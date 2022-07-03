@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Mooners</title>
+    <link>https://mooners.netlify.app/tags/r/</link>
+    <description>Recent content in R on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 04 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>计算R代码运行的时间</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Mon, 04 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>使用Sys.time 可以根据程序运行起始和终止的时间差计算运行时间 sleep_for_a_minute &amp;lt;- function() { Sys.sleep(10) } start_time &amp;lt;- Sys.time() sleep_for_a_minute() end_time &amp;lt;- Sys.time() end_time - start_time ## Time difference of 10.25374 secs 使用tictoc tictoc包中的tic和toc函数和Sys.time函数的使用方法是类似</description>
+    </item>
+    
+    <item>
+      <title>GO富集圈圈图</title>
+      <link>https://mooners.netlify.app/post/2020-09-23-go/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-23-go/</guid>
+      <description>绘制GO富集的圈圈图实例 载入R包 library(clusterProfiler) library(org.Hs.eg.db) library(GOplot) library(stringr) 载入差异表达数据 ## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file &#39;F:/ ## diff_expr.Rdata&#39;, probable reason &#39;No such file or directory&#39; ## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection ## logFC AveExpr t P.Value adj.P.Val B probe_id symbol change ## 1 -5.780170 7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898 8133876 CD36 down ## 2 4.212683 9.106625 68.40113 1.437468e-11 2.393169e-07 15.71739 7965335 DUSP6 up ## 3 -5.633027 8.763220 -57.61985 5.053466e-11</description>
+    </item>
+    
+    <item>
+      <title>WGCNA教程</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sat, 15 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>&lt;p&gt;WGCNA的基本原理和操作&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>R语言高级程序设计</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>数据结构 R 语言的基础数据结构可以按照维度来划分(1 维、 2 维&amp;hellip;n 维)；也可以按照它们所包含的数据类型是否相同来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的： Homogeneous Heterogeneous 1d Atomic vector List 2d Matrix Data frame</description>
+    </item>
+    
+  </channel>
+</rss>

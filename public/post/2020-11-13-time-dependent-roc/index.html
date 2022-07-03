@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Time-dependent ROC 曲线 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="timROC" />
+
+
+<meta property="og:title" content="Time-dependent ROC 曲线" />
+<meta name="twitter:title" content="Time-dependent ROC 曲线" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-11-13-time-dependent-roc/" /><meta property="og:description" content="基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线" />
+<meta name="twitter:description" content="基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-11-13T00:00:00+00:00" /><meta property="article:modified_time" content="2020-11-13T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-11-13-time-dependent-roc/">Time-dependent ROC 曲线</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-11-13</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2175 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/timroc">timROC</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="基本概念">基本概念</h2>
+<p>在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线。</p>
+<blockquote>
+<p>传统的ROC曲线分析方法认为个体的事件（疾病）状态和markers是随着时间的推移而固定的，但在临床流行病学研究中，疾病状态和markers都是随着时间的推移而变化的（即time-to-event outcomes）。早期无病的个体由于研究随访时间较长，可能较晚发病，而且其markers可能在随访期间较基线发生变化。如果使用传统的ROC会忽略疾病状态或markers的时间依赖性，此时用随时间变化的time-dependent ROC（时间相依ROC）比较合适。</p>
+</blockquote>
+<h2 id="原理">原理</h2>
+<p>时间依赖性ROC曲线有(1) cumulative/dynamic(C/D)、(2) incident/dynamic(I/D)和(3) incident/static(I/S)三种定义，其中cumulative/dynamic(C/D)是比较适合用于生存分析的定义，也是当前大多数研究使用的方法。cumulative/dynamic(C/D)中cumulative是指Cumulative sensitivity，dynamic是指dynamic specificity。</p>
+<p>对于任意时间t，每一个个体会按照其在时间t的状态被划分到病例组或对照组。在cumulative/dynamic中，如果一个个体在时间0和时间t之间发病，那么其会被划分到病例组（图中A、B和E）;如果一个个体在时间0和时间t之间没有发病，那么其会被划分到病例组（图中C、D和F）。</p>
+<p><img class="img-zoomable" src="images/timeROC.png" alt="" />
+</p>
+<p>在阈值为c的情况下，相应的敏感性和特异性计算公式如下：</p>
+<p>$$
+\begin{align*}  \text{sensitivity}^{\mathbb{C}}(c,t) &amp;= P(M_{i} &gt; c | T_{i} \le t)\  \text{specificity}^{\mathbb{D}}(c,t) &amp;= P(M_{i} \le c | T_{i} &gt; t)\  \end{align*}
+$$</p>
+<p>通过上述公式计算不同阈值下的敏感性和特异性我们即可得到时间t下的ROC曲线。结合上图可以轻易的看出，个体被划分到病例组还是对照组会随着时间t取值的变化而发生变化。假设图中的t增大，那么划分到病例组的个体就会变成A、B、C和E，对照组则会变成D和F。在此情形下，相应的ROC曲线也会发生变化。</p>
+<h2 id="意义解析">意义解析</h2>
+<h3 id="数据准备">数据准备</h3>
+<p>我们使用<code>survival</code>包中提供的<code>ovarian</code>数据集作为例子，可以简单看一下这些样本的生存曲线</p>
+<pre><code class="language-r">library(tidyverse)
+## Used for the dataset.
+library(survival)
+## Used for visualizaiton.
+library(survminer)
+## Load the Ovarian Cancer Survival Data
+data(ovarian)
+## Plot
+ggsurvplot(survfit(Surv(futime, fustat) ~ 1, data = ovarian),
+           risk.table = TRUE,
+           break.time.by = 180)
+</code></pre>
+<p><img class="img-zoomable" src="images/unnamed-chunk-2-1.png" alt="" />
+</p>
+<p>可以看到再该数据集中，大约在720天之后，就没有患者发生死亡</p>
+<p>我们使用所有的协变量(age, resid.ds, rx, ecog.ps)拟合Cox回归模型，并基于线性预测变量构建风险评分。</p>
+<pre><code class="language-r">## Fit a Cox model
+coxph1 &lt;- coxph(formula = Surv(futime, fustat) ~ pspline(age, df = 4) +
+                  factor(resid.ds) + factor(rx) + factor(ecog.ps),
+                data = ovarian)
+## Obtain the linear predictor
+ovarian$lp &lt;- predict(coxph1, type = &quot;lp&quot;)
+ovarian
+</code></pre>
+<pre><code>##    futime fustat     age resid.ds rx ecog.ps          lp
+## 1      59      1 72.3315        2  1       1  3.48363231
+## 2     115      1 74.4932        2  1       1  3.34783240
+## 3     156      1 66.4658        2  1       2  2.88061142
+## 4     421      0 53.3644        2  2       1 -0.29905598
+## 5     431      1 50.3397        2  1       1  0.30051742
+## 6     448      0 56.4301        1  1       2 -0.30406562
+## 7     464      1 56.9370        2  2       2  0.08752617
+## 8     475      1 59.8548        2  2       2  0.12126622
+## 9     477      0 64.1753        2  1       1  1.17098395
+## 10    563      1 55.1781        1  2       2 -0.66639213
+## 11    638      1 56.7562        1  1       2 -0.32969630
+## 12    744      0 50.1096        1  2       1 -1.09642040
+## 13    769      0 59.6301        2  2       2  0.09654704
+## 14    770      0 57.0521        2  2       1 -0.64257241
+## 15    803      0 39.2712        1  1       1 -3.22587014
+## 16    855      0 43.1233        1  1       2 -1.09198364
+## 17   1040      0 38.8932        2  1       2 -1.74841767
+## 18   1106      0 44.6000        1  1       1 -1.40907007
+## 19   1129      0 53.9068        1  2       1 -1.25981421
+## 20   1206      0 44.2055        2  2       1 -1.07935701
+## 21   1227      0 59.5890        1  2       2 -0.81842855
+## 22    268      1 74.5041        2  1       2  4.06915563
+## 23    329      1 43.1370        2  1       1 -0.89939270
+## 24    353      1 63.2192        1  2       2  0.11416973
+## 25    365      1 64.4247        2  2       1  0.79623290
+## 26    377      0 58.3096        1  2       1 -1.59793837
+</code></pre>
+<h3 id="计算时间依赖的roc">计算时间依赖的ROC</h3>
+<ul>
+<li>使用<code>survivalROC</code>包进行计算</li>
+</ul>
+<pre><code class="language-r">library(survivalROC)
+## Define a helper functio nto evaluate at various t
+survivalROC_helper &lt;- function(t) {
+    survivalROC(Stime        = ovarian$futime,
+                status       = ovarian$fustat,
+                marker       = ovarian$lp,
+                predict.time = t,
+                method       = &quot;NNE&quot;,
+                span = 0.25 * nrow(ovarian)^(-0.20))
+}
+## Evaluate every 180 days
+survivalROC_data &lt;- data_frame(t = 180 * c(1,2,3,4,5,6)) %&gt;%
+    mutate(survivalROC = map(t, survivalROC_helper),
+           ## Extract scalar AUC
+           auc = map_dbl(survivalROC, magrittr::extract2, &quot;AUC&quot;),
+           ## Put cut off dependent values in a data_frame
+           df_survivalROC = map(survivalROC, function(obj) {
+               as_tibble(obj[c(&quot;cut.values&quot;,&quot;TP&quot;,&quot;FP&quot;)])
+           })) %&gt;%
+    dplyr::select(-survivalROC) %&gt;%
+    unnest(cols = c(df_survivalROC)) %&gt;%
+    arrange(t, FP, TP)
+## Plot
+survivalROC_data %&gt;%
+    ggplot(mapping = aes(x = FP, y = TP)) +
+    geom_point() +
+    geom_line() +
+    geom_label(data = survivalROC_data %&gt;% dplyr::select(t,auc) %&gt;% unique,
+               mapping = aes(label = sprintf(&quot;%.3f&quot;, auc)), x = 0.5, y = 0.5) +
+    facet_wrap( ~ t) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
+          legend.key = element_blank(),
+          plot.title = element_text(hjust = 0.5),
+          strip.background = element_blank())
+</code></pre>
+<p><img class="img-zoomable" src="images/unnamed-chunk-4-1.png" alt="" />
+</p>
+<p>从图中大概可以看出，在180天时ROC曲线的效果最好，但是出现这种情况的主要原因是在180天的时候死亡的患者很少，所以几乎不影响。然后，在时间超过720天后AUC稳定在0.856，说明在此之后一直未死亡的患者贡献了风险得分的预测能力。</p>
+<h2 id="案例实现">案例实现</h2>
+<p>对于R中<code>time-dependent ROC</code>的实现方式，一般会用<code>timeROC</code>和<code>survivalROC</code>包， 也有一些其他的包如：<code>tdROC</code>, <code>timereg</code>, <code>risksetROC</code>和<code>survAUC</code>可以实现。<code>timeROC</code>相比于<code>survivalROC</code>会多计算个AUC的置信区间</p>
+<p><code>timeROC</code>的具体实现如下：</p>
+<pre><code class="language-r">library(timeROC)
+data(mayo)
+time_roc_res &lt;- timeROC(
+  T = mayo$time,
+  delta = mayo$censor,
+  marker = mayo$mayoscore5,
+  cause = 1,
+  weighting=&quot;marginal&quot;,
+  times = c(3 * 365, 5 * 365, 10 * 365),
+  ROC = TRUE,
+  iid = TRUE
+)
+</code></pre>
+<p>查看计算的AUC值及其置信区间：</p>
+<pre><code class="language-r">time_roc_res$AUC
+</code></pre>
+<pre><code>##    t=1095    t=1825    t=3650 
+## 0.8982790 0.9153621 0.8576153
+</code></pre>
+<pre><code class="language-r">confint(time_roc_res, level = 0.95)$CI_AUC
+</code></pre>
+<pre><code>##         2.5% 97.5%
+## t=1095 85.01 94.64
+## t=1825 87.42 95.65
+## t=3650 79.38 92.14
+</code></pre>
+<p>绘制time-dependent ROC曲线：</p>
+<pre><code class="language-r">plot(time_roc_res, time=3 * 365, col = &quot;red&quot;, title = FALSE)  
+plot(time_roc_res, time=5 * 365, add=TRUE, col=&quot;blue&quot;) 
+plot(time_roc_res, time=10 * 365, add=TRUE, col=&quot;green&quot;) 
+legend(&quot;bottomright&quot;,c(&quot;3 Years&quot; ,&quot;5 Years&quot;, &quot;10 Years&quot;),
+       col=c(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;), lty=1, lwd=2)
+</code></pre>
+<p><img class="img-zoomable" src="images/unnamed-chunk-7-1.png" alt="" />
+</p>
+<p>使用<code>ggplot2</code>绘制美化版本的ROC曲线：</p>
+<pre><code class="language-r">ROC_data &lt;- data.frame(
+  TP_3year = time_roc_res$TP[, 1],
+  FP_3year = time_roc_res$FP[, 1],
+  TP_5year = time_roc_res$TP[, 2],
+  FP_5year = time_roc_res$FP[, 2],
+  TP_10year = time_roc_res$TP[, 3],
+  FP_10year = time_roc_res$FP[, 3]
+)
+
+library(ggplot2)
+ggplot(data = ROC_data) +
+  geom_line(aes(x = FP_3year, y = TP_3year), size = 1, color = &quot;#BC3C29FF&quot;) +
+  geom_line(aes(x = FP_5year, y = TP_5year), size = 1, color = &quot;#0072B5FF&quot;) +
+  geom_line(aes(x = FP_10year, y = TP_10year), size = 1, color = &quot;#E18727FF&quot;) +
+  geom_abline(slope = 1, intercept = 0, color = &quot;grey&quot;, size = 1, linetype = 2) +
+  theme_bw() +
+  annotate(&quot;text&quot;, x = 0.75, y = 0.25, size = 4.5,
+           label = paste0(&quot;AUC at 3 years = &quot;, sprintf(&quot;%.3f&quot;, time_roc_res$AUC[[1]])), color = &quot;#BC3C29FF&quot;) +
+  annotate(&quot;text&quot;, x = 0.75, y = 0.15, size = 4.5,
+           label = paste0(&quot;AUC at 5 years = &quot;, sprintf(&quot;%.3f&quot;, time_roc_res$AUC[[2]])), color = &quot;#0072B5FF&quot;) +
+  annotate(&quot;text&quot;, x = 0.75, y = 0.05, size = 4.5,
+           label = paste0(&quot;AUC at 10 years = &quot;, sprintf(&quot;%.3f&quot;, time_roc_res$AUC[[3]])), color = &quot;#E18727FF&quot;) +
+  labs(x = &quot;False positive rate&quot;, y = &quot;True positive rate&quot;) +
+  theme(
+    axis.text = element_text(face = &quot;bold&quot;, size = 11, color = &quot;black&quot;),
+    axis.title.x = element_text(face = &quot;bold&quot;, size = 14, color = &quot;black&quot;, margin = margin(c(15, 0, 0, 0))),
+    axis.title.y = element_text(face = &quot;bold&quot;, size = 14, color = &quot;black&quot;, margin = margin(c(0, 15, 0, 0)))
+  )
+</code></pre>
+<p><img class="img-zoomable" src="images/unnamed-chunk-8-1.png" alt="" />
+</p>
+<hr>
+<h2 id="reference">Reference</h2>
+<p><a href="https://datascienceplus.com/time-dependent-roc-for-survival-prediction-models-in-r/" target="_blank">Time-dependent ROC for Survival Prediction Models in R</a></p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本概念">基本概念</a></li>
+    <li><a href="#原理">原理</a></li>
+    <li><a href="#意义解析">意义解析</a>
+      <ul>
+        <li><a href="#数据准备">数据准备</a></li>
+        <li><a href="#计算时间依赖的roc">计算时间依赖的ROC</a></li>
+      </ul>
+    </li>
+    <li><a href="#案例实现">案例实现</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本概念">基本概念</a></li>
+    <li><a href="#原理">原理</a></li>
+    <li><a href="#意义解析">意义解析</a>
+      <ul>
+        <li><a href="#数据准备">数据准备</a></li>
+        <li><a href="#计算时间依赖的roc">计算时间依赖的ROC</a></li>
+      </ul>
+    </li>
+    <li><a href="#案例实现">案例实现</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('div.content'), {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+  });
+</script>
+
+
+
+
+</body>
+
+</html>

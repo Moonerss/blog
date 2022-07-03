@@ -1,0 +1,132 @@
+---
+title: 计算R代码运行的时间
+author: Jeason
+date: '2021-10-04'
+slug: time_r
+categories:
+  - R
+tags:
+  - R
+---
+
+## 使用`Sys.time`
+
+可以根据程序运行起始和终止的时间差计算运行时间
+
+```{r}
+sleep_for_a_minute <- function() { Sys.sleep(10) }
+
+start_time <- Sys.time()
+sleep_for_a_minute()
+end_time <- Sys.time()
+
+end_time - start_time
+```
+
+## 使用`tictoc`
+
+`tictoc`包中的`tic`和`toc`函数和`Sys.time`函数的使用方法是类似的。但是`tictoc`提供了更加方便的使用形式，便于操作。
+
+-   可以对单个代码块的运行时间进行测试
+
+```{r}
+library(tictoc)
+
+tic("sleeping")
+print("falling asleep...")
+sleep_for_a_minute()
+print("...waking up")
+toc()
+```
+
+-   也可以同时对多段代码进行测试
+
+```{r}
+tic("total")
+tic("data generation")
+X <- matrix(rnorm(50000*1000), 50000, 1000)
+b <- sample(1:1000, 1000)
+y <- runif(1) + X %*% b + rnorm(50000)
+toc()
+tic("model fitting")
+model <- lm(y ~ X)
+toc()
+toc()
+```
+
+## 使用`system.time`
+
+使用`system.time`函数直接包裹运行代码测试运行时间，简单快捷
+
+```{r}
+system.time({ sleep_for_a_minute() })
+```
+
+其中的`elapsed`表示运行代码真正花费的时间
+
+## 使用`rbenchmark`
+
+`rbenchmark`是基于`system.time`的封装，提供了高效的用法进行专业的代码测试与比较
+
+```{r}
+library(rbenchmark)
+
+benchmark("lm" = {
+            X <- matrix(rnorm(1000), 100, 10)
+            y <- X %*% sample(1:10, 10) + rnorm(100)
+            b <- lm(y ~ X + 0)$coef
+          },
+          "pseudoinverse" = {
+            X <- matrix(rnorm(1000), 100, 10)
+            y <- X %*% sample(1:10, 10) + rnorm(100)
+            b <- solve(t(X) %*% X) %*% t(X) %*% y
+          },
+          "linear system" = {
+            X <- matrix(rnorm(1000), 100, 10)
+            y <- X %*% sample(1:10, 10) + rnorm(100)
+            b <- solve(t(X) %*% X, t(X) %*% y)
+          },
+          replications = 1000,
+          columns = c("test", "replications", "elapsed",
+                      "relative", "user.self", "sys.self"))
+```
+
+结果中的`elapsed`、`user.self`、`sys.self`与`system.time`函数结果中表示的意义相同，`relative`表示函数运行的时间利用率
+
+## 使用`microbenchmark`
+
+`microbenchmark`和`rbenchmark`一样，可以用来比较多个代码之间的运行速率，而`microbenchmark`提供了更加人性化的绘图功能可以直观的比较运行时间的差异。
+
+```{r}
+library(microbenchmark)
+
+set.seed(2017)
+n <- 10000
+p <- 100
+X <- matrix(rnorm(n*p), n, p)
+y <- X %*% rnorm(p) + rnorm(100)
+
+check_for_equal_coefs <- function(values) {
+  tol <- 1e-12
+  max_error <- max(c(abs(values[[1]] - values[[2]]),
+                     abs(values[[2]] - values[[3]]),
+                     abs(values[[1]] - values[[3]])))
+  max_error < tol
+}
+
+mbm <- microbenchmark("lm" = { b <- lm(y ~ X + 0)$coef },
+               "pseudoinverse" = {
+                 b <- solve(t(X) %*% X) %*% t(X) %*% y
+               },
+               "linear system" = {
+                 b <- solve(t(X) %*% X, t(X) %*% y)
+               },
+               check = check_for_equal_coefs)
+
+mbm
+```
+
+```{r}
+library(ggplot2)
+autoplot(mbm)
+```

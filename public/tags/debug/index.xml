@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>debug on Mooners</title>
+    <link>https://mooners.netlify.app/tags/debug/</link>
+    <description>Recent content in debug on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/debug/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SCENT包Debug</title>
+      <link>https://mooners.netlify.app/post/2020-11-20-scent-debug/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-20-scent-debug/</guid>
+      <description>背景 使用SCENT包进行分析时出现如下错误： OpenBLAS blas_thread_init: pthread_create: Resource temporarily unavailable OpenBLAS blas_thread_init: RLIMIT_NPROC 1024 current, 2583728 max OpenBLAS blas_thread_init: pthread_create: Resource temporarily unavailable OpenBLAS blas_thread_init: RLIMIT_NPROC 1024 current, 2583728 max 解决过程 BLAS BLAS（Basic Linear Algebra Subprograms，基础线性代数程序集）是一个应用程序接口，里面拥</description>
+    </item>
+    
+  </channel>
+</rss>

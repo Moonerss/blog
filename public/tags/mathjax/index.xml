@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mathjax on Mooners</title>
+    <link>https://mooners.netlify.app/tags/mathjax/</link>
+    <description>Recent content in Mathjax on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 12 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/mathjax/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Latex 公式语法参考</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>Mathjax简介 Mathjax是一款运行在浏览器中的开源数学符号渲染引擎，使用MathJax可以方便的在浏览器中显示数学公式，不需要使用图片。 基本语法 在正文中同一行内插入LaTex公式用$...$来</description>
+    </item>
+    
+  </channel>
+</rss>

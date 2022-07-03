@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Consensus clustering on Mooners</title>
+    <link>https://mooners.netlify.app/tags/consensus-clustering/</link>
+    <description>Recent content in Consensus clustering on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 24 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/consensus-clustering/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一致性聚类(Consensus Clustering)</title>
+      <link>https://mooners.netlify.app/post/2020-11-24-consensus-clustering/</link>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-24-consensus-clustering/</guid>
+      <description>背景 Consensus Clustering(一致性聚类)，无监督聚类方法，是一种常见的癌症亚型分类研究方法（如乳腺癌中的PAM50），可根据不同组学数据集将样本区分成几个亚型，从而发现新的疾病亚型或者对不同亚型进行比</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,22 +1,94 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Hugo Theme Fuji</title>
-    <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/</link>
-    <description>Recent content in Posts on Hugo Theme Fuji</description>
+    <title>Posts on Mooners</title>
+    <link>https://mooners.netlify.app/post/</link>
+    <description>Recent content in Posts on Mooners</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 10 Jan 2021 00:00:00 +0800</lastBuildDate><atom:link href="https://github.dsrkafuu.net/hugo-theme-fuji/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>同一电脑配置多个Github账户</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PCA分析原理及实现</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sat, 27 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>PCA的基本思想 我们先从最简单的案例入手，先看下面的一堆绿色的圆圈，如下所示： 我们可以把这些绿色圆圈当成一群正常的细胞,虽然这一群细胞看上去是一样的（至少表面上一样），但是，它们本质上也有可能不一样，</description>
+    </item>
+    
+    <item>
+      <title>归一化与标准化的联系与差别</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>差异 概念差异 归一化：１）把数据变成(０，１)或者（1,1）之间的小数。主要是为了数据处理方便提出来的，把数据映射到0～1范围之内处理，更加便捷快速。２）把有量纲表达式变成无量纲表达式，便于不同单位或量</description>
+    </item>
+    
+    <item>
+      <title>数据预处理之标准化</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>定义 标准化(Standardization)特指将数据进行变化，使其符合均值为0，标准差为1的分布。注意：这里的分布并非一定是正态分布 标准化会改变数据的均值、标准差，也就是说改变了原来的分布，但是分布</description>
+    </item>
+    
+    <item>
+      <title>Latex 公式语法参考</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>Mathjax简介 Mathjax是一款运行在浏览器中的开源数学符号渲染引擎，使用MathJax可以方便的在浏览器中显示数学公式，不需要使用图片。 基本语法 在正文中同一行内插入LaTex公式用$...$来</description>
+    </item>
+    
+    <item>
+      <title>数据预处理之归一化</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>定义 归一化（normalization）特指将数据进行缩放到一个固定的区间内。通常来讲，这个区间是[0，1]，但是在实际的情况中，这个区间可以是[-1,1]。总之符合使用的需求。 通过归⼀化，我们可以消</description>
+    </item>
+    
+    <item>
+      <title>fold change, or log fold change?</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>fold change是一个ratio比值，用来比较在两种不同条件下同一事物的差异，当fold change &amp;gt; 1时表示一种上升的趋势，反之&amp;lt; 1 表示一种下降的趋势，这一概念在医学研究中是非常重要的。 然而，在真是的科学</description>
+    </item>
+    
+    <item>
+      <title>计算R代码运行的时间</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Mon, 04 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>使用Sys.time 可以根据程序运行起始和终止的时间差计算运行时间 sleep_for_a_minute &amp;lt;- function() { Sys.sleep(10) } start_time &amp;lt;- Sys.time() sleep_for_a_minute() end_time &amp;lt;- Sys.time() end_time - start_time ## Time difference of 10.25374 secs 使用tictoc tictoc包中的tic和toc函数和Sys.time函数的使用方法是类似</description>
+    </item>
+    
     <item>
       <title>In-post APlayer Test</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/aplayer-test/</link>
+      <link>https://mooners.netlify.app/post/aplayer-test/</link>
       <pubDate>Sun, 10 Jan 2021 00:00:00 +0800</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/aplayer-test/</guid>
+      <guid>https://mooners.netlify.app/post/aplayer-test/</guid>
       <description>&lt;div class=&#34;post-player-wrapper&#34;&gt;
   &lt;div
     class=&#34;post-aplayer&#34;
-    data-base=&#34;https://github.dsrkafuu.net/hugo-theme-fuji/&#34;
+    data-base=&#34;https://mooners.netlify.app/&#34;
     data-urls=&#34;/aplayer/berlin.mp3&#34;
     data-names=&#34;Berlin&#34;
     data-artists=&#34;Crowander&#34;
@@ -30,21 +102,93 @@
     
     <item>
       <title>Hello R Markdown</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/2020-12-01-r-rmarkdown/</link>
+      <link>https://mooners.netlify.app/post/2020-12-01-r-rmarkdown/</link>
       <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/2020-12-01-r-rmarkdown/</guid>
+      <guid>https://mooners.netlify.app/post/2020-12-01-r-rmarkdown/</guid>
       <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
 You can embed an R code chunk like this:
 summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.:19.0 3rd Qu.: 56.00 ## Max. :25.0 Max. :120.00fit &amp;lt;- lm(dist ~ speed, data = cars)fit## ## Call:## lm(formula = dist ~ speed, data = cars)## ## Coefficients:## (Intercept) speed ## -17.</description>
     </item>
     
     <item>
+      <title>基于表达数据评估免疫浸润ssGSEA</title>
+      <link>https://mooners.netlify.app/post/2020-11-26-ssgsea/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-26-ssgsea/</guid>
+      <description>背景 单样本基因集富集分析（single sample gene set enrichment analysis, ssGSEA）, 是GSEA方法的扩展，主要是针对单个样本无法做GSEA而设计。文章2009年发表于nature，题目为Systematic RNA interference reveals that oncogenic KRAS-driven cancers</description>
+    </item>
+    
+    <item>
+      <title>一致性聚类(Consensus Clustering)</title>
+      <link>https://mooners.netlify.app/post/2020-11-24-consensus-clustering/</link>
+      <pubDate>Tue, 24 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-24-consensus-clustering/</guid>
+      <description>背景 Consensus Clustering(一致性聚类)，无监督聚类方法，是一种常见的癌症亚型分类研究方法（如乳腺癌中的PAM50），可根据不同组学数据集将样本区分成几个亚型，从而发现新的疾病亚型或者对不同亚型进行比</description>
+    </item>
+    
+    <item>
+      <title>SCENT包Debug</title>
+      <link>https://mooners.netlify.app/post/2020-11-20-scent-debug/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-20-scent-debug/</guid>
+      <description>背景 使用SCENT包进行分析时出现如下错误： OpenBLAS blas_thread_init: pthread_create: Resource temporarily unavailable OpenBLAS blas_thread_init: RLIMIT_NPROC 1024 current, 2583728 max OpenBLAS blas_thread_init: pthread_create: Resource temporarily unavailable OpenBLAS blas_thread_init: RLIMIT_NPROC 1024 current, 2583728 max 解决过程 BLAS BLAS（Basic Linear Algebra Subprograms，基础线性代数程序集）是一个应用程序接口，里面拥</description>
+    </item>
+    
+    <item>
+      <title>SSH连接自动断开问题</title>
+      <link>https://mooners.netlify.app/post/2020-11-16-ssh/</link>
+      <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-16-ssh/</guid>
+      <description>背景 平时在命令行下ssh连接了远程服务器，经常才几分钟没操作就被自动断线了，不能进行任何操作，其实这是因为ssh没有设置心跳检测，可以通过以下两种方法解决。 本地机最常用的方法 依赖ssh客户端定时发送心</description>
+    </item>
+    
+    <item>
+      <title>Time-dependent ROC 曲线</title>
+      <link>https://mooners.netlify.app/post/2020-11-13-time-dependent-roc/</link>
+      <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-13-time-dependent-roc/</guid>
+      <description>基本概念 在对biomarker进行分析时，我们通常会对预测模型的预测性能通过ROC曲线来进行评估，但是对于一些生存资料相关数据的预测模型需要考虑到生存信息与时间因素进去，于是就有了时间依赖的ROC曲线</description>
+    </item>
+    
+    <item>
+      <title>Conda使用指南（安装部署篇）</title>
+      <link>https://mooners.netlify.app/post/2022-11-10-conda/</link>
+      <pubDate>Tue, 10 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-11-10-conda/</guid>
+      <description>关于 Conda Conda is an open source package management system and environment management system that runs on Windows, macOS and Linux. Conda quickly installs, runs and updates packages and their dependencies. Conda easily creates, saves, loads and switches between environments on your local computer. It was created for Python programs, but it can package and distribute software for any language. 简单来说，Conda 就是专门用于管理 Python 包环境以及部署的工具。 Anaconda、</description>
+    </item>
+    
+    <item>
+      <title>GO富集圈圈图</title>
+      <link>https://mooners.netlify.app/post/2020-09-23-go/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-23-go/</guid>
+      <description>绘制GO富集的圈圈图实例 载入R包 library(clusterProfiler) library(org.Hs.eg.db) library(GOplot) library(stringr) 载入差异表达数据 ## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file &#39;F:/ ## diff_expr.Rdata&#39;, probable reason &#39;No such file or directory&#39; ## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection ## logFC AveExpr t P.Value adj.P.Val B probe_id symbol change ## 1 -5.780170 7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898 8133876 CD36 down ## 2 4.212683 9.106625 68.40113 1.437468e-11 2.393169e-07 15.71739 7965335 DUSP6 up ## 3 -5.633027 8.763220 -57.61985 5.053466e-11</description>
+    </item>
+    
+    <item>
+      <title>WGCNA教程</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sat, 15 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>&lt;p&gt;WGCNA的基本原理和操作&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Markdown Syntax</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/markdown-syntax/</link>
+      <link>https://mooners.netlify.app/post/markdown-syntax/</link>
       <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/markdown-syntax/</guid>
+      <guid>https://mooners.netlify.app/post/markdown-syntax/</guid>
       <description>&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;
 &lt;h2 id=&#34;headings&#34;&gt;Headings&lt;/h2&gt;
 &lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;</description>
@@ -52,10 +196,10 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     
     <item>
       <title>Math Typesetting</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/math-typesetting/</link>
+      <link>https://mooners.netlify.app/post/math-typesetting/</link>
       <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/math-typesetting/</guid>
+      <guid>https://mooners.netlify.app/post/math-typesetting/</guid>
       <description>&lt;p&gt;Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.&lt;/p&gt;
 &lt;p&gt;In this example we will be using &lt;a href=&#34;https://katex.org/&#34; target=&#34;_blank&#34;&gt;KaTeX&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -74,11 +218,20 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>R语言高级程序设计</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>数据结构 R 语言的基础数据结构可以按照维度来划分(1 维、 2 维&amp;hellip;n 维)；也可以按照它们所包含的数据类型是否相同来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的： Homogeneous Heterogeneous 1d Atomic vector List 2d Matrix Data frame</description>
+    </item>
+    
+    <item>
       <title>Placeholder Text</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/placeholder-text/</link>
+      <link>https://mooners.netlify.app/post/placeholder-text/</link>
       <pubDate>Sat, 09 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/placeholder-text/</guid>
+      <guid>https://mooners.netlify.app/post/placeholder-text/</guid>
       <description>&lt;p&gt;Lorem est tota propiore conpellat pectoribus de
 pectora summo. Redit teque digerit hominumque toris verebor lumina non cervice
 subde tollit usus habet Arctonque, furores quas nec ferunt. Quoque montibus nunc
@@ -88,10 +241,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p&gt;<
     
     <item>
       <title>Emoji Support</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/emoji-support/</link>
+      <link>https://mooners.netlify.app/post/emoji-support/</link>
       <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/emoji-support/</guid>
+      <guid>https://mooners.netlify.app/post/emoji-support/</guid>
       <description>&lt;p&gt;Emoji can be enabled in a Hugo project in a number of ways.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://gohugo.io/functions/emojify/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;emojify&lt;/code&gt;&lt;/a&gt; function can be called directly in templates or &lt;a href=&#34;https://gohugo.io/templates/shortcode-templates/#inline-shortcodes&#34; target=&#34;_blank&#34;&gt;Inline Shortcodes&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;To enable emoji globally, set &lt;code&gt;enableEmoji&lt;/code&gt; to &lt;code&gt;true&lt;/code&gt; in your site’s &lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34; target=&#34;_blank&#34;&gt;configuration&lt;/a&gt; and then you can type emoji shorthand codes directly in content files; e.g.&lt;/p&gt;
@@ -100,19 +253,19 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p&gt;<
     
     <item>
       <title>CJK Unicode Test</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/cjk-unicode-test/</link>
+      <link>https://mooners.netlify.app/post/cjk-unicode-test/</link>
       <pubDate>Fri, 09 Mar 2018 00:00:00 +0800</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/cjk-unicode-test/</guid>
+      <guid>https://mooners.netlify.app/post/cjk-unicode-test/</guid>
       <description>&lt;p&gt;The following is part of the CJK text, this page is for test use only.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>纯简体中文测试文章</title>
-      <link>https://github.dsrkafuu.net/hugo-theme-fuji/post/wtf-article/</link>
+      <link>https://mooners.netlify.app/post/wtf-article/</link>
       <pubDate>Sat, 01 Apr 2017 00:00:00 +0800</pubDate>
       
-      <guid>https://github.dsrkafuu.net/hugo-theme-fuji/post/wtf-article/</guid>
+      <guid>https://mooners.netlify.app/post/wtf-article/</guid>
       <description>&lt;p&gt;本文内容无实际意义，由狗屁不通文章生成器自动生成，不代表作者本人观点。&lt;/p&gt;
 &lt;p&gt;可是，即使是这样，一段代码写一天的出现仍然代表了一定的意义。一段代码写一天，到底应该如何实现。马克思在不经意间这样说过，一切节省，归根到底都归结为时间的节省。这不禁令我深思。马克思曾经说过，一切节省，归根到底都归结为时间的节省。&lt;/p&gt;</description>
     </item>

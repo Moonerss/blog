@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>GO富集圈圈图 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="R" />
+
+
+<meta property="og:title" content="GO富集圈圈图" />
+<meta name="twitter:title" content="GO富集圈圈图" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-09-23-go/" /><meta property="og:description" content="绘制GO富集的圈圈图实例 载入R包 library(clusterProfiler) library(org.Hs.eg.db) library(GOplot) library(stringr) 载入差异表达数据 ## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file &#39;F:/ ## diff_expr.Rdata&#39;, probable reason &#39;No such file or directory&#39; ## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection ## logFC AveExpr t P.Value adj.P.Val B probe_id symbol change ## 1 -5.780170 7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898 8133876 CD36 down ## 2 4.212683 9.106625 68.40113 1.437468e-11 2.393169e-07 15.71739 7965335 DUSP6 up ## 3 -5.633027 8.763220 -57.61985 5.053466e-11" />
+<meta name="twitter:description" content="绘制GO富集的圈圈图实例 载入R包 library(clusterProfiler) library(org.Hs.eg.db) library(GOplot) library(stringr) 载入差异表达数据 ## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file &#39;F:/ ## diff_expr.Rdata&#39;, probable reason &#39;No such file or directory&#39; ## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection ## logFC AveExpr t P.Value adj.P.Val B probe_id symbol change ## 1 -5.780170 7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898 8133876 CD36 down ## 2 4.212683 9.106625 68.40113 1.437468e-11 2.393169e-07 15.71739 7965335 DUSP6 up ## 3 -5.633027 8.763220 -57.61985 5.053466e-11" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-09-23T00:00:00+00:00" /><meta property="article:modified_time" content="2020-09-23T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-09-23-go/">GO富集圈圈图</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-09-23</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;500 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="绘制go富集的圈圈图实例">绘制GO富集的圈圈图实例</h2>
+<p>载入R包</p>
+<pre><code class="language-r">library(clusterProfiler)
+library(org.Hs.eg.db)
+library(GOplot)
+library(stringr)
+</code></pre>
+<p>载入差异表达数据</p>
+<pre><code>## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file 'F:/
+## diff_expr.Rdata', probable reason 'No such file or directory'
+</code></pre>
+<pre><code>## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection
+</code></pre>
+<pre><code>##       logFC   AveExpr         t      P.Value    adj.P.Val        B probe_id symbol change
+## 1 -5.780170  7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898  8133876   CD36   down
+## 2  4.212683  9.106625  68.40113 1.437468e-11 2.393169e-07 15.71739  7965335  DUSP6     up
+## 3 -5.633027  8.763220 -57.61985 5.053466e-11 4.431880e-07 15.04752  7972259    DCT   down
+## 4  3.801663  9.726468  57.21112 5.324059e-11 4.431880e-07 15.01709  7972217  SPRY2     up
+## 5 -3.263063 10.171635 -50.51733 1.324638e-10 8.821294e-07 14.45166  8129573  MOXD1   down
+## 6  3.843247  9.667077  45.87910 2.681063e-10 1.487856e-06 13.97123  8015806   ETV4     up
+##   ENTREZID
+## 1      948
+## 2     1848
+## 3     1638
+## 4    10253
+## 5    26002
+## 6     2118
+</code></pre>
+<p>保留差异表达基因</p>
+<pre><code class="language-r">diff_expr = diff_expr[diff_expr$change!=&quot;stable&quot;,]
+diff_expr = diff_expr[1:100,]
+gene_diff = diff_expr$symbol
+</code></pre>
+<p>富集分析</p>
+<pre><code class="language-r">enrich_BP &lt;- enrichGO(gene = gene_diff, keyType = &quot;SYMBOL&quot;, OrgDb= org.Hs.eg.db,
+                      ont = &quot;BP&quot;, pAdjustMethod = &quot;BH&quot;, minGSSize = 1,
+                      pvalueCutoff = 0.05, qvalueCutoff = 0.05)
+class(enrich_BP)
+</code></pre>
+<pre><code>## [1] &quot;enrichResult&quot;
+## attr(,&quot;package&quot;)
+## [1] &quot;DOSE&quot;
+</code></pre>
+<p>提取图像绘制需要的输入数据</p>
+<pre><code class="language-r">enrich &lt;- data.frame(enrich_BP) 
+colnames(enrich)
+</code></pre>
+<pre><code>## [1] &quot;ID&quot;          &quot;Description&quot; &quot;GeneRatio&quot;   &quot;BgRatio&quot;     &quot;pvalue&quot;      &quot;p.adjust&quot;   
+## [7] &quot;qvalue&quot;      &quot;geneID&quot;      &quot;Count&quot;
+</code></pre>
+<p>数据整理</p>
+<pre><code class="language-r">enrich &lt;- enrich[1:10,c(1,2,8,6)] 
+
+enrich$geneID &lt;- str_replace_all(enrich$geneID,&quot;/&quot;,&quot;,&quot;) 
+names(enrich)=c(&quot;ID&quot;,&quot;Term&quot;,&quot;Genes&quot;,&quot;adj_pval&quot;)
+enrich$Category = &quot;BP&quot;
+head(enrich)
+</code></pre>
+<pre><code>##                    ID                                                       Term
+## GO:0050730 GO:0050730            regulation of peptidyl-tyrosine phosphorylation
+## GO:0048732 GO:0048732                                          gland development
+## GO:0018108 GO:0018108                          peptidyl-tyrosine phosphorylation
+## GO:0018212 GO:0018212                             peptidyl-tyrosine modification
+## GO:1901992 GO:1901992 positive regulation of mitotic cell cycle phase transition
+## GO:0042326 GO:0042326                     negative regulation of phosphorylation
+##                                                                                   Genes
+## GO:0050730                CD36,AREG,TGFA,CD24,SFRP1,ITGB3,MIR221,SH2B3,CNTN1,INPP5F,MVP
+## GO:0048732   ETV5,CCND1,AREG,SERPINF1,SFRP1,IGFBP5,JUN,SEMA3C,SOX2,SNAI2,PBX1,E2F7,RARB
+## GO:0018108          CD36,AREG,TGFA,CD24,SFRP1,ITGB3,MIR221,EPHA5,SH2B3,CNTN1,INPP5F,MVP
+## GO:0018212          CD36,AREG,TGFA,CD24,SFRP1,ITGB3,MIR221,EPHA5,SH2B3,CNTN1,INPP5F,MVP
+## GO:1901992                                     DTL,CCND1,CDCA5,CDC25A,MIR221,PBX1,CDC45
+## GO:0042326 DUSP6,SPRY2,NUPR1,SPRY4,UBASH3B,SFRP1,JUN,TLR4,TIMP3,MIR221,SH2B3,INPP5F,MVP
+##                adj_pval Category
+## GO:0050730 0.0001172193       BP
+## GO:0048732 0.0001314734       BP
+## GO:0018108 0.0001314734       BP
+## GO:0018212 0.0001314734       BP
+## GO:1901992 0.0001567831       BP
+## GO:0042326 0.0001741554       BP
+</code></pre>
+<pre><code class="language-r">genes &lt;- data.frame(ID = diff_expr$symbol, logFC = diff_expr$logFC)
+head(genes)
+</code></pre>
+<pre><code>##      ID     logFC
+## 1  CD36 -5.780170
+## 2 DUSP6  4.212683
+## 3   DCT -5.633027
+## 4 SPRY2  3.801663
+## 5 MOXD1 -3.263063
+## 6  ETV4  3.843247
+</code></pre>
+<p>转化成输入数据</p>
+<pre><code class="language-r">circ &lt;- circle_dat(enrich,genes)
+head(circ)
+</code></pre>
+<pre><code>##   category         ID                                            term count genes     logFC
+## 1       BP GO:0050730 regulation of peptidyl-tyrosine phosphorylation    11  CD36 -5.780170
+## 2       BP GO:0050730 regulation of peptidyl-tyrosine phosphorylation    11  AREG  3.095910
+## 3       BP GO:0050730 regulation of peptidyl-tyrosine phosphorylation    11  TGFA  2.518930
+## 4       BP GO:0050730 regulation of peptidyl-tyrosine phosphorylation    11  CD24 -3.322533
+## 5       BP GO:0050730 regulation of peptidyl-tyrosine phosphorylation    11 SFRP1  2.103767
+## 6       BP GO:0050730 regulation of peptidyl-tyrosine phosphorylation    11 ITGB3  3.162000
+##       adj_pval   zscore
+## 1 0.0001172193 0.904534
+## 2 0.0001172193 0.904534
+## 3 0.0001172193 0.904534
+## 4 0.0001172193 0.904534
+## 5 0.0001172193 0.904534
+## 6 0.0001172193 0.904534
+</code></pre>
+<p>绘制图像</p>
+<pre><code class="language-r">GOCircle(circ)
+</code></pre>
+<p><img class="img-zoomable" src="images/unnamed-chunk-16-1.png" alt="" />
+</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#绘制go富集的圈圈图实例">绘制GO富集的圈圈图实例</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#绘制go富集的圈圈图实例">绘制GO富集的圈圈图实例</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

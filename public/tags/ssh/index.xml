@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ssh on Mooners</title>
+    <link>https://mooners.netlify.app/tags/ssh/</link>
+    <description>Recent content in ssh on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 16 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSH连接自动断开问题</title>
+      <link>https://mooners.netlify.app/post/2020-11-16-ssh/</link>
+      <pubDate>Mon, 16 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-16-ssh/</guid>
+      <description>背景 平时在命令行下ssh连接了远程服务器，经常才几分钟没操作就被自动断线了，不能进行任何操作，其实这是因为ssh没有设置心跳检测，可以通过以下两种方法解决。 本地机最常用的方法 依赖ssh客户端定时发送心</description>
+    </item>
+    
+  </channel>
+</rss>

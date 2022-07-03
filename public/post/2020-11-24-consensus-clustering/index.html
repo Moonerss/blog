@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>一致性聚类(Consensus Clustering) - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Consensus clustering" />
+
+
+<meta property="og:title" content="一致性聚类(Consensus Clustering)" />
+<meta name="twitter:title" content="一致性聚类(Consensus Clustering)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-11-24-consensus-clustering/" /><meta property="og:description" content="背景 Consensus Clustering(一致性聚类)，无监督聚类方法，是一种常见的癌症亚型分类研究方法（如乳腺癌中的PAM50），可根据不同组学数据集将样本区分成几个亚型，从而发现新的疾病亚型或者对不同亚型进行比" />
+<meta name="twitter:description" content="背景 Consensus Clustering(一致性聚类)，无监督聚类方法，是一种常见的癌症亚型分类研究方法（如乳腺癌中的PAM50），可根据不同组学数据集将样本区分成几个亚型，从而发现新的疾病亚型或者对不同亚型进行比" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-11-24T00:00:00+00:00" /><meta property="article:modified_time" content="2020-11-24T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-11-24-consensus-clustering/">一致性聚类(Consensus Clustering)</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-11-24</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1299 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/consensus-clustering">Consensus clustering</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="背景">背景</h2>
+<p>Consensus Clustering(<strong>一致性聚类</strong>)，无监督聚类方法，是一种常见的癌症亚型分类研究方法（如乳腺癌中的PAM50），可根据不同组学数据集将样本区分成几个亚型，从而发现新的疾病亚型或者对不同亚型进行比较分析。<br />一致性聚类方法包括从一组项目中进行次抽样，例如微阵列，并确定特定簇计数（k）的簇。然后，对共识值，两个项目占在同一子样本中发生的次数中有相同的聚类，计算并存储在每个k的对称一致矩阵中。<br /></p>
+<h2 id="为什么用一致性聚类">为什么用一致性聚类</h2>
+<h3 id="传统方法的不足">传统方法的不足</h3>
+<ul>
+<li>对于传统的聚类方法，不能提供“客观的”分类数目的标准和分类边界，如：Hierarchical Clustering。</li>
+<li>它需要我们给出一个预定的分类数目，并且我们无法根据分类的结果去比较不同分类数目下结果的差异，如：K-means Clustering。</li>
+</ul>
+<h3 id="一致性聚类优势">一致性聚类优势</h3>
+<ul>
+<li>一致聚类通过基于重采样(resample)的方法来验证聚类合理性</li>
+<li>一致聚类方法的主要目的是评估聚类的稳定性</li>
+</ul>
+<h2 id="一致性聚类的基本原理假设">一致性聚类的基本原理假设</h2>
+<p>从原数据集不同的子类中提取出的样本构成一个新的数据集，并且从同一个子类中有不同的样本被提取出来，那么在新数据集上聚类分析之后的结果，无论是聚类的数目还是类内样本都应该和原数据集相差不大。因此所得到的聚类相对于抽样变异越稳定，我们越可以相信这一样的聚类代表了一个真实的子类结构。重采样的方法可以打乱原始数据集，这样对每一次重采样的样本进行聚类分析然后再综合评估多次聚类分析的结果给出一致性(Consensus)的评估。</p>
+<h2 id="代码实现">代码实现</h2>
+<p>在R中，可以通过 <code>ConsensusClusterPlus</code> 包实现一致性聚类的操作，具体参考<a href="https://bioconductor.org/packages/release/bioc/vignettes/ConsensusClusterPlus/inst/doc/ConsensusClusterPlus.pdf" target="_blank">ConsensusClusterPlus (Tutorial)</a></p>
+<p>首先导入数据并进行预处理：</p>
+<pre><code class="language-R">##使用ALL示例数据
+library(ALL)
+data(ALL)
+d=exprs(ALL)
+d[1:5,1:5]
+
+             01005    01010    03002    04006    04007
+1000_at   7.597323 7.479445 7.567593 7.384684 7.905312
+1001_at   5.046194 4.932537 4.799294 4.922627 4.844565
+1002_f_at 3.900466 4.208155 3.886169 4.206798 3.416923
+1003_s_at 5.903856 6.169024 5.860459 6.116890 5.687997
+1004_at   5.925260 5.912780 5.893209 6.170245 5.615210
+
+## 筛选前5000高变异的基因
+mads=apply(d,1,mad)
+d=d[rev(order(mads))[1:5000],]
+
+#sweep函数减去中位数进行标准化
+d = sweep(d,1, apply(d,1,median,na.rm=T))
+
+#一步完成一致性聚类
+## 最大聚类个数为6，随即次数为50次，随机样本比例为80%
+library(ConsensusClusterPlus)
+title=tempdir()
+results = ConsensusClusterPlus(d,maxK=6,reps=50,pItem=0.8,pFeature=1,
+ title=title,clusterAlg=&quot;hc&quot;,distance=&quot;pearson&quot;,seed=1262118388.71279,plot=&quot;png&quot;)
+</code></pre>
+<p>结果查询：</p>
+<pre><code class="language-R">#输出K=2时的一致性矩阵
+results[[2]][[&quot;consensusMatrix&quot;]][1:5,1:5]
+
+          [,1]      [,2]      [,3]      [,4]     [,5]
+[1,] 1.0000000 1.0000000 0.8947368 1.0000000 1.000000
+[2,] 1.0000000 1.0000000 0.9142857 1.0000000 1.000000
+[3,] 0.8947368 0.9142857 1.0000000 0.8857143 0.969697
+[4,] 1.0000000 1.0000000 0.8857143 1.0000000 1.000000
+[5,] 1.0000000 1.0000000 0.9696970 1.0000000 1.000000
+
+#hclust选项
+results[[2]][[&quot;consensusTree&quot;]]
+
+Call:
+hclust(d = as.dist(1 - fm), method = finalLinkage)
+
+Cluster method   : average 
+Number of objects: 128 
+
+#样本分类
+results[[2]][[&quot;consensusClass&quot;]][1:5]
+
+01005 01010 03002 04006 04007 
+    1     1     1     1     1 
+
+#计算聚类一致性 (cluster-consensus) 和样品一致性 (item-consensus)
+icl &lt;- calcICL(results, title = title,
+               plot = &quot;png&quot;)
+## 返回了具有两个元素的list，然后分别查看一下
+dim(icl[[&quot;clusterConsensus&quot;]])
+ [1] 20  3
+icl[[&quot;clusterConsensus&quot;]] 
+
+dim(icl[[&quot;itemConsensus&quot;]])
+ [1] 2560    4
+icl[[&quot;itemConsensus&quot;]][1:5,] 
+</code></pre>
+<h2 id="结果解读">结果解读</h2>
+<h3 id="一致性矩阵">一致性矩阵</h3>
+<p><img class="img-zoomable" src="images/pic1.png" alt="" />
+</p>
+<p>以上图为例是聚类k=6的结果，这个图叫做CM plots，其目的是展示分类情况，找到最“干净”的一张图（也就是白的方块中尽量不掺杂蓝色），就是分类效果最好的一类。</p>
+<h3 id="一致性累积分布函数图">一致性累积分布函数图</h3>
+<p><img class="img-zoomable" src="images/pic2.png" alt="" />
+<br />该图叫做经验累积分布函数曲线(Empirical cumulative distribution function),简称CDF。</p>
+<blockquote>
+<p>Empirical cumulative distribution function (CDF) plots display consensus distributions for each k . The purpose of the CDF plot is to find the k at which the distribution reaches an approximate maximum, which indicates a maximum stability and after which divisions are equivalent to random picks rather than true cluster structure.</p>
+</blockquote>
+<p>一般选取最佳k值的方法是考虑CDF下降坡度相对最小的曲线对应的k值</p>
+<h3 id="delta-area-plot">Delta Area Plot</h3>
+<p><img class="img-zoomable" src="images/pic3.png" alt="" />
+<br />根据此图，一般选取拐点处的k值作为最佳分类数。</p>
+<blockquote>
+<p>The delta area score (y-axis) indicates the relative increase in cluster stability.</p>
+</blockquote>
+<h3 id="tracking-plot">Tracking Plot</h3>
+<p><img class="img-zoomable" src="images/pic4.png" alt="" />
+<br />这个图从行（k）开始看，展示了不同聚类数(k)下，每个sample(列)都被分为了哪一类。比如，k=2时，样本分为浅蓝色和深蓝色的两类。</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#为什么用一致性聚类">为什么用一致性聚类</a>
+      <ul>
+        <li><a href="#传统方法的不足">传统方法的不足</a></li>
+        <li><a href="#一致性聚类优势">一致性聚类优势</a></li>
+      </ul>
+    </li>
+    <li><a href="#一致性聚类的基本原理假设">一致性聚类的基本原理假设</a></li>
+    <li><a href="#代码实现">代码实现</a></li>
+    <li><a href="#结果解读">结果解读</a>
+      <ul>
+        <li><a href="#一致性矩阵">一致性矩阵</a></li>
+        <li><a href="#一致性累积分布函数图">一致性累积分布函数图</a></li>
+        <li><a href="#delta-area-plot">Delta Area Plot</a></li>
+        <li><a href="#tracking-plot">Tracking Plot</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#背景">背景</a></li>
+    <li><a href="#为什么用一致性聚类">为什么用一致性聚类</a>
+      <ul>
+        <li><a href="#传统方法的不足">传统方法的不足</a></li>
+        <li><a href="#一致性聚类优势">一致性聚类优势</a></li>
+      </ul>
+    </li>
+    <li><a href="#一致性聚类的基本原理假设">一致性聚类的基本原理假设</a></li>
+    <li><a href="#代码实现">代码实现</a></li>
+    <li><a href="#结果解读">结果解读</a>
+      <ul>
+        <li><a href="#一致性矩阵">一致性矩阵</a></li>
+        <li><a href="#一致性累积分布函数图">一致性累积分布函数图</a></li>
+        <li><a href="#delta-area-plot">Delta Area Plot</a></li>
+        <li><a href="#tracking-plot">Tracking Plot</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

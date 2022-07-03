@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>statistics on Mooners</title>
+    <link>https://mooners.netlify.app/tags/statistics/</link>
+    <description>Recent content in statistics on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 27 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PCA分析原理及实现</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sat, 27 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>PCA的基本思想 我们先从最简单的案例入手，先看下面的一堆绿色的圆圈，如下所示： 我们可以把这些绿色圆圈当成一群正常的细胞,虽然这一群细胞看上去是一样的（至少表面上一样），但是，它们本质上也有可能不一样，</description>
+    </item>
+    
+    <item>
+      <title>归一化与标准化的联系与差别</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>差异 概念差异 归一化：１）把数据变成(０，１)或者（1,1）之间的小数。主要是为了数据处理方便提出来的，把数据映射到0～1范围之内处理，更加便捷快速。２）把有量纲表达式变成无量纲表达式，便于不同单位或量</description>
+    </item>
+    
+    <item>
+      <title>数据预处理之标准化</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>定义 标准化(Standardization)特指将数据进行变化，使其符合均值为0，标准差为1的分布。注意：这里的分布并非一定是正态分布 标准化会改变数据的均值、标准差，也就是说改变了原来的分布，但是分布</description>
+    </item>
+    
+    <item>
+      <title>数据预处理之归一化</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Tue, 12 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>定义 归一化（normalization）特指将数据进行缩放到一个固定的区间内。通常来讲，这个区间是[0，1]，但是在实际的情况中，这个区间可以是[-1,1]。总之符合使用的需求。 通过归⼀化，我们可以消</description>
+    </item>
+    
+    <item>
+      <title>fold change, or log fold change?</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>fold change是一个ratio比值，用来比较在两种不同条件下同一事物的差异，当fold change &amp;gt; 1时表示一种上升的趋势，反之&amp;lt; 1 表示一种下降的趋势，这一概念在医学研究中是非常重要的。 然而，在真是的科学</description>
+    </item>
+    
+  </channel>
+</rss>

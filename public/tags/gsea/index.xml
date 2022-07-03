@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GSEA on Mooners</title>
+    <link>https://mooners.netlify.app/tags/gsea/</link>
+    <description>Recent content in GSEA on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/gsea/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于表达数据评估免疫浸润ssGSEA</title>
+      <link>https://mooners.netlify.app/post/2020-11-26-ssgsea/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-26-ssgsea/</guid>
+      <description>背景 单样本基因集富集分析（single sample gene set enrichment analysis, ssGSEA）, 是GSEA方法的扩展，主要是针对单个样本无法做GSEA而设计。文章2009年发表于nature，题目为Systematic RNA interference reveals that oncogenic KRAS-driven cancers</description>
+    </item>
+    
+  </channel>
+</rss>
