@@ -24,8 +24,8 @@ outputs:
 permalinks:
   post: /:section/:filename/
 params:
-  author: DSRKafuU
-  copyrightStartYear: '2020'
+  author: Mooners
+  copyrightStartYear: '2022'
   defaultTheme: auto
   description: A minimal Hugo theme with nice theme color.
   lazyPlaceholder: /assets/lazyload/dsrca_loading_480x270.svg
@@ -41,7 +41,7 @@ params:
   showToc: yes
   showWordCounter: yes
   sourceURL: https://github.com/dsrkafuu/hugo-theme-fuji
-  subTitle: A minimal Hugo theme.
+  subTitle: 山不向我走来，我便向它走去。
 markup:
   goldmark:
     renderer:
@@ -56,14 +56,14 @@ taxonomies:
 menu:
   link:
     - name: GitHub
-      url: https://github.com/dsrkafuu
+      url: https://github.com/Moonerss
       weight: 1
-    - name: Twitter
-      url: https://twitter.com/dsrkafuu
-      weight: 2
-    - name: bilibili
-      url: https://space.bilibili.com/19767474
-      weight: 3
+    # - name: Twitter
+    #   url: https://twitter.com/dsrkafuu
+    #   weight: 2
+    # - name: bilibili
+    #   url: https://space.bilibili.com/19767474
+    #   weight: 3
   nav:
     - name: Home
       url: /
