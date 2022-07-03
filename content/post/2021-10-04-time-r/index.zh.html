@@ -1,0 +1,135 @@
+---
+title: 计算R代码运行的时间
+author: Jeason
+date: '2021-10-04'
+slug: time_r
+categories:
+  - R
+tags:
+  - R
+---
+
+
+
+<div id="使用sys.time" class="section level2">
+<h2>使用<code>Sys.time</code></h2>
+<p>可以根据程序运行起始和终止的时间差计算运行时间</p>
+<pre class="r"><code>sleep_for_a_minute &lt;- function() { Sys.sleep(10) }
+
+start_time &lt;- Sys.time()
+sleep_for_a_minute()
+end_time &lt;- Sys.time()
+
+end_time - start_time</code></pre>
+<pre><code>## Time difference of 10.13829 secs</code></pre>
+</div>
+<div id="使用tictoc" class="section level2">
+<h2>使用<code>tictoc</code></h2>
+<p><code>tictoc</code>包中的<code>tic</code>和<code>toc</code>函数和<code>Sys.time</code>函数的使用方法是类似的。但是<code>tictoc</code>提供了更加方便的使用形式，便于操作。</p>
+<ul>
+<li>可以对单个代码块的运行时间进行测试</li>
+</ul>
+<pre class="r"><code>library(tictoc)
+
+tic(&quot;sleeping&quot;)
+print(&quot;falling asleep...&quot;)</code></pre>
+<pre><code>## [1] &quot;falling asleep...&quot;</code></pre>
+<pre class="r"><code>sleep_for_a_minute()
+print(&quot;...waking up&quot;)</code></pre>
+<pre><code>## [1] &quot;...waking up&quot;</code></pre>
+<pre class="r"><code>toc()</code></pre>
+<pre><code>## sleeping: 10.14 sec elapsed</code></pre>
+<ul>
+<li>也可以同时对多段代码进行测试</li>
+</ul>
+<pre class="r"><code>tic(&quot;total&quot;)
+tic(&quot;data generation&quot;)
+X &lt;- matrix(rnorm(50000*1000), 50000, 1000)
+b &lt;- sample(1:1000, 1000)
+y &lt;- runif(1) + X %*% b + rnorm(50000)
+toc()</code></pre>
+<pre><code>## data generation: 3.58 sec elapsed</code></pre>
+<pre class="r"><code>tic(&quot;model fitting&quot;)
+model &lt;- lm(y ~ X)
+toc()</code></pre>
+<pre><code>## model fitting: 44.44 sec elapsed</code></pre>
+<pre class="r"><code>toc()</code></pre>
+<pre><code>## total: 48.08 sec elapsed</code></pre>
+</div>
+<div id="使用system.time" class="section level2">
+<h2>使用<code>system.time</code></h2>
+<p>使用<code>system.time</code>函数直接包裹运行代码测试运行时间，简单快捷</p>
+<pre class="r"><code>system.time({ sleep_for_a_minute() })</code></pre>
+<pre><code>##    user  system elapsed 
+##     0.0     0.0    10.1</code></pre>
+<p>其中的<code>elapsed</code>表示运行代码真正花费的时间</p>
+</div>
+<div id="使用rbenchmark" class="section level2">
+<h2>使用<code>rbenchmark</code></h2>
+<p><code>rbenchmark</code>是基于<code>system.time</code>的封装，提供了高效的用法进行专业的代码测试与比较</p>
+<pre class="r"><code>library(rbenchmark)
+
+benchmark(&quot;lm&quot; = {
+            X &lt;- matrix(rnorm(1000), 100, 10)
+            y &lt;- X %*% sample(1:10, 10) + rnorm(100)
+            b &lt;- lm(y ~ X + 0)$coef
+          },
+          &quot;pseudoinverse&quot; = {
+            X &lt;- matrix(rnorm(1000), 100, 10)
+            y &lt;- X %*% sample(1:10, 10) + rnorm(100)
+            b &lt;- solve(t(X) %*% X) %*% t(X) %*% y
+          },
+          &quot;linear system&quot; = {
+            X &lt;- matrix(rnorm(1000), 100, 10)
+            y &lt;- X %*% sample(1:10, 10) + rnorm(100)
+            b &lt;- solve(t(X) %*% X, t(X) %*% y)
+          },
+          replications = 1000,
+          columns = c(&quot;test&quot;, &quot;replications&quot;, &quot;elapsed&quot;,
+                      &quot;relative&quot;, &quot;user.self&quot;, &quot;sys.self&quot;))</code></pre>
+<pre><code>##            test replications elapsed relative user.self sys.self
+## 3 linear system         1000    0.14    1.000      0.14     0.00
+## 1            lm         1000    1.07    7.643      1.00     0.08
+## 2 pseudoinverse         1000    0.18    1.286      0.17     0.02</code></pre>
+<p>结果中的<code>elapsed</code>、<code>user.self</code>、<code>sys.self</code>与<code>system.time</code>函数结果中表示的意义相同，<code>relative</code>表示函数运行的时间利用率</p>
+</div>
+<div id="使用microbenchmark" class="section level2">
+<h2>使用<code>microbenchmark</code></h2>
+<p><code>microbenchmark</code>和<code>rbenchmark</code>一样，可以用来比较多个代码之间的运行速率，而<code>microbenchmark</code>提供了更加人性化的绘图功能可以直观的比较运行时间的差异。</p>
+<pre class="r"><code>library(microbenchmark)</code></pre>
+<pre><code>## Warning: package &#39;microbenchmark&#39; was built under R version 4.2.1</code></pre>
+<pre class="r"><code>set.seed(2017)
+n &lt;- 10000
+p &lt;- 100
+X &lt;- matrix(rnorm(n*p), n, p)
+y &lt;- X %*% rnorm(p) + rnorm(100)
+
+check_for_equal_coefs &lt;- function(values) {
+  tol &lt;- 1e-12
+  max_error &lt;- max(c(abs(values[[1]] - values[[2]]),
+                     abs(values[[2]] - values[[3]]),
+                     abs(values[[1]] - values[[3]])))
+  max_error &lt; tol
+}
+
+mbm &lt;- microbenchmark(&quot;lm&quot; = { b &lt;- lm(y ~ X + 0)$coef },
+               &quot;pseudoinverse&quot; = {
+                 b &lt;- solve(t(X) %*% X) %*% t(X) %*% y
+               },
+               &quot;linear system&quot; = {
+                 b &lt;- solve(t(X) %*% X, t(X) %*% y)
+               },
+               check = check_for_equal_coefs)
+
+mbm</code></pre>
+<pre><code>## Unit: milliseconds
+##           expr      min        lq      mean   median        uq      max neval
+##             lm 101.9213 106.86300 111.12837 109.2796 111.66865 166.3508   100
+##  pseudoinverse 127.4689 133.07600 139.97497 136.5505 140.14365 215.3037   100
+##  linear system  71.3803  76.04865  80.24977  78.1503  80.61275 140.4225   100</code></pre>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.2.1</code></pre>
+<pre class="r"><code>autoplot(mbm)</code></pre>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code></pre>
+<p><img src="{{< blogdown/postref >}}index.zh_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
