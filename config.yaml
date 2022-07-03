@@ -1,5 +1,5 @@
-baseURL: https://github.dsrkafuu.net/hugo-theme-fuji/
-title: Hugo Theme Fuji
+baseURL: https://mooners.netlify.app/
+title: Mooners
 theme: hugo-theme-fuji
 hasCJKLanguage: yes
 enableEmoji: yes
