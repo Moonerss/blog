@@ -21,7 +21,7 @@ sleep_for_a_minute()
 end_time &lt;- Sys.time()
 
 end_time - start_time</code></pre>
-<pre><code>## Time difference of 10.13829 secs</code></pre>
+<pre><code>## Time difference of 10.25374 secs</code></pre>
 </div>
 <div id="使用tictoc" class="section level2">
 <h2>使用<code>tictoc</code></h2>
@@ -38,7 +38,7 @@ print(&quot;falling asleep...&quot;)</code></pre>
 print(&quot;...waking up&quot;)</code></pre>
 <pre><code>## [1] &quot;...waking up&quot;</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## sleeping: 10.14 sec elapsed</code></pre>
+<pre><code>## sleeping: 10.23 sec elapsed</code></pre>
 <ul>
 <li>也可以同时对多段代码进行测试</li>
 </ul>
@@ -48,20 +48,20 @@ X &lt;- matrix(rnorm(50000*1000), 50000, 1000)
 b &lt;- sample(1:1000, 1000)
 y &lt;- runif(1) + X %*% b + rnorm(50000)
 toc()</code></pre>
-<pre><code>## data generation: 3.58 sec elapsed</code></pre>
+<pre><code>## data generation: 3.98 sec elapsed</code></pre>
 <pre class="r"><code>tic(&quot;model fitting&quot;)
 model &lt;- lm(y ~ X)
 toc()</code></pre>
-<pre><code>## model fitting: 44.44 sec elapsed</code></pre>
+<pre><code>## model fitting: 51.15 sec elapsed</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## total: 48.08 sec elapsed</code></pre>
+<pre><code>## total: 55.23 sec elapsed</code></pre>
 </div>
 <div id="使用system.time" class="section level2">
 <h2>使用<code>system.time</code></h2>
 <p>使用<code>system.time</code>函数直接包裹运行代码测试运行时间，简单快捷</p>
 <pre class="r"><code>system.time({ sleep_for_a_minute() })</code></pre>
 <pre><code>##    user  system elapsed 
-##     0.0     0.0    10.1</code></pre>
+##    0.00    0.00   10.25</code></pre>
 <p>其中的<code>elapsed</code>表示运行代码真正花费的时间</p>
 </div>
 <div id="使用rbenchmark" class="section level2">
@@ -88,9 +88,9 @@ benchmark(&quot;lm&quot; = {
           columns = c(&quot;test&quot;, &quot;replications&quot;, &quot;elapsed&quot;,
                       &quot;relative&quot;, &quot;user.self&quot;, &quot;sys.self&quot;))</code></pre>
 <pre><code>##            test replications elapsed relative user.self sys.self
-## 3 linear system         1000    0.14    1.000      0.14     0.00
-## 1            lm         1000    1.07    7.643      1.00     0.08
-## 2 pseudoinverse         1000    0.18    1.286      0.17     0.02</code></pre>
+## 3 linear system         1000    0.16    1.000      0.14     0.02
+## 1            lm         1000    1.26    7.875      1.21     0.01
+## 2 pseudoinverse         1000    0.19    1.187      0.19     0.00</code></pre>
 <p>结果中的<code>elapsed</code>、<code>user.self</code>、<code>sys.self</code>与<code>system.time</code>函数结果中表示的意义相同，<code>relative</code>表示函数运行的时间利用率</p>
 </div>
 <div id="使用microbenchmark" class="section level2">
@@ -123,10 +123,10 @@ mbm &lt;- microbenchmark(&quot;lm&quot; = { b &lt;- lm(y ~ X + 0)$coef },
 
 mbm</code></pre>
 <pre><code>## Unit: milliseconds
-##           expr      min        lq      mean   median        uq      max neval
-##             lm 101.9213 106.86300 111.12837 109.2796 111.66865 166.3508   100
-##  pseudoinverse 127.4689 133.07600 139.97497 136.5505 140.14365 215.3037   100
-##  linear system  71.3803  76.04865  80.24977  78.1503  80.61275 140.4225   100</code></pre>
+##           expr      min        lq      mean   median       uq      max neval
+##             lm 106.8171 117.14540 138.10963 125.7470 140.9701 248.1502   100
+##  pseudoinverse 139.6060 151.98975 168.84800 156.9450 168.7233 304.7273   100
+##  linear system  80.5045  87.41095  99.21405  92.0061  97.4622 214.8991   100</code></pre>
 <pre class="r"><code>library(ggplot2)</code></pre>
 <pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.2.1</code></pre>
 <pre class="r"><code>autoplot(mbm)</code></pre>
