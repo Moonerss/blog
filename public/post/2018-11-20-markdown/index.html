@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Markdown常用语法 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="markdown" />
+
+
+<meta property="og:title" content="Markdown常用语法" />
+<meta name="twitter:title" content="Markdown常用语法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2018-11-20-markdown/" /><meta property="og:description" content="" />
+<meta name="twitter:description" content="" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2018-11-20T00:00:00+00:00" /><meta property="article:modified_time" content="2018-11-20T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2018-11-20-markdown/">Markdown常用语法</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-11-20</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2084 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/markdown">markdown</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h3 id="摘要">摘要</h3>
+<ol>
+<li><a href="#%e4%bb%80%e4%b9%88%e6%98%afmarkdown">什么是Markdown</a></li>
+<li><a href="#%e4%ba%9a%e4%bc%a6%c2%b7%e6%96%af%e6%b2%83%e8%8c%a8%e7%9a%84%e4%bc%a0%e5%a5%87%e4%ba%ba%e7%94%9f">亚伦·斯沃茨的传奇人生</a></li>
+<li><a href="#markdown%e7%9a%84%e4%bc%98%e7%82%b9">Markdown的优点</a></li>
+<li><a href="#markdown%e5%b8%b8%e7%94%a8%e8%af%ad%e6%b3%95">Markdown常用语法</a></li>
+<li><a href="#%e6%89%a9%e5%b1%95%e8%af%ad%e6%b3%95">扩展语法</a></li>
+</ol>
+<h3 id="什么是markdown">什么是Markdown</h3>
+<p><strong>Markdown</strong>是一种<a href="https://zh.wikipedia.org/wiki/%e8%bd%bb%e9%87%8f%e7%ba%a7%e6%a0%87%e8%ae%b0%e8%af%ad%e8%a8%80" target="_blank">轻量级标记语言</a>，创始人为<a href="https://zh.wikipedia.org/wiki/%e7%b4%84%e7%bf%b0%c2%b7%e6%a0%bc%e9%ad%af%e4%bc%af" target="_blank">约翰·格鲁伯</a>（英语：John Gruber）。它允许人们“使用易读易写的纯文本格式编写文档，然后转换成有效的<a href="https://zh.wikipedia.org/wiki/XHTML" target="_blank">XHTML</a>（或者<a href="https://zh.wikipedia.org/wiki/HTML" target="_blank">HTML</a>）文档”。作为一种小型标记语言，Markdown很容易阅读，也很容易使用普通的文本编辑器编辑。</p>
+<p><strong>Markdown</strong>也可以理解为将以MARKDOWN语法编写的语言转换成HTML内容的工具。</p>
+<h3 id="亚伦斯沃茨的传奇人生">亚伦·斯沃茨的传奇人生</h3>
+<p><strong>Markdown</strong>是由<a href="http://www.aaronsw.com/" target="_blank"><strong>Aaron Swartz</strong></a>和<strong>John Gruber</strong>共同设计的，<strong>Aaron Swartz</strong>就是那位于2013年自杀,有着<strong>开挂</strong>一般传奇人生经历的美国程序员。死后也被追授入<a href="https://zh.wikipedia.org/wiki/%e7%b6%b2%e9%9a%9b%e7%b6%b2%e8%b7%af%e5%90%8d%e4%ba%ba%e5%a0%82" target="_blank">互联网名人堂</a>。维基百科对他的评价是：<a href="https://zh.wikipedia.org/wiki/%e7%be%8e%e5%9b%bd" target="_blank">美国</a><a href="https://zh.wikipedia.org/wiki/%e7%94%b5%e8%84%91%e7%a8%8b%e5%ba%8f%e5%91%98" target="_blank">计算机程序员</a>、<a href="https://zh.wikipedia.org/wiki/%e4%bc%81%e4%b8%9a%e5%ae%b6" target="_blank">企业家</a>、<a href="https://zh.wikipedia.org/wiki/%e4%bd%9c%e5%ae%b6" target="_blank">作家</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%e6%94%bf%e6%b2%bb%e6%b4%bb%e5%8a%a8%e8%80%85&amp;action=edit&amp;redlink=1" target="_blank">政治活动者</a>和互联网<a href="https://zh.wikipedia.org/w/index.php?title=%e9%bb%91%e5%ae%a2%e4%b8%bb%e4%b9%89&amp;action=edit&amp;redlink=1" target="_blank">黑客主义者</a></p>
+<p>他的一生足以让我们膜拜：</p>
+<ul>
+<li>13岁时，斯沃茨赢得为创办“有用、有教育意义、协作而非商业的网站”的年轻人而设的<a href="https://zh.wikipedia.org/w/index.php?title=ArsDigita_Prize&amp;action=edit&amp;redlink=1" target="_blank">ArsDigita</a>奖。</li>
+<li>14岁时，斯沃茨加入编写早期版本的<a href="https://zh.wikipedia.org/wiki/RSS" target="_blank">RSS</a>1.0版本的工作组。</li>
+<li><strong>2004</strong>年入读<strong>斯坦福</strong>，2005年暑假之后就退学创业。。。</li>
+<li><strong>2005</strong>年创建<a href="http://infogami.org/" target="_blank">Infogami</a>，之后与<a href="http://www.reddit.com/" target="_blank">Reddit</a>合并成为其合伙人，斯沃茨被给予公司联合创始人的头衔。</li>
+<li>2008 年，斯沃茨创办了 Watchdog.net，“会咬人的优秀政府类网站”（”the good government site with teeth”），用于汇集政治人物相关的数据起来并进行数据可视化。此外，他最著名的项目之一是《DeadDrop》（之后更名为《<a href="https://zh.wikipedia.org/w/index.php?title=SecureDrop&amp;action=edit&amp;redlink=1" target="_blank">SecureDrop</a>》），一个致力于帮助记者和线人（<a href="https://zh.wikipedia.org/wiki/%e5%91%8a%e5%af%86%e8%80%85" target="_blank">告密者</a>）安全沟通的平台。</li>
+<li>2010年创立求进会（Demand Progress），积极参与禁止网络盗版法案（SOPA）活动，最终该提案被撤回。
+<ul>
+<li><strong>2011</strong>年7月19日，因被控从MIT和JSTOR下载480万篇学术论文并以免费形式上传于网络被捕。</li>
+<li><strong>2013</strong>年1月自杀身亡，死后仍然影响着世界各地的黑客。</li>
+<li><strong>科里·多克托罗的评价</strong>：亚伦拥有无以伦比的政治洞见力、技术能力和处理人、事的智能。我认为他本可以彻底改变美国（及世界）政治。不过——他的遗产仍然可以在将来对政治做出影响。</li>
+</ul>
+</li>
+</ul>
+<img src = "images/220px-Aaron_Swartz_profile.jpg" align = "middle"> 
+<h3 id="markdown的优点">Markdown的优点</h3>
+<ul>
+<li>易读（看起来舒服）、易写（语法简单）、易更改<strong>纯文本</strong></li>
+<li>与HTML兼容，是属于程序员的Word</li>
+<li>排版方便</li>
+<li>越来越多的网站支持Markdown。（主要还是写博客方便😜）</li>
+</ul>
+<h3 id="markdown常用语法">Markdown常用语法</h3>
+<h4 id="标题">标题</h4>
+<p>标题一般有两种形式：
+1）使用<code>=</code>和<code>-</code>标记一级和二级标题。</p>
+<blockquote>
+<p>一级标题</p>
+<p><code>========= </code></p>
+<p>二级标题</p>
+<p><code>---------</code></p>
+</blockquote>
+<p>效果：</p>
+<blockquote>
+<h1 id="一级标题">一级标题</h1>
+<h2 id="二级标题">二级标题</h2>
+</blockquote>
+<p>2）使用<code>#</code>，可表示1-6级标题。</p>
+<blockquote>
+<p><code># 一级标题</code></p>
+<p><code>## 二级标题</code></p>
+<p><code>### 三级标题</code></p>
+<p><code>#### 四级标题</code></p>
+<p><code>##### 五级标题</code></p>
+<p><code>###### 六级标题</code></p>
+</blockquote>
+<p>效果:</p>
+<blockquote>
+<h1 id="一级标题-1">一级标题</h1>
+<h2 id="二级标题-1">二级标题</h2>
+<h3 id="三级标题">三级标题</h3>
+<h4 id="四级标题">四级标题</h4>
+<h5 id="五级标题">五级标题</h5>
+<h6 id="六级标题">六级标题</h6>
+</blockquote>
+<h4 id="段落">段落</h4>
+<p>Markdown的段落前后都要有空行，如果要段内强制换行，需要使用<strong>两个以上</strong><code>空格键</code>加上<code>回车键</code></p>
+<h4 id="区块引用">区块引用</h4>
+<p>在段落的每行或者只在第一行使用符号<code>&gt;</code>,还可使用多个嵌套引用，如：</p>
+<blockquote>
+<p>&gt;区块引用
+&gt;&gt; 嵌套引用</p>
+</blockquote>
+<p>效果：</p>
+<blockquote>
+<p>区块引用</p>
+<blockquote>
+<p>嵌套引用</p>
+</blockquote>
+</blockquote>
+<h4 id="插入代码块">插入代码块</h4>
+<p>代码区块的建立有两种方法：
+1）在每行加上4个空格或者一个制表符，如：</p>
+<pre><code class="language-markdown">Hello Markdown
+</code></pre>
+<p><strong>注意</strong>:和普通段落之间需要单独保留空行。</p>
+<p>2）使用三个**```** 来作为代码开始的标志，如：</p>
+<blockquote>
+<p>```
+Hello Markdown
+```</p>
+</blockquote>
+<p>效果如下：</p>
+<pre><code class="language-markdown">Hello Markdown
+</code></pre>
+<h4 id="黑体和斜体">黑体和斜体</h4>
+<p>在强调内容两侧分别加上<code>*</code>或者<code>_</code>，如：</p>
+<blockquote>
+<p>*斜体*，<em>斜体</em></p>
+<p>**粗体**，<strong>粗体</strong></p>
+</blockquote>
+<h4 id="列表">列表</h4>
+<p><strong>无序列表</strong>
+使用<code>·</code>、<code>+</code>、或<code>-</code>标记无序列表，如：</p>
+<blockquote>
+<p>-（+*） 第一项</p>
+<p>-（+*） 第二项</p>
+<p>-（+*）第三项</p>
+</blockquote>
+<p><strong>注意</strong>：标记后面最少有一个_空格_或_制表符_。若不在引用区块中，必须和前方段落之间存在空行。</p>
+<p>效果：</p>
+<blockquote>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+</blockquote>
+<p>有序列表的标记方式是将上述的符号换成数字,并辅以<code>.</code>，如：</p>
+<blockquote>
+<p>1 . 第一项<br>
+2 . 第二项 <br>
+3 . 第三项</p>
+</blockquote>
+<p>效果：</p>
+<blockquote>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ol>
+</blockquote>
+<h4 id="分割线">分割线</h4>
+<p>分割线最常使用就是三个或以上<code>*</code>，还可以使用<code>-</code>和<code>_</code>。</p>
+<p><strong>注意</strong>： 第一二级标题会自带分割线</p>
+<h4 id="链接">链接</h4>
+<p>链接可以由两种形式生成：<strong>行内式</strong>和<strong>参考式</strong>。</p>
+<p><strong>行内式</strong>：</p>
+<blockquote>
+<p>[*<em>Aaron Swartz</em>*](http://www.aaronsw.com/)</p>
+</blockquote>
+<p>效果：</p>
+<p><a href="http://www.aaronsw.com/" target="_blank"><strong>Aaron Swartz</strong></a></p>
+<p><strong>参考式</strong>：
+就是以参考的形式给出链接</p>
+<blockquote>
+<p>[*<em>Aaron Swartz</em>*][1]</p>
+<p>[*<em>亚伦·斯沃茨</em>*][2]</p>
+</blockquote>
+<p>效果：</p>
+<p><a href="http://www.aaronsw.com/" target="_blank"><strong>Aaron Swartz</strong></a>
+<a href="http://www.aaronsw.com/" target="_blank"><strong>亚伦·斯沃茨</strong></a></p>
+<h4 id="图像插入">图像插入</h4>
+<p>插入图片的语法和插入超链接的语法基本一致，只是在最前面多一个 <code>!</code>。也可分为行内式和参考式两种。</p>
+<blockquote>
+<p>![亚伦·斯沃茨](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Aaron_Swartz_profile.jpg/220px-Aaron_Swartz_profile.jpg)</p>
+</blockquote>
+<p>Markdown 不支持指定图片的显示大小，不过可以通过直接插入<code>&lt;img /&gt;</code>标签来指定相关属性。</p>
+<h4 id="字符转义">字符转义</h4>
+<p>反斜线（<code>\</code>）用于插入在 Markdown 语法中有特殊作用的字符。</p>
+<h4 id="行内代码块">行内代码块</h4>
+<p>起到标记作用。如：</p>
+<blockquote>
+<p>`hello`</p>
+</blockquote>
+<p>效果：</p>
+<blockquote>
+<p><code>hello</code></p>
+</blockquote>
+<h3 id="扩展语法">扩展语法</h3>
+<h4 id="删除线">删除线</h4>
+<p>使用<code>~~</code>表示</p>
+<blockquote>
+<p>~~删除线~~</p>
+</blockquote>
+<p>效果：</p>
+<blockquote>
+<p><del>删除线</del></p>
+</blockquote>
+<h4 id="表格">表格</h4>
+<p>使用<code>|</code>表示表格纵向边界，表头和表内容用<code>-</code>隔开，并可用<code>:</code>进行对齐设置，两边都有<code>:</code>则表示居中，若不加<code>:</code>则默认左对齐。</p>
+<pre><code class="language-tex">| left | center | right |
+| :--- | :----: | ----: |
+| aaaa | bbbbbb | ccccc |
+| a    | b      | c     |
+</code></pre>
+<p>效果如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">left</th>
+<th style="text-align:left">center</th>
+<th style="text-align:left">right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">aaaa</td>
+<td style="text-align:left">bbbbbb</td>
+<td style="text-align:left">ccccc</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">b</td>
+<td style="text-align:left">c</td>
+</tr>
+</tbody>
+</table>
+<p>表格中不仅可以加入字符，还可以是链接等信息。</p>
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#摘要">摘要</a></li>
+        <li><a href="#什么是markdown">什么是Markdown</a></li>
+        <li><a href="#亚伦斯沃茨的传奇人生">亚伦·斯沃茨的传奇人生</a></li>
+        <li><a href="#markdown的优点">Markdown的优点</a></li>
+        <li><a href="#markdown常用语法">Markdown常用语法</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#二级标题">二级标题</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#二级标题-1">二级标题</a>
+      <ul>
+        <li><a href="#三级标题">三级标题</a></li>
+        <li><a href="#扩展语法">扩展语法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#摘要">摘要</a></li>
+        <li><a href="#什么是markdown">什么是Markdown</a></li>
+        <li><a href="#亚伦斯沃茨的传奇人生">亚伦·斯沃茨的传奇人生</a></li>
+        <li><a href="#markdown的优点">Markdown的优点</a></li>
+        <li><a href="#markdown常用语法">Markdown常用语法</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#二级标题">二级标题</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#二级标题-1">二级标题</a>
+      <ul>
+        <li><a href="#三级标题">三级标题</a></li>
+        <li><a href="#扩展语法">扩展语法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

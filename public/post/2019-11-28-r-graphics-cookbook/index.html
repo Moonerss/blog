@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>R graphics cookbook - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="R, ggplot2" />
+
+
+<meta property="og:title" content="R graphics cookbook" />
+<meta name="twitter:title" content="R graphics cookbook" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/" /><meta property="og:description" content="R语言绘制基础图形 R语言绘制图像主要有三种方式：（1）由graphics包提供的基础绘图方式；（2）基于ggplot2的qplot()快捷绘图函数；（3）ggplot2图层绘图风格 散点图 ## 方法一 plot(mtcars$wt, mtcars$mpg) ##" />
+<meta name="twitter:description" content="R语言绘制基础图形 R语言绘制图像主要有三种方式：（1）由graphics包提供的基础绘图方式；（2）基于ggplot2的qplot()快捷绘图函数；（3）ggplot2图层绘图风格 散点图 ## 方法一 plot(mtcars$wt, mtcars$mpg) ##" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2019-11-28T00:00:00+00:00" /><meta property="article:modified_time" content="2019-11-28T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/">R graphics cookbook</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-11-28</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1225 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/ggplot2">ggplot2</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="r语言绘制基础图形">R语言绘制基础图形</h2>
+<p>R语言绘制图像主要有三种方式：（1）由<code>graphics</code>包提供的基础绘图方式；（2）基于<code>ggplot2</code>的<code>qplot()</code>快捷绘图函数；（3）<code>ggplot2</code>图层绘图风格</p>
+<h3 id="散点图">散点图</h3>
+<pre><code class="language-R">## 方法一
+plot(mtcars$wt, mtcars$mpg)
+
+## 方法二
+qplot(mtcars$wt, mtcars$mpg)
+
+## 方法三
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point()
+</code></pre>
+<div align="center">
+  <img src="./images/P1.jpg" height="300" width = "300">
+  <img src="./images/P2.jpg" height="300" width = "300" >    
+</div>
+<h3 id="线图">线图</h3>
+<pre><code class="language-R">## 方法一
+plot(pressure$temperature, pressure$pressure, type=&quot;l&quot;)
+
+## 方法二
+qplot(pressure$temperature, pressure$pressure, geom=&quot;line&quot;)
+
+## 方法三
+ggplot(pressure, aes(x=temperature, y=pressure)) + geom_line()
+</code></pre>
+<div align="center">
+  <img src="./images/P4.jpg" height="300" width = "300">
+  <img src="./images/P3.jpg" height="300" width = "300" >    
+</div>
+<p>同时绘制点和线</p>
+<pre><code class="language-R">## 方法一
+lines(pressure$temperature, pressure$pressure, col=&quot;red&quot;)
+points(pressure$temperature, pressure$pressure, col=&quot;red&quot;)
+
+## 方法二
+qplot(temperature, pressure, data=pressure, geom=c(&quot;line&quot;, &quot;point&quot;))
+
+## 方法三
+ggplot(pressure, aes(x=temperature, y=pressure)) + geom_line() + geom_point()
+</code></pre>
+<div align="center">
+  <img src="./images/P5.jpg" height="300" width = "300">
+</div>
+<h3 id="条形图">条形图</h3>
+<pre><code class="language-R">## 方法一
+barplot(table(mtcars$cyl))
+
+## 方法二
+qplot(BOD$Time, BOD$demand, geom=&quot;bar&quot;, stat=&quot;identity&quot;)
+
+## 方法三
+ggplot(BOD, aes(x=Time, y=demand)) + geom_bar(stat=&quot;identity&quot;)
+</code></pre>
+<div align="left">
+  <img src="./images/P6.jpg" height="300" width = "300">
+  <img src="./images/P7.jpg" height="300" width = "300">
+</div>
+<h3 id="直方图">直方图</h3>
+<pre><code class="language-R">## 方法一
+hist(mtcars$mpg)
+
+## 方法二
+qplot(mpg, data=mtcars, binwidth=4)
+
+## 方法三
+ggplot(mtcars, aes(x=mpg)) + geom_histogram(binwidth=4)
+</code></pre>
+<div align="left">
+  <img src="./images/P8.jpg" height="300" width = "300">
+  <img src="./images/P9.jpg" height="300" width = "300">
+</div>
+<h3 id="箱式图">箱式图</h3>
+<pre><code class="language-R">## 方法一
+boxplot(len ~ supp, data = ToothGrowth)
+
+## 方法二
+qplot(ToothGrowth$supp, ToothGrowth$len, geom=&quot;boxplot&quot;)
+
+## 方法三
+ggplot(ToothGrowth, aes(x=supp, y=len)) + geom_boxplot()
+</code></pre>
+<div align="center">
+  <img src="./images/P10.jpg" height="300" width = "300">
+  <img src="./images/P11.jpg" height="300" width = "300">
+</div>
+<p>同时使用多个分组变量</p>
+<pre><code class="language-R">## 方法一
+boxplot(len ~ supp + dose, data = ToothGrowth)
+
+## 方法二
+qplot(interaction(supp, dose), len, data=ToothGrowth, geom=&quot;boxplot&quot;)
+
+## 方法三
+ggplot(ToothGrowth, aes(x=interaction(supp, dose), y=len)) + geom_boxplot()
+</code></pre>
+<div align="center">
+  <img src="./images/P12.jpg" height="300" width = "300">
+  <img src="./images/P13.jpg" height="300" width = "300">
+</div>
+<h2 id="总结">总结</h2>
+<p>基于图层的<code>ggplot2</code>绘图风格是将图形中的每一个对象拆分开，然后根据不同的需求映射到图形中</p>
+<p><code>ggplot()</code>函数控制图像的整体格式，x、y轴的对象<br>
+<code>geom_point</code>函数描述的是点图层的属性<br>
+<code>geom_line</code>函数描述的是线图层的属性<br>
+<code>geom_bar</code>函数是条形图的属性<br>
+<code>geom_boxplot</code>函数控制的是箱线图图层的属性<br>
+<code>geom_histogram</code>函数控制直方图图层的属性</p>
+<h2 id="ggplot2图形语法">ggplot2图形语法</h2>
+<p>必须的图表输入信息包括以下两部分：</p>
+<p>（1）ggplot()：底层绘图函数。DATA为数据集，主要是数据框（data.frame）格式的数据集；MAPPINGS变量的视觉通道映射，用来表示变量x和y，还可以用来控制颜色（color）、大小（size）或形状（shape）等视觉通道；STAT表示统计变换，与stat_×××()相对应，默认为&quot;identity&quot;（无数据变换）；POSITION表示绘图数据系列的位置调整，默认为&quot;identity&quot;（无位置调整）</p>
+<p>（2）geom_×××() | stat_×××()：几何图层或统计变换，比如常见的geom_point()（散点图）、geom_bar()（柱形图）、geom_histogram()（统计直方图）、geom_ boxplot()（箱形图）、geom_line()（折线图）等。我们通常使用geom_×××()函数就可以绘制大部分图表，有时候通过设定stat参数可以先实现统计变换。</p>
+<p>可选的图表输入信息包括如下5个部分，主要是实现图表的美化与变换等。</p>
+<p>(1) scale_×××()：度量调整，调整具体的度量，包括颜色（color）、大小（size）或形状（shape）等，跟MAPPINGS的映射变量相对应；<br>
+(2) coord_×××()：坐标变换，默认笛卡儿坐标系，还包括极坐标系、地理空间坐标系等；<br>
+(3) facet_×××()：分面系统，将某个变量进行分面变换，包括按行、列和网格等形式分面绘图，这部分内容具体可见第9章9.4节。<br>
+(4) guides()：图例调整，主要包括连续型和离散型两种类型的图例。<br>
+(5) theme()：主题设定，主要用于调整图表的细节，包括图表背景颜色、网格线的间隔与颜色等。</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#r语言绘制基础图形">R语言绘制基础图形</a>
+      <ul>
+        <li><a href="#散点图">散点图</a></li>
+        <li><a href="#线图">线图</a></li>
+        <li><a href="#条形图">条形图</a></li>
+        <li><a href="#直方图">直方图</a></li>
+        <li><a href="#箱式图">箱式图</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#ggplot2图形语法">ggplot2图形语法</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#r语言绘制基础图形">R语言绘制基础图形</a>
+      <ul>
+        <li><a href="#散点图">散点图</a></li>
+        <li><a href="#线图">线图</a></li>
+        <li><a href="#条形图">条形图</a></li>
+        <li><a href="#直方图">直方图</a></li>
+        <li><a href="#箱式图">箱式图</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#ggplot2图形语法">ggplot2图形语法</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

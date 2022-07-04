@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://mooners.netlify.app/" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="og:updated_time" content="2022-07-03T00:00:00+00:00" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="og:updated_time" content="2022-07-04T00:00:00+00:00" />
 
 
 <style>
@@ -103,6 +103,71 @@
                 
 
 
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/index.zh/">计算R代码运行的时间</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-10-04</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;831 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        使用Sys.time 可以根据程序运行起始和终止的时间差计算运行时间 sleep_for_a_minute &lt;- function() { Sys.sleep(10) } start_time &lt;- Sys.time() sleep_for_a_minute() end_time &lt;- Sys.time() end_time - start_time ## Time difference of 10.25374 secs 使用tictoc tictoc包中的tic和toc函数和Sys.time函数的使用方法是类似
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/aplayer-test/">In-post APlayer Test</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-01-10</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;40 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/test">test</a>&nbsp;<a href="/tags/aplayer">aplayer</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        <div class="post-player-wrapper">
+  <div
+    class="post-aplayer"
+    data-base="https://mooners.netlify.app/"
+    data-urls="/aplayer/berlin.mp3"
+    data-names="Berlin"
+    data-artists="Crowander"
+    data-covers="/aplayer/crowander.jpg"
+  ></div>
+</div>
+
+<p>This post is for in-post APlayer test, above is previous post-player.</p>
+<p>Music files are all downloaded from <a href="https://freemusicarchive.org" target="_blank">Free Music Archive</a>.</p>
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-12-01-r-rmarkdown/">Hello R Markdown</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-12-01</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;159 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r-markdown">R Markdown</a>&nbsp;<a href="/tags/plot">plot</a>&nbsp;<a href="/tags/regression">regression</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.:19.0 3rd Qu.: 56.00 ## Max. :25.0 Max. :120.00fit &lt;- lm(dist ~ speed, data = cars)fit## ## Call:## lm(formula = dist ~ speed, data = cars)## ## Coefficients:## (Intercept) speed ## -17.
+    </div>
+</div>
 
 <div class="post">
     <h2 class="post-item post-title">
@@ -222,73 +287,6 @@
         绘制GO富集的圈圈图实例 载入R包 library(clusterProfiler) library(org.Hs.eg.db) library(GOplot) library(stringr) 载入差异表达数据 ## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file 'F:/ ## diff_expr.Rdata', probable reason 'No such file or directory' ## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection ## logFC AveExpr t P.Value adj.P.Val B probe_id symbol change ## 1 -5.780170 7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898 8133876 CD36 down ## 2 4.212683 9.106625 68.40113 1.437468e-11 2.393169e-07 15.71739 7965335 DUSP6 up ## 3 -5.633027 8.763220 -57.61985 5.053466e-11
     </div>
 </div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/index.zh/">WGCNA教程</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-08-15</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;4793 words</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/wgcna">WGCNA</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>WGCNA的基本原理和操作</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/markdown-syntax/">Markdown Syntax</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-11</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;424 words</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/markdown">markdown</a>&nbsp;<a href="/tags/css">css</a>&nbsp;<a href="/tags/html">html</a>&nbsp;<a href="/tags/themes">themes</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.</p>
-<h2 id="headings">Headings</h2>
-<p>The following HTML <code>&lt;h1&gt;</code>—<code>&lt;h6&gt;</code> elements represent six levels of section headings. <code>&lt;h1&gt;</code> is the highest section level while <code>&lt;h6&gt;</code> is the lowest.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/math-typesetting/">Math Typesetting</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-03-08</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;122 words</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;No tag</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.</p>
-<p>In this example we will be using <a href="https://katex.org/" target="_blank">KaTeX</a></p>
-<ul>
-<li>Create a partial under <code>/layouts/partials/math.html</code></li>
-<li>Within this partial reference the <a href="https://katex.org/docs/autorender.html" target="_blank">Auto-render Extension</a> or host these scripts locally.</li>
-<li>Include the partial in your templates like so:</li>
-</ul>
-<pre><code>{{ if or .Params.math .Site.Params.math }}
-{{ partial &quot;math.html&quot; . }}
-{{ end }}
-</code></pre>
-<ul>
-<li>To enable KaTex globally set the parameter <code>math</code> to <code>true</code> in a project&rsquo;s configuration</li>
-<li>To enable KaTex on a per page basis include the parameter <code>math: true</code> in content files.</li>
-</ul>
-    </div>
-</div>
 <div class="pagination"><div class="pag-first">
     <a href="/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
   </div><div class="pag-previous">
@@ -299,10 +297,12 @@
     <a href="/page/2/">2</a>
   </div><div class="pag-item">
     <a href="/page/3/">3</a>
+  </div><div class="pag-item">
+    <a href="/page/4/">4</a>
   </div><div class="pag-next">
     <a href="/page/3/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
   </div><div class="pag-last">
-    <a href="/page/3/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
+    <a href="/page/4/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
   </div></div>
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
@@ -374,7 +374,15 @@
             </span>
             
             <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
                 <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
             </span>
             
             <span>
@@ -398,6 +406,10 @@
             </span>
             
             <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
                 <a href="/tags/plot/">plot</a>
             </span>
             
@@ -418,11 +430,19 @@
             </span>
             
             <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
                 <a href="/tags/ssh/">ssh</a>
             </span>
             
             <span>
                 <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
             </span>
             
             <span>
@@ -538,7 +558,15 @@
             </span>
             
             <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
                 <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
             </span>
             
             <span>
@@ -562,6 +590,10 @@
             </span>
             
             <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
                 <a href="/tags/plot/">plot</a>
             </span>
             
@@ -582,11 +614,19 @@
             </span>
             
             <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
                 <a href="/tags/ssh/">ssh</a>
             </span>
             
             <span>
                 <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
             </span>
             
             <span>

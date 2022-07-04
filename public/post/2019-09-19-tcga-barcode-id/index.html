@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>TCGA barcode（样本ID） - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="TCGA" />
+
+
+<meta property="og:title" content="TCGA barcode（样本ID）" />
+<meta name="twitter:title" content="TCGA barcode（样本ID）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/" /><meta property="og:description" content="接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的7个编码信息，每个编码信息用横杠-隔开，如下所示： 接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的前15位（有时" />
+<meta name="twitter:description" content="接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的7个编码信息，每个编码信息用横杠-隔开，如下所示： 接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的前15位（有时" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2019-09-19T00:00:00+00:00" /><meta property="article:modified_time" content="2019-09-19T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/">TCGA barcode（样本ID）</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-09-19</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;814 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/tcga">TCGA</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的7个编码信息，每个编码信息用横杠-隔开，如下所示：</p>
+<p><img class="img-zoomable" src="./images/barcode.jpg" alt="" />
+</p>
+<p>接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的前15位（有时12位），实际从上图可以看出TCGA的barcode设计总共有28位之多。</p>
+<p>每一个短横杠衔接的都是含不同意义的序列，如下图</p>
+<p><img class="img-zoomable" src="./images/flow.jpg" alt="" />
+</p>
+<p>图中总结了TCGA中从样品到数据处理流程：</p>
+<p>BCR从TSS收到参与者的样本和他们相关的元数据。然后BCRs分配人可读的IDs（barcode），也就是TCGA barcode给参与者的元数据和样本。TCGA barcode用来把扩展到整个TCGA网络中的数据联系在一起，因为IDs可以唯一识别一个特定样本的一组结果。</p>
+<p>具体的解释如下表：</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Identifier for</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Project</td>
+<td>Project name</td>
+<td>来自哪个项目: 如TCGA、TARGET等等</td>
+</tr>
+<tr>
+<td>TSS</td>
+<td>Tissue source site</td>
+<td>样品来自哪个组织机构：01 代表International Genomics Consortium, 更多见：<a href="https://www.omicsclass.com/article/1079" target="_blank">TSS</a></td>
+</tr>
+<tr>
+<td>Participant</td>
+<td>Study participant</td>
+<td>样品唯一编号(可以理解为一个病人唯一编号）</td>
+</tr>
+<tr>
+<td>Sample</td>
+<td>Sample type</td>
+<td>样品来自人体组织类型，01-09表示肿瘤样本，10-19表示normal type，20-29表示control samples,如：01代表Primary Solid Tumor， 更多见：<a href="https://www.omicsclass.com/article/1080" target="_blank">SampleType</a></td>
+</tr>
+<tr>
+<td>Vial</td>
+<td>Order of sample in a sequence of samples</td>
+<td>一份样品被分割成好几份，表示第几份，通常是A-Z编号</td>
+</tr>
+<tr>
+<td>Portion</td>
+<td>Order of portion in a sequence of 100-120 mg sample portions</td>
+<td>每份样品再分割成不同的小样品：01-99等等编号，代表第几份</td>
+</tr>
+<tr>
+<td>Analyte</td>
+<td>Molecular type of analyte for analysis</td>
+<td>实验数据来源分子类型，如R代表 RNA，D代表DNA等等，更多见：<a href="https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/portion-analyte-codes" target="_blank">Portion / Analyte Codes</a></td>
+</tr>
+<tr>
+<td>Plate</td>
+<td>Order of plate in a sequence of 96-well plates</td>
+<td>96孔序列中板的顺序，4个数字组成</td>
+</tr>
+<tr>
+<td>Center</td>
+<td>Sequencing or characterization center that will receive the aliquot for analysis</td>
+<td>数据由哪个机构分析：如 01代表The Broad Institute GCC,更多见：<a href="https://www.omicsclass.com/article/1081" target="_blank">Center</a></td>
+</tr>
+</tbody>
+</table>
+<p>其中比较重要的，用于区分样本类型的是 sample。</p>
+<p>此外除了上述的barcode还有表示其他信息的barcode，整体的组织形式如下：</p>
+<p><img class="img-zoomable" src="./images/barcode1.jpg" alt="" />
+</p>
+<p>下表显示了不同barcode，所代表的不同意义：层次结构级别：</p>
+<p><img class="img-zoomable" src="./images/table.jpg" alt="" />
+</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

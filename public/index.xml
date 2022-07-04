@@ -6,7 +6,37 @@
     <description>Recent content on Mooners</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 03 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>inferCNV 推断拷贝数</title>
+      <link>https://mooners.netlify.app/post/2022-07-04-infercnv/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-04-infercnv/</guid>
+      <description>inferCNV使用流程 inferCNV简介 inferCNV可以被用于单细胞RNA-seq数据识别大规模的染色体拷贝数变异，如：整个染色体或是大染色体片段的获得和缺失。主要是通过与一组参考“正常”细胞</description>
+    </item>
+    
+    <item>
+      <title>组合多张ggplot2图片</title>
+      <link>https://mooners.netlify.app/post/2022-07-04-ggplot2-combine/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-04-ggplot2-combine/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>单尾还是双尾检验</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>&lt;p&gt;单侧检验 or 双侧检验？&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>同一电脑配置多个Github账户</title>
       <link>https://mooners.netlify.app/post/index.zh/</link>
@@ -184,6 +214,33 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>R 语言统计检验函数汇总</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Fri, 31 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>连续型数据 基于分布的检验 T检验 t.test(1:10, 10:20) ## ## Welch Two Sample t-test ## ## data: 1:10 and 10:20 ## t = -6.862, df = 18.998, p-value = 1.513e-06 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -12.397677 -6.602323 ## sample estimates: ## mean of x mean of y ## 5.5 15.0 配对 t 检验： t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE) ## ## Paired t-test ## ## data: rnorm(10) and rnorm(10, mean = 1) ##</description>
+    </item>
+    
+    <item>
+      <title>R Docker tutorial</title>
+      <link>https://mooners.netlify.app/post/2020-07-14-r-docker-tutorial/</link>
+      <pubDate>Tue, 14 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-07-14-r-docker-tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markdown语法说明</title>
+      <link>https://mooners.netlify.app/post/2020-05-30-markdown/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-05-30-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Markdown Syntax</title>
       <link>https://mooners.netlify.app/post/markdown-syntax/</link>
       <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
@@ -227,6 +284,42 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>复合饼图</title>
+      <link>https://mooners.netlify.app/post/2020-01-07-pie-plot/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-01-07-pie-plot/</guid>
+      <description>复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种： 散点复合饼图（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在</description>
+    </item>
+    
+    <item>
+      <title>pheatmap使用指南</title>
+      <link>https://mooners.netlify.app/post/2019-12-23-pheatmap/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-12-23-pheatmap/</guid>
+      <description>pheatmap包 简介 官方介绍： A function to draw clustered heatmaps where one has better control over some graphical parameters such as cell size, etc 实际上，pheatmap是 Pretty Heatmaps 的缩写，是我认为目前最好用的绘制聚类热图的R包（尽管有很多其他的函数。。。） 使用方法 pheatmap(mat, color = colorRampPalette(rev(brewer.pal(n = 7, name</description>
+    </item>
+    
+    <item>
+      <title>R graphics cookbook</title>
+      <link>https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/</guid>
+      <description>R语言绘制基础图形 R语言绘制图像主要有三种方式：（1）由graphics包提供的基础绘图方式；（2）基于ggplot2的qplot()快捷绘图函数；（3）ggplot2图层绘图风格 散点图 ## 方法一 plot(mtcars$wt, mtcars$mpg) ##</description>
+    </item>
+    
+    <item>
+      <title>TCGA barcode（样本ID）</title>
+      <link>https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/</link>
+      <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/</guid>
+      <description>接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的7个编码信息，每个编码信息用横杠-隔开，如下所示： 接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的前15位（有时</description>
+    </item>
+    
+    <item>
       <title>R语言高级程序设计</title>
       <link>https://mooners.netlify.app/post/index.zh/</link>
       <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
@@ -258,6 +351,42 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p&gt;<
 &lt;p&gt;The &lt;a href=&#34;https://gohugo.io/functions/emojify/&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;emojify&lt;/code&gt;&lt;/a&gt; function can be called directly in templates or &lt;a href=&#34;https://gohugo.io/templates/shortcode-templates/#inline-shortcodes&#34; target=&#34;_blank&#34;&gt;Inline Shortcodes&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;To enable emoji globally, set &lt;code&gt;enableEmoji&lt;/code&gt; to &lt;code&gt;true&lt;/code&gt; in your site’s &lt;a href=&#34;https://gohugo.io/getting-started/configuration/&#34; target=&#34;_blank&#34;&gt;configuration&lt;/a&gt; and then you can type emoji shorthand codes directly in content files; e.g.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;:s ee_no_evil:[Remove the space]&lt;/code&gt; 🙈 &lt;code&gt;:h ear_no_evil:[Remove the space]&lt;/code&gt; 🙉 &lt;code&gt;:s peak_no_evil:[Remove the space]&lt;/code&gt; 🙊&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Fisher精确检验</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>卡方检验</title>
+      <link>https://mooners.netlify.app/post/2018-12-21-chisq/</link>
+      <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-12-21-chisq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markdown常用语法</title>
+      <link>https://mooners.netlify.app/post/2018-11-20-markdown/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-11-20-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R的更新</title>
+      <link>https://mooners.netlify.app/post/2018-07-04-r-update/</link>
+      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-07-04-r-update/</guid>
+      <description>!&amp;ndash;more&amp;ndash;&amp;gt; 背景 在windows中R和Rstudio的更新是非常头疼的问题，每次更新都需要把之前的版本删掉重新安装，甚是麻烦。所以一直在想是否有R包可以实现R的自动更新和配置。 R的更新 目前R已经提供了insta</description>
     </item>
     
     <item>

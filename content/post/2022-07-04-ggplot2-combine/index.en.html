@@ -1,0 +1,279 @@
+---
+title: 组合多张ggplot2图片
+author: Jeason
+date: '2022-07-04'
+slug: ggplot2-combine
+categories:
+  - R
+  - ggplot2
+tags:
+  - R
+  - ggplot2
+---
+
+
+
+<!--more-->
+<p>在同一页面上安排<strong>多张ggplot2</strong>图片时，普通的标准R函数<code>par()</code>和<code>layout</code>已经不能使用。</p>
+<p>目前基本的解决办法是使用名叫<code>ggExtra</code>的R包，它包含以下功能：<br />
++ <code>grid.arrange（）</code>和<code>arrangeGrob（）</code>可以在一个页面上排列多个ggplots<br />
++ <code>marrangeGrob（）</code>可用于在多个页面上排列多个ggplots</p>
+<p>但是，这些功能不会尝试对齐绘图面板; 相反，这些图只是简单地放置在网格中，因此轴不对齐。</p>
+<p>因此我们可以使用<code>ggpubr</code>包提供的<code>ggarrange（）</code>函数来实现多个ggplot图画的排布，并且提供统一的共同图例。</p>
+<div id="创建图片" class="section level2">
+<h2>创建图片</h2>
+<p>使用演示数据集 <strong><em>ToothGrowth</em></strong> 和 <strong><em>mtcars</em></strong>创建多个图形：</p>
+<pre class="r"><code># Box plot (bp)
+bxp &lt;- ggpubr::ggboxplot(ToothGrowth, x = &quot;dose&quot;, y = &quot;len&quot;,
+                 color = &quot;dose&quot;, palette = &quot;jco&quot;)
+bxp</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># Dot plot (dp)
+dp &lt;- ggpubr::ggdotplot(ToothGrowth, x = &quot;dose&quot;, y = &quot;len&quot;,
+                 color = &quot;dose&quot;, palette = &quot;jco&quot;, binwidth = 1)
+dp</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>data(&quot;mtcars&quot;)
+mtcars$name &lt;- rownames(mtcars)
+mtcars$cyl &lt;- as.factor(mtcars$cyl)
+head(mtcars[, c(&quot;name&quot;, &quot;wt&quot;, &quot;mpg&quot;, &quot;cyl&quot;)])</code></pre>
+<pre><code>##                                name    wt  mpg cyl
+## Mazda RX4                 Mazda RX4 2.620 21.0   6
+## Mazda RX4 Wag         Mazda RX4 Wag 2.875 21.0   6
+## Datsun 710               Datsun 710 2.320 22.8   4
+## Hornet 4 Drive       Hornet 4 Drive 3.215 21.4   6
+## Hornet Sportabout Hornet Sportabout 3.440 18.7   8
+## Valiant                     Valiant 3.460 18.1   6</code></pre>
+<pre class="r"><code># Bar plot (bp)
+bp &lt;- ggpubr::ggbarplot(mtcars, x = &quot;name&quot;, y = &quot;mpg&quot;,
+          fill = &quot;cyl&quot;,               # change fill color by cyl
+          color = &quot;white&quot;,            # Set bar border colors to white
+          palette = &quot;jco&quot;,            # jco journal color palett. see ?ggpar
+          sort.val = &quot;asc&quot;,           # Sort the value in ascending order
+          sort.by.groups = TRUE,      # Sort inside each group
+          x.text.angle = 90           # Rotate vertically x axis texts
+          )
+bp + font(&quot;x.text&quot;, size = 8)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># Scatter plots (sp)
+sp &lt;- ggpubr::ggscatter(mtcars, x = &quot;wt&quot;, y = &quot;mpg&quot;,
+                add = &quot;reg.line&quot;,               # Add regression line
+                conf.int = TRUE,                # Add confidence interval
+                color = &quot;cyl&quot;, palette = &quot;jco&quot;, # Color by groups &quot;cyl&quot;
+                shape = &quot;cyl&quot;                   # Change point shape by groups &quot;cyl&quot;
+                )+
+  stat_cor(aes(color = cyl), label.x = 3)       # Add correlation coefficient
+sp</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="组合多张图片在一个面板上" class="section level2">
+<h2>组合多张图片在一个面板上</h2>
+<p>使用<code>ggpubr</code>包的<code>ggarrange（）</code>进行以下操作：</p>
+<pre class="r"><code>ggarrange(bxp, dp, bp + rremove(&quot;x.text&quot;), 
+          labels = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;),
+          ncol = 2, nrow = 2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="给图片添加注释" class="section level2">
+<h2>给图片添加注释</h2>
+<p><code>ggpubr</code>包提供了函数<code>annotate_figure()</code>可以对面板中图片整体或任意图片添加一定量的注释展示效果如下图:</p>
+<pre class="r"><code>figure &lt;- ggarrange(sp, bp + font(&quot;x.text&quot;, size = 10),
+                    ncol = 1, nrow = 2)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre class="r"><code>annotate_figure(figure,
+                top = text_grob(&quot;Visualizing mpg&quot;, color = &quot;red&quot;, face = &quot;bold&quot;, size = 14),
+                bottom = text_grob(&quot;Data source: \n mtcars data set&quot;, color = &quot;blue&quot;,
+                                   hjust = 1, x = 1, face = &quot;italic&quot;, size = 10),
+                left = text_grob(&quot;Figure arranged using ggpubr&quot;, color = &quot;green&quot;, rot = 90),
+                right = &quot;I&#39;m done, thanks :-)!&quot;,
+                fig.lab = &quot;Figure 1&quot;, fig.lab.face = &quot;bold&quot;
+                )</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="图片对齐" class="section level2">
+<h2>图片对齐</h2>
+<p>最经典的例子就是在绘制生存曲线时，把risk table放在生存曲线图的下边。此时，我们需要调节表和图的大小和相对位置，使其分布更为合理</p>
+<pre class="r"><code># Fit survival curves
+library(survival)
+fit &lt;- survfit( Surv(time, status) ~ adhere, data = colon )
+# Plot survival curves
+library(survminer)</code></pre>
+<pre><code>## Warning: package &#39;survminer&#39; was built under R version 4.2.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;survminer&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:survival&#39;:
+## 
+##     myeloma</code></pre>
+<pre class="r"><code>ggsurv &lt;- ggsurvplot(fit, data = colon, 
+                     palette = &quot;jco&quot;,                              # jco palette
+                     pval = TRUE, pval.coord = c(500, 0.4),        # Add p-value
+                     risk.table = TRUE                            # Add risk table
+                     )</code></pre>
+<pre class="r"><code>ggarrange(ggsurv$plot, ggsurv$table, heights = c(2, 0.7),
+          ncol = 1, nrow = 2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>此时，我们可以看出图和表并不是完全垂直对齐的，要对齐他们需要调用<code>align</code>参数</p>
+<pre class="r"><code>ggarrange(ggsurv$plot, ggsurv$table, heights = c(2, 0.7),
+          ncol = 1, nrow = 2, align = &quot;v&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="改变图形的行列布局排布" class="section level2">
+<h2>改变图形的行列布局排布</h2>
+<div id="使用ggpubr包" class="section level3">
+<h3>使用<code>ggpubr</code>包</h3>
+<p>我们将使用嵌套的<code>ggarrange（）</code>函数来更改图的列/行跨度。</p>
+<p>例如，我们使用下边的代码可以实现这样的布局</p>
+<ul>
+<li>散点图（sp）将位于第一行并跨越两列<br />
+</li>
+<li>箱形图（bxp）和点图（dp）将首先排列，并且将在第二行中生活两列不同的列</li>
+</ul>
+<pre class="r"><code>ggarrange(sp,                                                 # First row with scatter plot
+          ggarrange(bxp, dp, ncol = 2, labels = c(&quot;B&quot;, &quot;C&quot;)), # Second row with box and dot plots
+          nrow = 2, 
+          labels = &quot;A&quot;                                        # Labels of the scatter plot
+          )</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="使用cowplot包" class="section level3">
+<h3>使用<code>cowplot</code>包</h3>
+<p>函数<code>ggdraw（）+ draw_plot（）+ draw_plot_label（）</code>的组合可用于将图形放置在特定大小的特定位置。</p>
+<p><code>ggdraw（）</code>可以初始化一个空的绘图画布，默认情况是这样的：</p>
+<div class="figure">
+<img src="%22images/canva.png%22" alt="" />
+<p class="caption">canva</p>
+</div>
+<p><code>draw_plot（）</code>可以将绘图放置在绘图画布上的某处：</p>
+<pre class="r"><code>draw_plot(plot, x = 0, y = 0, width = 1, height = 1)</code></pre>
+<pre><code>## geom_draw_grob: grob = list(x = function (x, y, ...) 
+## UseMethod(&quot;plot&quot;), prefix = NULL, device = function (width, height) 
+## {
+##     grDevices::pdf(NULL, width = width, height = height)
+##     grDevices::dev.control(&quot;enable&quot;)
+## }, name = &quot;GRID.echogrob.1266&quot;, gp = NULL, vp = NULL, children = list(), childrenOrder = character(0)), xmin = 0, xmax = 1, ymin = 0, ymax = 1, scale = 1, clip = inherit, halign = 0.5, valign = 0.5
+## stat_identity: na.rm = FALSE
+## position_identity</code></pre>
+<p><code>draw_plot_label()</code> 可以向图的左上角添加绘图标签。它可以处理带有关联坐标的标签向量。</p>
+<pre class="r"><code>draw_plot_label(label, x = 0, y = 1, size = 16, ...)</code></pre>
+<p>如果需要组合多张图形，可以通过类似于下边的代码来实现：</p>
+<pre class="r"><code>library(&quot;cowplot&quot;)
+ggdraw() +
+  draw_plot(bxp, x = 0, y = .5, width = .5, height = .5) +
+  draw_plot(dp, x = .5, y = .5, width = .5, height = .5) +
+  draw_plot(bp, x = 0, y = 0, width = 1, height = 0.5) +
+  draw_plot_label(label = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), size = 15,
+                  x = c(0, 0.5, 0), y = c(1, 1, 0.5))</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="使用gridextra包" class="section level3">
+<h3>使用<code>gridExtra</code>包</h3>
+<p><code>gridExtra</code>包的使用方法和<code>ggpubr</code>包类似</p>
+<pre class="r"><code>library(&quot;gridExtra&quot;)
+grid.arrange(sp,                             # First row with one plot spaning over 2 columns
+             arrangeGrob(bxp, dp, ncol = 2), # Second row with 2 plots in 2 different columns
+             nrow = 2)       </code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>我们同样可以使用<code>gird.arrange()</code>函数中的<code>lay_matrix</code>参数来设置，使用方法如下：</p>
+<pre class="r"><code>grid.arrange(bp,                                    # bar plot spaning two columns
+             bxp, sp,                               # box plot and scatter plot
+             ncol = 2, nrow = 2, 
+             layout_matrix = rbind(c(1,1), c(2,3)))</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<blockquote>
+<p>在上面的R代码中，layout_matrix是一个2×2矩阵（2列和2行）。 第一行全是1，这是第一幅图占的地方，横跨两列; 第二行包含分别占据一列的图2和图3</p>
+</blockquote>
+<p>此时，如果需要对图形进行注释，<code>ggpubr</code>包已经不足以实现，需要我们使用<code>cowplot</code>包来进行进一步的注释</p>
+<p>需要注意的是<code>grid.arrange（）</code>/ <code>arrangeGrob（）</code>输出的是一个<code>gtable</code>，首先需要使用<code>ggpubr</code>包中的<code>as_ggplot（）</code>函数将其转换为<code>ggplot</code>。 接下来，就可以使用函数<code>draw_plot_label（）</code>对其进行注释。</p>
+<pre class="r"><code>library(&quot;gridExtra&quot;)
+library(&quot;cowplot&quot;)
+# Arrange plots using arrangeGrob
+# returns a gtable (gt)
+gt &lt;- arrangeGrob(bp,                               # bar plot spaning two columns
+             bxp, sp,                               # box plot and scatter plot
+             ncol = 2, nrow = 2, 
+             layout_matrix = rbind(c(1,1), c(2,3)))</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre class="r"><code># Add labels to the arranged plots
+p &lt;- as_ggplot(gt) +                                # transform to a ggplot
+  draw_plot_label(label = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;), size = 15,
+                  x = c(0, 0, 0.5), y = c(1, 0.5, 0.5)) # Add labels
+p</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<blockquote>
+<p>在上面的R代码中，我们使用了<code>arrangeGrob（）</code>而不<code>是grid.arrange（）</code>。<br />
+请注意，这两个函数的主要区别在于，<code>grid.arrange（）</code>会自动绘制排列好的图<br />
+由于我们要在绘制之前注释已排列的图，因此在这种情况下，函数<code>arrangeGrob（）</code>是首选。</p>
+</blockquote>
+</div>
+</div>
+<div id="使用grid包" class="section level2">
+<h2>使用<code>grid</code>包</h2>
+<p>通过函数<code>grid.layout（）</code>，可以使用<code>gridR</code>包创建复杂的图像布局。 它还提供了函数<code>viewport（）</code>来定义布局上图像的区域或位置。 函数<code>print（）</code>用于将图放置在指定区域中。</p>
+<p>总结起来共以下5个顺序步骤：<br />
+1. 创建绘图：p1，p2，p3，…<br />
+2. 使用函数<code>grid.newpage（）</code>创建画板<br />
+3. 创建画板布局2X2 - 列数= 2; 行数= 2<br />
+4. 定义图像输出位置：画板中图像显示的区域<br />
+5. 在画板中输出显示图片</p>
+<pre class="r"><code>library(grid)
+# Move to a new page
+grid.newpage()
+# Create layout : nrow = 3, ncol = 2
+pushViewport(viewport(layout = grid.layout(nrow = 3, ncol = 2)))
+# A helper function to define a region on the layout
+define_region &lt;- function(row, col){
+  viewport(layout.pos.row = row, layout.pos.col = col)
+} 
+# Arrange the plots
+print(sp, vp = define_region(row = 1, col = 1:2))   # Span over two columns</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre class="r"><code>print(bxp, vp = define_region(row = 2, col = 1))
+print(dp, vp = define_region(row = 2, col = 2))
+print(bp + rremove(&quot;x.text&quot;), vp = define_region(row = 3, col = 1:2))</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="通用图例的设定" class="section level2">
+<h2>通用图例的设定</h2>
+<p>在我们绘制的图片当中，有的可能具有相同的图例，函数<code>ggarrange（）</code>可以与以下参数一起使用,使两幅图使用相同的图例</p>
+<ul>
+<li><code>common.legend = TRUE</code>：使用公共图例<br />
+</li>
+<li><code>legend</code>:指定图例位置。 允许的值包括c（“top”，“bottom”，“left”，“right”）</li>
+</ul>
+<pre class="r"><code>ggarrange(bxp, dp, labels = c(&quot;A&quot;, &quot;B&quot;),
+          common.legend = TRUE, legend = &quot;bottom&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="实战" class="section level2">
+<h2>实战</h2>
+<p>给散点图添加边界密度图</p>
+<pre class="r"><code># Scatter plot colored by groups (&quot;Species&quot;)
+sp &lt;- ggscatter(iris, x = &quot;Sepal.Length&quot;, y = &quot;Sepal.Width&quot;,
+                color = &quot;Species&quot;, palette = &quot;jco&quot;,
+                size = 3, alpha = 0.6)+
+  border()                                         
+# Marginal density plot of x (top panel) and y (right panel)
+xplot &lt;- ggdensity(iris, &quot;Sepal.Length&quot;, fill = &quot;Species&quot;,
+                   palette = &quot;jco&quot;)
+yplot &lt;- ggdensity(iris, &quot;Sepal.Width&quot;, fill = &quot;Species&quot;, 
+                   palette = &quot;jco&quot;)+
+  rotate()
+# Cleaning the plots
+yplot &lt;- yplot + clean_theme() 
+xplot &lt;- xplot + clean_theme()
+# Arranging the plot
+ggarrange(xplot, NULL, sp, yplot, 
+          ncol = 2, nrow = 2,  align = &quot;hv&quot;, 
+          widths = c(2, 1), heights = c(1, 2),
+          common.legend = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<hr />
+<div id="reference" class="section level3">
+<h3>Reference:</h3>
+<p><a href="http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/81-ggplot2-easy-way-to-mix-multiple-graphs-on-the-same-page/">ggplot2 - Easy Way to Mix Multiple Graphs on The Same Page</a></p>
+</div>
+</div>

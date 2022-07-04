@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>复合饼图 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="R, ggplot2" />
+
+
+<meta property="og:title" content="复合饼图" />
+<meta name="twitter:title" content="复合饼图" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-01-07-pie-plot/" /><meta property="og:description" content="复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种： 散点复合饼图（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在" />
+<meta name="twitter:description" content="复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种： 散点复合饼图（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-01-07T00:00:00+00:00" /><meta property="article:modified_time" content="2020-01-07T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-01-07-pie-plot/">复合饼图</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-07</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;520 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/ggplot2">ggplot2</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种：</p>
+<p><strong>散点复合饼图</strong>（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在直角坐标系中的位置，P表示饼图的数据信息，决定饼图中各个类别的占比情况，如图1(a)所示。</p>
+<p><strong>气泡复合饼图</strong>（compound bubble and pie chart）可以展示四个数据变量的信息：(x, y, z, P)，其中x和y决定气泡在直角坐标系中的位置，z决定气泡的大小，P表示饼图的数据信息，决定饼图中各个类别的占比情况，如图1(b)所示。</p>
+<div align="center">
+  <img src="./images/P1.png" height="300" width = "300">
+  <img src="./images/P2.png" height="300" width = "300" >
+</div>
+<p>具体操作如下：</p>
+<pre><code class="language-R">library(ggforce)
+library(dplyr)
+data_graph &lt;- read.table(text = &quot;x     y group    nb
+1     0     0     1  1060
+2     0     0     2   361
+3     0     0     3   267
+4     0     1     1   788
+5     0     1     2   215
+6     0     1     3    80
+7     1     0     1   485
+8     1     0     2   168
+9     1     0     3   101
+10     1     1     1  6306
+11     1     1     2  1501
+12     1     1     3   379&quot;, header = TRUE)
+
+# make group a factor
+data_graph$group &lt;- factor(data_graph$group)
+
+# add case variable that separates the four pies
+data_graph &lt;- cbind(data_graph, case = rep(c(&quot;Aaaa&quot;, &quot;Bbbb&quot;, &quot;Cccc&quot;, &quot;Dddd&quot;), each = 3))
+
+# calculate the start and end angles for each pie
+data_graph &lt;- left_join(data_graph,
+                        data_graph %&gt;% 
+                          group_by(case) %&gt;%
+                          summarize(nb_total = sum(nb))) %&gt;%
+  group_by(case) %&gt;%
+  mutate(nb_frac = 2*pi*cumsum(nb)/nb_total,
+         start = lag(nb_frac, default = 0))
+
+# position of the labels
+data_labels &lt;- data_graph %&gt;% 
+  group_by(case) %&gt;%
+  summarize(x = x[1], y = y[1], nb_total = nb_total[1])
+
+# overall scaling for pie size
+scale = .5/sqrt(max(data_graph$nb_total))
+
+# draw the pies
+ggplot(data_graph) + 
+  geom_arc_bar(aes(x0 = x, y0 = y, r0 = 0, r = sqrt(nb_total)*scale,
+                   start = start, end = nb_frac, fill = group)) +
+  geom_text(data = data_labels,
+            aes(label = case, x = x, y = y + scale*sqrt(nb_total) + .05),
+            size =11/.pt, vjust = 0) +
+  coord_fixed() +
+  scale_x_continuous(breaks = c(0, 1), labels = c(&quot;X0&quot;, &quot;X1&quot;), name = &quot;x axis&quot;) +
+  scale_y_continuous(breaks = c(0, 1), labels = c(&quot;Y0&quot;, &quot;Y1&quot;), name = &quot;y axis&quot;) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+</code></pre>
+<p>最终得到的图形如下所示：</p>
+<div align="center">
+  <img src="./images/P3.png" height="300" width = "400">
+</div>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

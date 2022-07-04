@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>inferCNV 推断拷贝数 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="R, single cell" />
+
+
+<meta property="og:title" content="inferCNV 推断拷贝数" />
+<meta name="twitter:title" content="inferCNV 推断拷贝数" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2022-07-04-infercnv/" /><meta property="og:description" content="inferCNV使用流程 inferCNV简介 inferCNV可以被用于单细胞RNA-seq数据识别大规模的染色体拷贝数变异，如：整个染色体或是大染色体片段的获得和缺失。主要是通过与一组参考“正常”细胞" />
+<meta name="twitter:description" content="inferCNV使用流程 inferCNV简介 inferCNV可以被用于单细胞RNA-seq数据识别大规模的染色体拷贝数变异，如：整个染色体或是大染色体片段的获得和缺失。主要是通过与一组参考“正常”细胞" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2022-07-04T00:00:00+00:00" /><meta property="article:modified_time" content="2022-07-04T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2022-07-04-infercnv/">inferCNV 推断拷贝数</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-07-04</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2503 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/single-cell">single cell</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="infercnv使用流程">inferCNV使用流程</h2>
+<h3 id="infercnv简介">inferCNV简介</h3>
+<p><strong>inferCNV</strong>可以被用于单细胞RNA-seq数据识别大规模的染色体拷贝数变异，如：整个染色体或是大染色体片段的获得和缺失。主要是通过与一组参考“正常”细胞相比，探索肿瘤基因组不同位置基因表达强度来实现。生成的热图可以显示每条染色体的相对表达强度。通过与正常细胞相比，很容易看出肿瘤基因组哪些区域表达过于丰富或者不够丰富。</p>
+<h3 id="infercnv安装">inferCNV安装</h3>
+<p>安装inferCNV需要同时安装<a href="https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/" target="_blank">JAGS</a> package.</p>
+<pre><code class="language-R">if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
+     install.packages(&quot;BiocManager&quot;)
+BiocManager::install(&quot;infercnv&quot;)
+</code></pre>
+<h3 id="infercnv运行">inferCNV运行</h3>
+<p>inferCNV可以通过两步进行运行：</p>
+<p><strong>首先需要创建一个inferCNV对象</strong>。</p>
+<pre><code class="language-R">infercnv_obj = CreateInfercnvObject(raw_counts_matrix=system.file(&quot;extdata&quot;, &quot;oligodendroglioma_expression_downsampled.counts.matrix.gz&quot;, package = &quot;infercnv&quot;),
+                                    annotations_file=system.file(&quot;extdata&quot;,            &quot;oligodendroglioma_annotations_downsampled.txt&quot;, package = &quot;infercnv&quot;),
+                                    delim=&quot;\t&quot;,
+                                    gene_order_file=system.file(&quot;extdata&quot;, &quot;gencode_downsampled.EXAMPLE_ONLY_DONT_REUSE.txt&quot;, package = &quot;infercnv&quot;), ref_group_names=c(&quot;Microglia/Macrophage&quot;,&quot;Oligodendrocytes (non-malignant)&quot;)) 
+</code></pre>
+<p>需要的输入文件有三个：</p>
+<ul>
+<li>
+<p><strong>Raw Counts Matrix for Genes x Cells</strong></p>
+<p><strong>inferCNV</strong>可以兼容来自<code>smart-seq2</code>和<code>10x genmoic</code>等单细胞测序平台的数据，count矩阵必须行是基因，列是细胞的矩阵，格式如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MGH54_P16_F12</th>
+<th>MGH54_P12_C10</th>
+<th>MGH54_P11_C11</th>
+<th>MGH54_P15_D06</th>
+<th>&hellip;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A2M</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>AAAS</td>
+<td>0</td>
+<td>37</td>
+<td>30</td>
+<td>21</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>AACS</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>AADAT</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>Sample annotation file</strong></p>
+<p>样本注释文件包括两列：第一列是细胞名字，第二列是细胞的类型，以<code>tab</code>分割。如果已知正常细胞的类型，可以给出具体的细胞类型，并且，在进行计算时，每一种细胞类型都将作为单独的正常细胞存在，而不是整合成一个正常的类型。同样，如果并不能详细的获得正常细胞的类型，可以将其统称为normal，作为统一的正常细胞类型。对于恶性细胞需要标记为<code>malignant_{patient}</code>的形式。使它们在聚类时可以聚在一起。</p>
+<pre><code class="language-reStructuredText">MGH54_P2_C12    Microglia/Macrophage
+MGH36_P6_F03    Microglia/Macrophage
+MGH54_P16_F12   Oligodendrocytes (non-malignant)
+MGH54_P12_C10   Oligodendrocytes (non-malignant)
+MGH36_P1_B02    malignant_MGH36
+MGH36_P1_H10    malignant_MGH36
+</code></pre>
+</li>
+<li>
+<p><strong>Gene ordering file</strong></p>
+<p>Gene ordering文件提供每个基因的染色体位置信息，使用<code>tab</code>分割。要分析的count矩阵中的每个基因都应该在这个基因排序文件中提供相应的基因名称和位置信息。</p>
+<pre><code class="language-reStructuredText">WASH7P  chr1    14363   29806
+LINC00115       chr1    761586  762902
+NOC2L   chr1    879584  894689
+MIR200A chr1    1103243 1103332
+SDF4    chr1    1152288 1167411
+UBE2J2  chr1    1189289 1209265
+</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>注意，如果没有参考的正常细胞，可以设置<code>ref_group_names=NULL</code>，使用所有细胞的平均表达作为参考基线。</p>
+<p>此外，inferCNV默认已经去除低质量的细胞，如果要进一步进行最大或最小count值的过滤，可以设置<code>min_max_counts_per_cell=c(1e5,1e6)</code></p>
+</blockquote>
+<p><strong>在创建<code>infercnv_obj</code>对象之后，使用内置的<code>infercnv::run()</code>方法运行标准的infercnv过程：</strong></p>
+<pre><code class="language-R">infercnv_obj = infercnv::run(infercnv_obj,
+                             cutoff=1, # cutoff=1 works well for Smart-seq2, and cutoff=0.1 works well for 10x Genomics
+                             out_dir=tempfile(), 
+                             cluster_by_groups=TRUE, 
+                             denoise=TRUE,
+                             HMM=TRUE)
+</code></pre>
+<p><code>cutoff</code>决定了哪个基因可以被用于infercnv分析</p>
+<p><code>cluster_by_groups</code>可以根据细胞注释文件对细胞进行聚类</p>
+<h3 id="infercnv降噪处理">inferCNV降噪处理</h3>
+<p>降噪处理可以降低噪声对与表达的影响，同时保留在肿瘤细胞中的表达</p>
+<ol>
+<li>
+<p>使用固定阈值过滤</p>
+<p>可以使用<code>noise_filter</code>参数设定一个特定的偏离均值的阈值</p>
+<pre><code class="language-R">infercnv_obj = infercnv::run(infercnv_obj,
+                             cutoff=1, # cutoff=1 works well for Smart-seq2, and cutoff=0.1 works well for 10x Genomics
+                             out_dir=out_dir, 
+                             cluster_by_groups=T, 
+                             plot_steps=F,
+                             denoise=T, ## de noise
+                             noise_filter=0.1   ## hard thresholds
+                             )
+</code></pre>
+<p><img class="img-zoomable" src="images/denoise_hard_filter.png" alt="" />
+</p>
+</li>
+<li>
+<p>使用动态阈值过滤</p>
+<p>默认情况下，用于去噪的硬边界是基于剩余的正常表达值的标准差来计算的。这个阈值可以使用<code>sd_amplifier</code>参数进行调整。例如，我们可以使用1.5 *标准差的过滤如下:</p>
+<pre><code class="language-R">infercnv_obj = infercnv::run(infercnv_obj,
+                             cutoff=1, # cutoff=1 works well for Smart-seq2, and cutoff=0.1 works well for 10x Genomics
+                             out_dir=out_dir, 
+                             cluster_by_groups=T, 
+                             plot_steps=F,
+                             denoise=T,
+                             sd_amplifier=1.5  ## set dynamic thresholding based on the standard deviation value.
+                             )
+</code></pre>
+</li>
+</ol>
+<p><img class="img-zoomable" src="images/denoise_dynamic_sd.png" alt="" />
+</p>
+<h3 id="基于hmm的cnv预测方法">基于HMM的CNV预测方法</h3>
+<p>inferCNV当前支持两种基于HMM的CNV预测方法（i3和i6）。两种方法可以通过<code>infercnv::run()</code>函数中的<code>HMM_type</code>参数进行设定，默认为<code>HMM_type='i6</code></p>
+<p>两种方法的操作对象都是对<code>CreateInfercnvObject()</code>函数计算出来的<code>infercnv</code>对象进行处理。</p>
+<blockquote>
+<p><a href="https://github.com/broadinstitute/infercnv/wiki/infercnv-i3-HMM-type" target="_blank">i3 HMM</a>: 包括CNV的三种状态： 拷贝数缺失（deletion）、拷贝数中立（neutral）、拷贝数扩增（amplification ）</p>
+<p><a href="https://github.com/broadinstitute/infercnv/wiki/infercnv-i6-HMM-type" target="_blank">i6 HMM</a>: 包括更加精细定义六种CNV改变状态：</p>
+<ul>
+<li>0x: complete loss</li>
+<li>0.5x: loss of one copy</li>
+<li>1x: neutral</li>
+<li>1.5x: addition of one copy</li>
+<li>2x: addition of two copies</li>
+<li>3x: essentially a placeholder for &gt;2x copies but modeled as 3x</li>
+</ul>
+</blockquote>
+<h3 id="cnv-region预测报告">CNV region预测报告</h3>
+<p>CNV的推断预测结果包含在以下文件夹中：</p>
+<ul>
+<li>
+<p><code>HMM_CNV_predictions.*.pred_cnv_regions.dat</code> ：包含CNV区域坐标、状态分配和细胞分组的摘要信息。</p>
+<pre><code class="language-reStructuredText">cell_group_name                         cnv_name        state   chr     start   end
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     chr1    3696784 144612683
+malignant_MGH36.malignant_MGH36_s1      chr1-region_4   1.5     chr1    151336778       156213123
+malignant_MGH36.malignant_MGH36_s1      chr3-region_7   1.5     chr3    3168600 10285427
+malignant_MGH36.malignant_MGH36_s1      chr3-region_9   1.5     chr3    45429998        49460186
+malignant_MGH36.malignant_MGH36_s1      chr4-region_11  0.5     chr4    53179   187134610
+malignant_MGH36.malignant_MGH36_s1      chr5-region_13  1.5     chr5    134181370       177037348
+</code></pre>
+</li>
+<li>
+<p><code>HMM_CNV_predictions.*.cell_groupings</code>: 提供肿瘤subcluster和细胞成员的对应关系</p>
+<pre><code class="language-reStructuredText">cell_group_name                         cell
+malignant_MGH36.malignant_MGH36_s1      MGH36_P3_E06
+malignant_MGH36.malignant_MGH36_s1      MGH36_P10_E07
+malignant_MGH36.malignant_MGH36_s1      MGH36_P3_C04
+malignant_MGH36.malignant_MGH36_s1      MGH36_P3_A09
+malignant_MGH36.malignant_MGH36_s1      MGH36_P2_A08
+malignant_MGH36.malignant_MGH36_s1      MGH36_P10_B08
+malignant_MGH36.malignant_MGH36_s1      MGH36_P8_H09
+...
+</code></pre>
+</li>
+<li>
+<p><code>HMM_CNV_predictions.*.pred_cnv_genes.dat</code>: 包含每个细胞、每个基因的CNV状态分级情况</p>
+<pre><code class="language-reStructuredText">cell_group_name                         gene_region_name state   gene    chr     start   end
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     DFFB    chr1    3696784 3713068
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     C1orf174        chr1    3773845 3801993
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     RPL22   chr1    3805689 3816857
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     ICMT    chr1    6241329 6269449
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     ACOT7   chr1    6281253 6296032
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     NOL9    chr1    6324329 6454451
+malignant_MGH36.malignant_MGH36_s1      chr1-region_2   0.5     KLHL21  chr1    6581407 6614595
+...
+</code></pre>
+</li>
+<li>
+<p><code>HMM_CNV_predictions.*.genes_used.dat</code>: 提供在分析中使用的基因列表</p>
+</li>
+</ul>
+<h3 id="推断肿瘤subclusters">推断肿瘤subclusters</h3>
+<p>通过设置 <code>infercnv::run(analysis_mode='subclusters')</code>, inferCNV会试着根据CNV改变的模式对细胞进行聚类。</p>
+<p>在inferCNV中，使用的聚类方式为层次聚类（hierarchical clustering），根据层次聚类树划分不同的subcluster。有三个参数可以影响层次聚类划分的结果：</p>
+<ul>
+<li><code>infercnv::run(hclust_method='ward.D2')</code>：层次聚类使用的方法，支持所有的<code>hclust</code>方法。目前作者认为<code>ward.D2</code>的效果最好</li>
+<li><code>infercnv::run(tumor_subcluster_partition_method='random_trees')</code>：划分层次聚类树的方法。可选的方法为：<code>random_trees</code>, <code>qnorm</code></li>
+<li><code>infercnv::run(tumor_subcluster_pval=0.05)</code>:用于确定分层树中的切割点的设置</li>
+</ul>
+<h3 id="infercnv的输出">inferCNV的输出</h3>
+<p>通过inferCNV的<code>run</code>函数运行后，会产生一些输出文件：</p>
+<ul>
+<li><code>infercnv.preliminary.png</code>:初步的inferCNV图像</li>
+<li><code>infercnv.png </code>：采用去噪方法，生成最终的热图</li>
+<li><code>infercnv.references.txt</code>：“正常”细胞矩阵数据值</li>
+<li><code>infercnv.observations.txt</code>：肿瘤细胞数据值</li>
+<li><code>infercnv.observation_groupings.txt</code>：聚类后的肿瘤细胞关系</li>
+<li><code>infercnv.observations_dendrogram.txt </code>：肿瘤细胞聚类树状结构图</li>
+</ul>
+<h3 id="解读infercnv图像">解读inferCNV图像</h3>
+<p>通过inferCNV会得到类似于下面的聚类图：</p>
+<p><img class="img-zoomable" src="images/infercnv.png" alt="" />
+</p>
+<p>正常细胞的表达值绘制在顶部的热图中，肿瘤细胞绘制在底部的热图中，基因从左到右排列在染色体上。将正常的细胞表达数据从肿瘤细胞表达数据中减去，产生差异，其中染色体区域扩增为红色块，染色体区域缺失为蓝色块。</p>
+<hr>
+<h3 id="参考">参考</h3>
+<p><a href="https://github.com/broadinstitute/infercnv/wiki" target="_blank">https://github.com/broadinstitute/infercnv/wiki</a></p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#infercnv使用流程">inferCNV使用流程</a>
+      <ul>
+        <li><a href="#infercnv简介">inferCNV简介</a></li>
+        <li><a href="#infercnv安装">inferCNV安装</a></li>
+        <li><a href="#infercnv运行">inferCNV运行</a></li>
+        <li><a href="#infercnv降噪处理">inferCNV降噪处理</a></li>
+        <li><a href="#基于hmm的cnv预测方法">基于HMM的CNV预测方法</a></li>
+        <li><a href="#cnv-region预测报告">CNV region预测报告</a></li>
+        <li><a href="#推断肿瘤subclusters">推断肿瘤subclusters</a></li>
+        <li><a href="#infercnv的输出">inferCNV的输出</a></li>
+        <li><a href="#解读infercnv图像">解读inferCNV图像</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#infercnv使用流程">inferCNV使用流程</a>
+      <ul>
+        <li><a href="#infercnv简介">inferCNV简介</a></li>
+        <li><a href="#infercnv安装">inferCNV安装</a></li>
+        <li><a href="#infercnv运行">inferCNV运行</a></li>
+        <li><a href="#infercnv降噪处理">inferCNV降噪处理</a></li>
+        <li><a href="#基于hmm的cnv预测方法">基于HMM的CNV预测方法</a></li>
+        <li><a href="#cnv-region预测报告">CNV region预测报告</a></li>
+        <li><a href="#推断肿瘤subclusters">推断肿瘤subclusters</a></li>
+        <li><a href="#infercnv的输出">inferCNV的输出</a></li>
+        <li><a href="#解读infercnv图像">解读inferCNV图像</a></li>
+        <li><a href="#参考">参考</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

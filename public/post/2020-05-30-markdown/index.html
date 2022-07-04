@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Markdown语法说明 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="markdown" />
+
+
+<meta property="og:title" content="Markdown语法说明" />
+<meta name="twitter:title" content="Markdown语法说明" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-05-30-markdown/" /><meta property="og:description" content="" />
+<meta name="twitter:description" content="" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-05-30T00:00:00+00:00" /><meta property="article:modified_time" content="2020-05-30T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-05-30-markdown/">Markdown语法说明</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-30</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6270 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/markdown">markdown</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h1 id="markdown-文件">Markdown 文件</h1>
+<p><img class="img-zoomable" src="http://markdown.tw/images/208x128.png" alt="" />
+</p>
+<p><strong>NOTE:</strong>  本文是简体中文意译,英文原文见 <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown: Syntax</a>.</p>
+<h1 id="markdown-语法syntax">Markdown: 语法(syntax)</h1>
+<ul>
+<li><a href="#overview">概述</a>
+<ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容 HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
+</ul>
+</li>
+<li><a href="#block">区块元素</a>
+<ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
+</ul>
+</li>
+<li><a href="#span">区段元素</a>
+<ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
+</ul>
+</li>
+<li><a href="#misc">其它</a>
+<ul>
+<li><a href="#autolink">自动链接</a></li>
+<li><a href="#backslash">反斜杠</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>注意</strong>:这份文件是用 Markdown 写的，你可以<a href="https://github.com/osokay/markdown-syntax-zh/edit/master/syntax_zh.md" target="_blank">看看它的原始档</a> 。</p>
+<hr>
+<h2 id="overview">概述</h2>
+<h3 id="philosophy">宗旨</h3> 
+<p>Markdown 的目标是实现「易读易写」。</p>
+<p>可读性，无论如何，都是最重要的。一份使用 Markdown 格式撰写的文件应该可以直接以纯文本发布，并且看起来不会像是由许多标签或是格式指令所构成。Markdown 语法受到一些既有 text-to-HTML 格式的影响，包括 [Setext] <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank">1</a>、[atx] <a href="http://www.aaronsw.com/2002/atx/" target="_blank">2</a>、[Textile] <a href="http://textism.com/tools/textile/" target="_blank">3</a>、[reStructuredText] <a href="http://docutils.sourceforge.net/rst.html" target="_blank">4</a>、[Grutatext] <a href="http://www.triptico.com/software/grutatxt.html" target="_blank">5</a> 和 [EtText] <a href="http://ettext.taint.org/doc/" target="_blank">6</a>，而最大灵感来源其实是纯文本电子邮件的格式。</p>
+<p>总之， Markdown 的语法全由一些符号所组成，这些符号经过精挑细选，其作用一目了然。比如：在文字两旁加上星号，看起来就像<em>强调</em>。Markdown 的列表看起来，嗯，就是列表。Markdown 的区块引用看起来就真的像是引用一段文字，就像你曾在电子邮件中见过的那样。</p>
+<h3 id="html">兼容 HTML</h3>
+<p>Markdown 的格式语法只涵盖纯文本可以涵盖的范围，不在 Markdown 涵盖范围之内的标签，都可以直接在文件里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。</p>
+<p>只有区块元素──比如 <code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code> 等标签，必须在前后加上空行与其它内容区隔开，而且这些（元素）的开始与结尾标签，不可以用制表符或空格来缩进。Markdown 的生成器足够智能，不会在 HTML 区块标签外加上不必要的 <code>&lt;p&gt;</code> 标签。</p>
+<p>举例来说，在 Markdown 文件里加上一段 HTML 表格：</p>
+<pre><code>This is a regular paragraph.
+
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Foo&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+This is another regular paragraph.
+</code></pre>
+<p>Markdown 语法在 HTML 区块标签中将不会被进行处理。比如，你在 HTML 区块内使用 Markdown 样式的<code>*强调*</code>会没有效果。</p>
+<p>HTML 的区段（行内）标签如 <code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code> 则不受限制，可以在 Markdown 的段落、列表或是标题里任意使用。依照个人习惯，甚至可以不用Markdown 格式，而直接采用 HTML 标签来格式化。举例说明：如果比较喜欢 HTML 的  <code>&lt;a&gt;</code> 或 <code>&lt;img&gt;</code> 标签，可以直接使用这些标签，而不用 Markdown 提供的链接或是图像标签语法。</p>
+<p>请注意，Markdown 语法在 HTML 区段标签间是有效的。</p>
+<h3 id="autoescape">特殊字符自动转换</h3>
+<p>在 HTML 文件中，有两个字符需要特殊处理： <code>&lt;</code> 和 <code>&amp;</code> 。 <code>&lt;</code> 符号用于起始标签，<code>&amp;</code> 符号则用于标记 HTML 实体，如果你只是想要显示这些字符的原型，你必须要使用实体的形式，像是 <code>&amp;lt;</code> 和 <code>&amp;amp;</code>。</p>
+<p><code>&amp;</code> 符号其实很容易让写作网络文件的人感到困扰，如果你要打「AT&amp;T」 ，你必须要写成「<code>AT&amp;amp;T</code>」 ，而且网址中的 <code>&amp;</code> 字符也要转换。如果你要链接到：</p>
+<pre><code>http://images.google.com/images?num=30&amp;q=larry+bird
+</code></pre>
+<p>你必须要把网址写成：</p>
+<pre><code>http://images.google.com/images?num=30&amp;amp;q=larry+bird
+</code></pre>
+<p>才能放到链接标签的 <code>href</code> 属性里。不用说也知道这很容易忽略，这也可能是 HTML 标准检查所检查到的错误中，数量最多的。</p>
+<p>Markdown 可以自动处理这些符号，如果你使用的 <code>&amp;</code> 字符是 HTML 字符实体的一部分，它会保留原状，否则它会被转换成 <code>&amp;amp</code>;。<br>
+所以你如果要在文件中插入一个著作权的符号，你可以这样写：</p>
+<pre><code>&amp;copy;
+</code></pre>
+<p>Markdown 将不会对这段文字做修改，但是如果你这样写：</p>
+<pre><code>AT&amp;T
+</code></pre>
+<p>Markdown 就会将它转为：</p>
+<pre><code>AT&amp;amp;T
+</code></pre>
+<p>类似的状况也会发生在 <code>&lt;</code> 符号上，因为 Markdown 支持 <a href="#html">兼容 HTML</a> ，如果你是使用 <code>&lt;</code> 符号作为 HTML 标签使用，那 Markdown 也不会对它做任何转换，但是如果你是写：</p>
+<pre><code>4 &lt; 5
+</code></pre>
+<p>Markdown 将会把它转换为：</p>
+<pre><code>4 &amp;lt; 5
+</code></pre>
+<p>不过需要注意的是，code 范围内，不论是行内还是区块， <code>&lt;</code> 和 <code>&amp;</code> 两个符号都<strong>一定</strong>会被转换成 HTML 实体，这项特性让你可以很容易地用 Markdown 写 HTML code （和 HTML 相对而言， HTML 语法中，你要把所有的 <code>&lt;</code> 和 <code>&amp;</code> 都转换为 HTML 实体，才能在 HTML 文件里面写出 HTML code。）</p>
+<hr>
+<h2 id="block">区块元素</h2>
+<h3 id="p">段落和换行</h3>
+<p>一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行（空行的定义是显示上看起来像是空的，便会被视为空行。比方说，若某一行只包含空格和制表符，则该行也会被视为空行）。普通段落不该用空格或制表符来缩进。</p>
+<p>「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 <code>&lt;br /&gt;</code> 标签。</p>
+<p>如果你<strong>真的</strong>想要插入 <code>&lt;br /&gt;</code> 标签的话，在行尾加上两个以上的格然后回车。</p>
+<p>是的，这确实需要花比较多功夫来插入 <code>&lt;br /&gt;</code> ，但是「每个换行都转换为 <code>&lt;br /&gt;</code>」的方法在 Markdown 中并不适合， Markdown 中 email 式的 <a href="#blockquote">区块引用</a> 和多段落的 <a href="#list">列表</a> 在使用换行来排版的时候，不但更好用，还更好阅读。</p>
+<h3 id="header">标题</h3>
+<p>Markdown 支持两种标题的语法，类 [Setext] <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank">1</a> 和类 [atx] <a href="http://www.aaronsw.com/2002/atx/" target="_blank">2</a> 形式。</p>
+<p>类 Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），例如：</p>
+<pre><code>This is an H1
+=============
+
+This is an H2
+-------------
+</code></pre>
+<p>任何数量的 <code>=</code> 和 <code>-</code> 都可以有效果。</p>
+<p>类 Atx 形式则是在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶，例如：</p>
+<pre><code># This is an H1
+
+## This is an H2
+
+###### This is an H6
+</code></pre>
+<p>你可以选择性地「闭合」类 atx 样式的标题，这纯粹只是美观用的，若是觉得这样看起来比较舒适，你就可以在行尾加上 <code>#</code>，而行尾的 <code>#</code> 数量也不用和开头一样（行首的井字数量决定标题的阶数）：</p>
+<pre><code># This is an H1 #
+
+## This is an H2 ##
+
+### This is an H3 ######
+</code></pre>
+<h3 id="blockquote">Blockquotes</h3>
+<p>Markdown 标记区块引用是使用类似 email 中用 <code>&gt;</code> 的引用方式。如果你还熟悉在 email 信件中的引言部分，你就知道怎么在 Markdown 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行的最前面加上 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+&gt; 
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+&gt; id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>Markdown 也允许你只在整个段落的第一行最前面加上 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>区块引用可以有嵌套（例如：引用内的引用），只要根据层数加上不同数量的 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is the first level of quoting.
+&gt;
+&gt; &gt; This is nested blockquote.
+&gt;
+&gt; Back to the first level.
+</code></pre>
+<p>引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等：</p>
+<pre><code>&gt; ## This is a header.
+&gt; 
+&gt; 1.   This is the first list item.
+&gt; 2.   This is the second list item.
+&gt; 
+&gt; Here's some example code:
+&gt; 
+&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);
+</code></pre>
+<p>任何标准的文本编辑器都能简单地建立 email 样式的引用，例如 BBEdit ，你可以选取文字后然后从选单中选择<em>增加引用阶层</em>。</p>
+<h3 id="list">列表</h3>
+<p>Markdown 支持有序列表和无序列表。</p>
+<p>无序清单使用星号、加号或是减号作为列表标记：</p>
+<pre><code>*   Red
+*   Green
+*   Blue
+</code></pre>
+<p>等同于：</p>
+<pre><code>+   Red
++   Green
++   Blue
+</code></pre>
+<p>也等同于：</p>
+<pre><code>-   Red
+-   Green
+-   Blue
+</code></pre>
+<p>有序列表则使用数字接着一个英文句点：</p>
+<pre><code>1.  Bird
+2.  McHale
+3.  Parish
+</code></pre>
+<p>很重要的一点是，你在列表标记上使用的数字并不会影响输出的 HTML 结果，上面的列表所产生的 HTML 标记为：</p>
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;McHale&lt;/li&gt;
+&lt;li&gt;Parish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p>如果你的列表标记写成：</p>
+<pre><code>1.  Bird
+1.  McHale
+1.  Parish
+</code></pre>
+<p>或甚至是：</p>
+<pre><code>3. Bird
+1. McHale
+8. Parish
+</code></pre>
+<p>你都会得到完全相同的 HTML 输出。重点在于，你可以让 Markdown 文件的列表数字和输出的结果相同，或是你懒一点，你可以完全不用在意数字的正确性。</p>
+<p>如果你使用懒惰的写法，建议第一个项目最好还是从 1. 开始，因为 Markdown 未来可能会支持有序列表的 start 属性。</p>
+<p>列表项目标记通常是放在最左边，但是其实也可以缩进，最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
+<p>要让列表看起来更漂亮，你可以把内容用固定的缩进整理好：</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>但是如果你很懒，那也行：</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>如果列表项目间用空行分开， 在输出 HTML 时 Markdown 会把项目的内容在输出时用 <code>&lt;p&gt;</code> 
+标签包起来，举例来说：</p>
+<pre><code>*   Bird
+*   Magic
+</code></pre>
+<p>会被转换为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;Magic&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>但是这个：</p>
+<pre><code>*   Bird
+
+*   Magic
+</code></pre>
+<p>会被转换为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Bird&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Magic&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>列表项目可以包含多个段落，每个项目下的段落都必须缩进 4 个空格或是 1 个制表符：</p>
+<pre><code>1.  This is a list item with two paragraphs. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+    mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+    sit amet velit.
+
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre>
+<p>如果你每行都有缩进，看起来会看好很多，当然，Markdown 也允许：</p>
+<pre><code>*   This is a list item with two paragraphs.
+
+    This is the second paragraph in the list item. You're
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.
+
+*   Another item in the same list.
+</code></pre>
+<p>如果要在列表项目内放进引用，那 <code>&gt;</code> 就需要缩进：</p>
+<pre><code>*   A list item with a blockquote:
+
+    &gt; This is a blockquote
+    &gt; inside a list item.
+</code></pre>
+<p>如果要放代码区块的话，该区块就需要缩排<strong>两次</strong>，也就是 8 个空格或是 2 个制表符：</p>
+<pre><code>*   A list item with a code block:
+
+        &lt;code goes here&gt;
+</code></pre>
+<p>当然，项目列表很可能会不小心产生，像是下面这样的写法：</p>
+<pre><code>1986. What a great season.
+</code></pre>
+<p>换句话说，也就是在行首出现<strong>数字-句点-空白</strong>，要避免这样的状况，你可以在句点前面加上反斜杠。</p>
+<pre><code>1986\. What a great season.
+</code></pre>
+<h3 id="precode">程序代码区块</h3>
+<p>和程序相关的写作或是标签语言原始码通常会有已经排版好的代码区块，通常这些区块我们并不希望它以一般段落文件的方式去排版，而是照原来的样子显示，Markdown 会用 <code>&lt;pre&gt;</code> 和 <code>&lt;code&gt;</code> 标签来把代码区块包起来。</p>
+<p>要在 Markdown 中建立代码区块很简单，只要简单地缩进 4 个空格或是 1 个制表符就可以，例如，下面的输入：</p>
+<pre><code>This is a normal paragraph:
+
+    This is a code block.
+</code></pre>
+<p>Markdown 会转换成：</p>
+<pre><code>&lt;p&gt;This is a normal paragraph:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;This is a code block.
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>这个每行一阶的缩进（4 个空格或是 1 个制表符），都会被移除，例如：</p>
+<pre><code>Here is an example of AppleScript:
+
+    tell application &quot;Foo&quot;
+        beep
+    end tell
+</code></pre>
+<p>会被转换为：</p>
+<pre><code>&lt;p&gt;Here is an example of AppleScript:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tell application &quot;Foo&quot;
+    beep
+end tell
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>一个代码区块会一直持续到没有缩进的那一行（或是文件结尾）。</p>
+<p>在代码区块里面， <code>&amp;</code> 、 <code>&lt;</code> 和 <code>&gt;</code> 会自动转成 HTML 实体，这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码，只需要复制贴上，再加上缩进就可以了，剩下的 Markdown 都会帮你处理，例如：</p>
+<pre><code>    &lt;div class=&quot;footer&quot;&gt;
+        &amp;copy; 2004 Foo Corporation
+    &lt;/div&gt;
+</code></pre>
+<p>会被转换为：</p>
+<pre><code>&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;footer&quot;&amp;gt;
+    &amp;amp;copy; 2004 Foo Corporation
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>代码区块中，一般的 Markdown 语法不会被转换，像是星号便只是星号，这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件。</p>
+<h3 id="hr">分隔线</h3>
+<p>你可以在一行中用三个或以上的星号、减号来建立一个分隔线，行内不能有其他东西。你也可以在星号中间插入空格。下面每种写法都可以建立分隔线：</p>
+<pre><code>* * *
+
+***
+
+*****
+
+- - -
+
+---------------------------------------
+</code></pre>
+<hr>
+<h2 id="span">区段元素</h2>
+<h3 id="link">链接</h3>
+<p>Markdown 支持两种形式的链接语法： <strong>行内式</strong>和<strong>参考式</strong>两种形式。</p>
+<p>不管是哪一种，链接的文字都是用 [方括号] 来标记。</p>
+<p>要建立一个<strong>行内式</strong>的链接，只要在方括号后面马上接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
+<pre><code>This is [an example](http://example.com/ &quot;Title&quot;) inline link.
+
+[This link](http://example.net/) has no title attribute.
+</code></pre>
+<p>会产生：</p>
+<pre><code>&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot; title=&quot;Title&quot;&gt;
+an example&lt;/a&gt; inline link.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://example.net/&quot;&gt;This link&lt;/a&gt; has no
+title attribute.&lt;/p&gt;
+</code></pre>
+<p>如果你是要链接到同样主机的资源，你可以使用相对路径：</p>
+<pre><code>See my [About](/about/) page for details.   
+</code></pre>
+<p><strong>参考式</strong>的链接是在链接文字的括号后面再接上另一个方括号，而在第二个方括号里面要填入用以辨识链接的标记：</p>
+<pre><code>This is [an example][id] reference-style link.
+</code></pre>
+<p>你也可以选择性地在两个方括号中间加上空格：</p>
+<pre><code>This is [an example] [id] reference-style link.
+</code></pre>
+<p>接着，在文件的任意处，你可以把这个标签的链接内容定义出来：</p>
+<pre><code>[id]: http://example.com/  &quot;Optional Title Here&quot;
+</code></pre>
+<p>链接内容定义的形式为：</p>
+<ul>
+<li>方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字</li>
+<li>接着一个冒号</li>
+<li>接着一个以上的空格或制表符</li>
+<li>接着链接的网址</li>
+<li>选择性地接着 title 内容，可以用单引号、双引号或是圆括号包着</li>
+</ul>
+<p>下面这三种连结的定义都是相同：</p>
+<pre><code>[foo]: http://example.com/  &quot;Optional Title Here&quot;
+[foo]: http://example.com/  'Optional Title Here'
+[foo]: http://example.com/  (Optional Title Here)
+</code></pre>
+<p>**请注意：**有一个已知的问题是 Markdown.pl 1.0.1 会忽略单引号包起来的链接 title。</p>
+<p>链接网址也可以用方括号包起来：</p>
+<pre><code>[id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;
+</code></pre>
+<p>你也可以把 title 属性放到下一行，也可以加一些缩进，网址太长的话，这样会比较好看：</p>
+<pre><code>[id]: http://example.com/longish/path/to/resource/here
+    &quot;Optional Title Here&quot;
+</code></pre>
+<p>网址定义只有在产生链接的时候用到，并不会直接出现在文件之中。</p>
+<p>链接辨识标记可以有字母、数字、空白和标点符号，但是并<strong>不区分</strong>大小写，因此下面两个链接是一样的：</p>
+<pre><code>[link text][a]
+[link text][A]
+</code></pre>
+<p><strong>隐式链接标记</strong>功能让你可以省略指定链接标记，这种情形下，链接标记和链接文字会视为相同，要用隐式链接标记只要在链接文字后面加上一个空的方括号，如果你要让 &ldquo;Google&rdquo; 链接到 google.com，你可以简化成：</p>
+<pre><code>[Google][]
+</code></pre>
+<p>然后定义链接内容：</p>
+<pre><code>[Google]: http://google.com/
+</code></pre>
+<p>由于链接文字可能包含空白，所以这种简化的标记内也可以包含多个单词：</p>
+<pre><code>Visit [Daring Fireball][] for more information.
+</code></pre>
+<p>然后接着定义链接：</p>
+<pre><code>[Daring Fireball]: http://daringfireball.net/
+</code></pre>
+<p>链接的定义可以放在文件中的任何一个地方，我比较偏好直接放在链接出现段落的后面，你也可以把它放在文件最后面，就像是注解一样。</p>
+<p>下面是一个参考式链接的范例：</p>
+<pre><code>I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        &quot;Google&quot;
+  [2]: http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [3]: http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre>
+<p>如果改成用链接名称的方式写：</p>
+<pre><code>I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        &quot;Google&quot;
+  [yahoo]:  http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [msn]:    http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre>
+<p>上面两种写法都会产生下面的 HTML。</p>
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
+title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from
+&lt;a href=&quot;http://search.yahoo.com/&quot; title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt;
+or &lt;a href=&quot;http://search.msn.com/&quot; title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre>
+<p>下面是用行内形式写的同样一段内容的 Markdown 文件，提供作为比较之用：</p>
+<pre><code>I get 10 times more traffic from [Google](http://google.com/ &quot;Google&quot;)
+than from [Yahoo](http://search.yahoo.com/ &quot;Yahoo Search&quot;) or
+[MSN](http://search.msn.com/ &quot;MSN Search&quot;).
+</code></pre>
+<p>参考式的链接其实重点不在于它比较好写，而是它比较好读，比较一下上面的范例，使用参考式的文章本身只有 81 个字符，但是用行内形式的连结却会增加到 176 个字符，如果是用纯 HTML 格式来写，会有 234 个字符，在 HTML 格式中，标签比文字还要多。</p>
+<p>使用 Markdown 的参考式链接，可以让文件更像是浏览器最后产生的结果，让你可以把一些标记相关的信息移到段落文字之外，你就可以增加连结而不让文章的阅读感觉被打断。</p>
+<h3 id="em">强调</h3>
+<p>Markdown 使用星号（<code>*</code>）和底线（<code>_</code>）作为标记强调字词的符号，被 <code>*</code> 或 <code>_</code> 包围的字词会被转成用 <code>&lt;em&gt;</code> 标签包围，用两个 <code>*</code> 或 <code>_</code> 包起来的话，则会被转成 <code>&lt;strong&gt;</code>，例如：</p>
+<pre><code>*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+</code></pre>
+<p>会转成：</p>
+<pre><code>&lt;em&gt;single asterisks&lt;/em&gt;
+
+&lt;em&gt;single underscores&lt;/em&gt;
+
+&lt;strong&gt;double asterisks&lt;/strong&gt;
+
+&lt;strong&gt;double underscores&lt;/strong&gt;
+</code></pre>
+<p>你可以随便用你喜欢的样式，唯一的限制是，你用什么符号开启标签，就要用什么符号结束。</p>
+<p>强调也可以直接插在文字中间：</p>
+<pre><code>un*frigging*believable
+</code></pre>
+<p>但是<strong>如果你的 <code>*</code> 和 <code>_</code> 两边都有空白的话，它们就只会被当成普通的符号</strong>。</p>
+<p>如果要在文字前后直接插入普通的星号或底线，你可以用反斜杠：</p>
+<pre><code>\*this text is surrounded by literal asterisks\*
+</code></pre>
+<h3 id="code">代码</h3>
+<p>如果要标记一小段行内代码，你可以用反引号把它包起来（<code>`</code>），例如：</p>
+<pre><code>Use the `printf()` function.
+</code></pre>
+<p>会产生：</p>
+<pre><code>&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
+</code></pre>
+<p>如果要在代码区段内插入反引号，你可以用多个反引号来开启和结束代码区段：</p>
+<pre><code>``There is a literal backtick (`) here.``
+</code></pre>
+<p>这段语法会产生：</p>
+<pre><code>&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<p>代码区段的起始和结束端都可以放入一个空白，起始端后面一个，结束端前面一个，这样你就可以在区段的一开始就插入反引号：</p>
+<pre><code>A single backtick in a code span: `` ` ``
+
+A backtick-delimited string in a code span: `` `foo` ``
+</code></pre>
+<p>会产生：</p>
+<pre><code>&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<p>在代码区段内，<code>&amp;</code> 和方括号都会被转成 HTML 实体，这样会比较容易插入 HTML 原始码，Markdown 会把下面这段：</p>
+<pre><code>Please don't use any `&lt;blink&gt;` tags.
+</code></pre>
+<p>转为：</p>
+<pre><code>&lt;p&gt;Please don't use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+</code></pre>
+<p>你也可以这样写：</p>
+<pre><code>`&amp;#8212;` is the decimal-encoded equivalent of `&amp;mdash;`.
+</code></pre>
+<p>以产生：</p>
+<pre><code>&lt;p&gt;&lt;code&gt;&amp;amp;#8212;&lt;/code&gt; is the decimal-encoded
+equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;
+</code></pre>
+<h3 id="img">图片</h3>
+<p>很明显地，要在纯文本应用中设计一个 「自然」的语法来插入图片是有一定难度的。</p>
+<p>Markdown 使用一种和链接很相似的语法来标记图片，同样也允许两种样式： <strong>行内式</strong>和<strong>参考式</strong>。</p>
+<p>行内式图片的语法看起来像是：</p>
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+</code></pre>
+<p>详细叙述如下：</p>
+<ul>
+<li>一个惊叹号 <code>!</code></li>
+<li>接着一对方括号，里面放上图片的替代文字</li>
+<li>接着一对普通括号，里面放上图片的网址，最后还可以用引号包住并加上选择性的 &rsquo;title&rsquo; 文字。</li>
+</ul>
+<p>参考式的图片语法则长得像这样：</p>
+<pre><code>![Alt text][id]
+</code></pre>
+<p>「id」是图片参考的名称，图片参考的定义方式则和链接参考一样：</p>
+<pre><code>[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre>
+<p>到目前为止， Markdown 还没有办法指定图片的宽高，如果你需要的话，你可以使用普通的 <code>&lt;img&gt;</code> 标签。</p>
+<hr>
+<h2 id="misc">其它</h2>
+<h3 id="autolink">自动链接</h3>
+<p>Markdown 支持比较简短的自动连结形式来处理网址和电子邮件信箱，只要是用方括号包起来， Markdown 就会自动把它转成链接，链接的文字就和链接位置一样，例如：</p>
+<pre><code>&lt;http://example.com/&gt;
+</code></pre>
+<p>Markdown 会转为：</p>
+<pre><code>&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;
+</code></pre>
+<p>邮址的自动链接也很类似，只是 Markdown 会先做一个编码转换的过程，把文字字符转成 16 进位码的 HTML 实体，这样的格式可以糊弄一些不好的邮址收集机器人，例如：</p>
+<pre><code>&lt;address@example.com&gt;
+</code></pre>
+<p>Markdown 会转成：</p>
+<pre><code>&lt;a href=&quot;&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;
+&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
+&amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
+&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
+</code></pre>
+<p>在浏览器里面，这段字符串（其实是 <code>&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;</code>）会变成一个可以点击的「address@example.com」链接。</p>
+<p>（这种作法虽然可以糊弄不少的机器人，但并无法全部挡下来，不过这样也比什么都不做好些。无论如何，公开你的信箱终究会引来广告信件的。）</p>
+<h3 id="backslash">反斜杠</h3>
+<p>Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用 <code>&lt;em&gt;</code> 标签），你可以在星号的前面加上反斜杠：</p>
+<pre><code>\*literal asterisks\*
+</code></pre>
+<p>Markdown 支持在下面这些符号前面加上反斜杠来帮助插入普通的符号：</p>
+<pre><code>\   反斜杠
+`   反引号
+*   星号
+_   底线
+{}  大括号
+[]  方括号
+()  括号
+#   井字号
++    加号
+-    减号
+.   英文句点
+!   惊叹号
+</code></pre>
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents"></nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>
