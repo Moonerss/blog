@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>single cell on Mooners</title>
+    <link>https://mooners.netlify.app/tags/single-cell/</link>
+    <description>Recent content in single cell on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/single-cell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>inferCNV 推断拷贝数</title>
+      <link>https://mooners.netlify.app/post/2022-07-04-infercnv/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-04-infercnv/</guid>
+      <description>inferCNV使用流程 inferCNV简介 inferCNV可以被用于单细胞RNA-seq数据识别大规模的染色体拷贝数变异，如：整个染色体或是大染色体片段的获得和缺失。主要是通过与一组参考“正常”细胞</description>
+    </item>
+    
+  </channel>
+</rss>

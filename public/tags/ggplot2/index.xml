@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ggplot2 on Mooners</title>
+    <link>https://mooners.netlify.app/tags/ggplot2/</link>
+    <description>Recent content in ggplot2 on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>组合多张ggplot2图片</title>
+      <link>https://mooners.netlify.app/post/2022-07-04-ggplot2-combine/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-04-ggplot2-combine/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>复合饼图</title>
+      <link>https://mooners.netlify.app/post/2020-01-07-pie-plot/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-01-07-pie-plot/</guid>
+      <description>复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种： 散点复合饼图（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在</description>
+    </item>
+    
+    <item>
+      <title>R graphics cookbook</title>
+      <link>https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/</guid>
+      <description>R语言绘制基础图形 R语言绘制图像主要有三种方式：（1）由graphics包提供的基础绘图方式；（2）基于ggplot2的qplot()快捷绘图函数；（3）ggplot2图层绘图风格 散点图 ## 方法一 plot(mtcars$wt, mtcars$mpg) ##</description>
+    </item>
+    
+  </channel>
+</rss>

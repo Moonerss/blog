@@ -6,7 +6,16 @@
     <description>Recent content in statistics on Mooners</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 27 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/statistics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>单尾还是双尾检验</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Sun, 03 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>&lt;p&gt;单侧检验 or 双侧检验？&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>PCA分析原理及实现</title>
       <link>https://mooners.netlify.app/post/index.zh/</link>
@@ -50,6 +59,33 @@
       
       <guid>https://mooners.netlify.app/post/index.zh/</guid>
       <description>fold change是一个ratio比值，用来比较在两种不同条件下同一事物的差异，当fold change &amp;gt; 1时表示一种上升的趋势，反之&amp;lt; 1 表示一种下降的趋势，这一概念在医学研究中是非常重要的。 然而，在真是的科学</description>
+    </item>
+    
+    <item>
+      <title>R 语言统计检验函数汇总</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Fri, 31 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description>连续型数据 基于分布的检验 T检验 t.test(1:10, 10:20) ## ## Welch Two Sample t-test ## ## data: 1:10 and 10:20 ## t = -6.862, df = 18.998, p-value = 1.513e-06 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -12.397677 -6.602323 ## sample estimates: ## mean of x mean of y ## 5.5 15.0 配对 t 检验： t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE) ## ## Paired t-test ## ## data: rnorm(10) and rnorm(10, mean = 1) ##</description>
+    </item>
+    
+    <item>
+      <title>Fisher精确检验</title>
+      <link>https://mooners.netlify.app/post/index.zh/</link>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/index.zh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>卡方检验</title>
+      <link>https://mooners.netlify.app/post/2018-12-21-chisq/</link>
+      <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-12-21-chisq/</guid>
+      <description></description>
     </item>
     
   </channel>

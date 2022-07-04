@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pheatmap on Mooners</title>
+    <link>https://mooners.netlify.app/tags/pheatmap/</link>
+    <description>Recent content in pheatmap on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/pheatmap/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pheatmap使用指南</title>
+      <link>https://mooners.netlify.app/post/2019-12-23-pheatmap/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-12-23-pheatmap/</guid>
+      <description>pheatmap包 简介 官方介绍： A function to draw clustered heatmaps where one has better control over some graphical parameters such as cell size, etc 实际上，pheatmap是 Pretty Heatmaps 的缩写，是我认为目前最好用的绘制聚类热图的R包（尽管有很多其他的函数。。。） 使用方法 pheatmap(mat, color = colorRampPalette(rev(brewer.pal(n = 7, name</description>
+    </item>
+    
+  </channel>
+</rss>

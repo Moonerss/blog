@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TCGA on Mooners</title>
+    <link>https://mooners.netlify.app/tags/tcga/</link>
+    <description>Recent content in TCGA on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 19 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/tcga/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCGA barcode（样本ID）</title>
+      <link>https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/</link>
+      <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/</guid>
+      <description>接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的7个编码信息，每个编码信息用横杠-隔开，如下所示： 接触和分析过TCGA数据的朋友肯定会经常处理TCGA barcode的前15位（有时</description>
+    </item>
+    
+  </channel>
+</rss>
