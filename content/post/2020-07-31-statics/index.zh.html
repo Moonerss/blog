@@ -1,0 +1,437 @@
+---
+title: R 语言统计检验函数汇总
+author: Jeason
+date: '2020-07-31'
+slug: -statics
+categories:
+  - R
+  - statistics
+tags:
+  - R
+  - statistics
+---
+
+
+
+<div id="连续型数据" class="section level2">
+<h2>连续型数据</h2>
+<div id="基于分布的检验" class="section level3">
+<h3>基于分布的检验</h3>
+<div id="t检验" class="section level4">
+<h4>T检验</h4>
+<pre class="r"><code>t.test(1:10, 10:20)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  1:10 and 10:20
+## t = -6.862, df = 18.998, p-value = 1.513e-06
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -12.397677  -6.602323
+## sample estimates:
+## mean of x mean of y 
+##       5.5      15.0</code></pre>
+<p>配对 t 检验：</p>
+<pre class="r"><code>t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  rnorm(10) and rnorm(10, mean = 1)
+## t = -2.0672, df = 9, p-value = 0.06868
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -1.63668905  0.07370857
+## sample estimates:
+## mean difference 
+##      -0.7814902</code></pre>
+<p>使用公式表示：</p>
+<pre class="r"><code>df &lt;- data.frame(
+  value = c(rnorm(10), rnorm(10, mean = 1)),
+  group = c(rep(&quot;case&quot;, 10), rep(&quot;control&quot;, 10))
+)
+
+t.test(value ~ group, data = df)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  value by group
+## t = -0.83386, df = 17.99, p-value = 0.4153
+## alternative hypothesis: true difference in means between group case and group control is not equal to 0
+## 95 percent confidence interval:
+##  -0.9447619  0.4079057
+## sample estimates:
+##    mean in group case mean in group control 
+##           -0.03321131            0.23521681</code></pre>
+<p>假设方差同质化：</p>
+<pre class="r"><code>t.test(value ~ group, data = df, var.equal = TRUE)</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  value by group
+## t = -0.83386, df = 18, p-value = 0.4153
+## alternative hypothesis: true difference in means between group case and group control is not equal to 0
+## 95 percent confidence interval:
+##  -0.9447355  0.4078793
+## sample estimates:
+##    mean in group case mean in group control 
+##           -0.03321131            0.23521681</code></pre>
+</div>
+<div id="总体方差比较" class="section level4">
+<h4>总体方差比较</h4>
+<pre class="r"><code>var.test(value ~ group, data = df)</code></pre>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  value by group
+## F = 0.95435, num df = 9, denom df = 9, p-value = 0.9456
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  0.2370459 3.8421893
+## sample estimates:
+## ratio of variances 
+##          0.9543455</code></pre>
+<pre class="r"><code>bartlett.test(value ~ group, data = df)</code></pre>
+<pre><code>## 
+##  Bartlett test of homogeneity of variances
+## 
+## data:  value by group
+## Bartlett&#39;s K-squared = 0.0046542, df = 1, p-value = 0.9456</code></pre>
+</div>
+<div id="多个组间均值的比较" class="section level4">
+<h4>多个组间均值的比较</h4>
+<p>两组以上的比较要使用ANOVA</p>
+<pre class="r"><code>aov(wt ~ factor(cyl), data = mtcars)</code></pre>
+<pre><code>## Call:
+##    aov(formula = wt ~ factor(cyl), data = mtcars)
+## 
+## Terms:
+##                 factor(cyl) Residuals
+## Sum of Squares     18.17579  11.50296
+## Deg. of Freedom           2        29
+## 
+## Residual standard error: 0.6298047
+## Estimated effects may be unbalanced</code></pre>
+<pre class="r"><code>model.tables(aov(wt ~ factor(cyl), data = mtcars))</code></pre>
+<pre><code>## Tables of effects
+## 
+##  factor(cyl) 
+##           4       6      8
+##     -0.9315 -0.1001  0.782
+## rep 11.0000  7.0000 14.000</code></pre>
+<p>ANOVA 分析假设各组样本数据的方差是相等的，如果知道（或怀疑）不相等，可以使用 <code>oneway.test()</code> 函数。</p>
+<pre class="r"><code>oneway.test(wt ~ cyl, data = mtcars)</code></pre>
+<pre><code>## 
+##  One-way analysis of means (not assuming equal variances)
+## 
+## data:  wt and cyl
+## F = 20.249, num df = 2.000, denom df = 18.974, p-value = 1.963e-05</code></pre>
+</div>
+<div id="多组样本的配对-t-检验" class="section level4">
+<h4>多组样本的配对 t 检验</h4>
+<pre class="r"><code>pairwise.t.test(mtcars$wt, mtcars$cyl)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  mtcars$wt and mtcars$cyl 
+## 
+##   4       6    
+## 6 0.011   -    
+## 8 6.2e-07 0.010
+## 
+## P value adjustment method: holm</code></pre>
+</div>
+<div id="正态性检验" class="section level4">
+<h4>正态性检验</h4>
+<pre class="r"><code>shapiro.test(rnorm(30))</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  rnorm(30)
+## W = 0.94755, p-value = 0.1453</code></pre>
+<pre class="r"><code>qqnorm(rnorm(30))</code></pre>
+<p><img src="{{< blogdown/postref >}}index.zh_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="分布的对称性检验" class="section level4">
+<h4>分布的对称性检验</h4>
+<p>用 Kolmogorov-Smirnov 检验查看一个向量是否来自一个对称的分布（不限于正态分布）。</p>
+<pre class="r"><code>ks.test(rnorm(10), pnorm)</code></pre>
+<pre><code>## 
+##  Exact one-sample Kolmogorov-Smirnov test
+## 
+## data:  rnorm(10)
+## D = 0.32939, p-value = 0.1816
+## alternative hypothesis: two-sided</code></pre>
+<blockquote>
+<p>函数第 1 个参数指定待检验的数据，第 2个参数指定对称分布的类型，可以是数值型向量、指定概率分布函数的字符串或一个分布函数。</p>
+</blockquote>
+<pre class="r"><code>ks.test(rnorm(10), &quot;pnorm&quot;)</code></pre>
+<pre><code>## 
+##  Exact one-sample Kolmogorov-Smirnov test
+## 
+## data:  rnorm(10)
+## D = 0.30619, p-value = 0.2497
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>ks.test(rpois(10, lambda = 1), &quot;pnorm&quot;)</code></pre>
+<pre><code>## Warning in ks.test.default(rpois(10, lambda = 1), &quot;pnorm&quot;): ties should not be
+## present for the Kolmogorov-Smirnov test</code></pre>
+<pre><code>## 
+##  Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  rpois(10, lambda = 1)
+## D = 0.5, p-value = 0.01348
+## alternative hypothesis: two-sided</code></pre>
+</div>
+<div id="检验两个向量是否服从同一分布" class="section level4">
+<h4>检验两个向量是否服从同一分布</h4>
+<pre class="r"><code>ks.test(rnorm(20), rnorm(30))</code></pre>
+<pre><code>## 
+##  Exact two-sample Kolmogorov-Smirnov test
+## 
+## data:  rnorm(20) and rnorm(30)
+## D = 0.16667, p-value = 0.8602
+## alternative hypothesis: two-sided</code></pre>
+</div>
+<div id="相关性分析" class="section level4">
+<h4>相关性分析</h4>
+<pre class="r"><code>cor.test(mtcars$mpg, mtcars$wt)</code></pre>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  mtcars$mpg and mtcars$wt
+## t = -9.559, df = 30, p-value = 1.294e-10
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.9338264 -0.7440872
+## sample estimates:
+##        cor 
+## -0.8676594</code></pre>
+</div>
+</div>
+<div id="不依赖分布的检验" class="section level3">
+<h3>不依赖分布的检验</h3>
+<div id="均值检验" class="section level4">
+<h4>均值检验</h4>
+<p>Wilcoxon 检验是 t 检验的非参数版本</p>
+<pre class="r"><code>wilcox.test(1:10, 10:20)</code></pre>
+<pre><code>## Warning in wilcox.test.default(1:10, 10:20): cannot compute exact p-value with
+## ties</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  1:10 and 10:20
+## W = 0.5, p-value = 0.0001425
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<pre class="r"><code>## 符号秩检验
+wilcox.test(1:10, 10:19, paired = TRUE)</code></pre>
+<pre><code>## Warning in wilcox.test.default(1:10, 10:19, paired = TRUE): cannot compute exact
+## p-value with ties</code></pre>
+<pre><code>## 
+##  Wilcoxon signed rank test with continuity correction
+## 
+## data:  1:10 and 10:19
+## V = 0, p-value = 0.001904
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+<div id="多均值比较" class="section level4">
+<h4>多均值比较</h4>
+<pre class="r"><code>## Kruskal-Wallis 秩和检验
+kruskal.test(wt ~ factor(cyl), data = mtcars)</code></pre>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  wt by factor(cyl)
+## Kruskal-Wallis chi-squared = 22.807, df = 2, p-value = 1.116e-05</code></pre>
+</div>
+<div id="方差检验" class="section level4">
+<h4>方差检验</h4>
+<p>使用Fligner-Killeen（中位数）检验完成不同组别的方差比较</p>
+<pre class="r"><code>fligner.test(wt ~ cyl, data = mtcars)</code></pre>
+<pre><code>## 
+##  Fligner-Killeen test of homogeneity of variances
+## 
+## data:  wt by cyl
+## Fligner-Killeen:med chi-squared = 0.48467, df = 2, p-value = 0.7848</code></pre>
+</div>
+</div>
+</div>
+<div id="离散数据" class="section level2">
+<h2>离散数据</h2>
+<div id="比例检验" class="section level3">
+<h3>比例检验</h3>
+<p>使用 <code>prop.test()</code> 比较两组观测值发生的概率是否有差异。</p>
+<pre class="r"><code>heads &lt;- rbinom(1, size = 100, prob = .5)
+prop.test(heads, 100)  </code></pre>
+<pre><code>## 
+##  1-sample proportions test with continuity correction
+## 
+## data:  heads out of 100, null probability 0.5
+## X-squared = 0.01, df = 1, p-value = 0.9203
+## alternative hypothesis: true p is not equal to 0.5
+## 95 percent confidence interval:
+##  0.4086512 0.6105719
+## sample estimates:
+##    p 
+## 0.51</code></pre>
+<pre class="r"><code>prop.test(heads, 100, p = 0.3, correct = FALSE)</code></pre>
+<pre><code>## 
+##  1-sample proportions test without continuity correction
+## 
+## data:  heads out of 100, null probability 0.3
+## X-squared = 21, df = 1, p-value = 4.593e-06
+## alternative hypothesis: true p is not equal to 0.3
+## 95 percent confidence interval:
+##  0.4134801 0.6057800
+## sample estimates:
+##    p 
+## 0.51</code></pre>
+</div>
+<div id="二项式检验" class="section level3">
+<h3>二项式检验</h3>
+<pre class="r"><code>binom.test(c(682, 243), p = 3/4)</code></pre>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  c(682, 243)
+## number of successes = 682, number of trials = 925, p-value = 0.3825
+## alternative hypothesis: true probability of success is not equal to 0.75
+## 95 percent confidence interval:
+##  0.7076683 0.7654066
+## sample estimates:
+## probability of success 
+##              0.7372973</code></pre>
+</div>
+<div id="列联表" class="section level3">
+<h3>列联表</h3>
+<p>确定两个分类变量是否相关</p>
+<div id="fisher精确检验" class="section level4">
+<h4>Fisher精确检验</h4>
+<pre class="r"><code>TeaTasting &lt;-
+matrix(c(3, 1, 1, 3),
+       nrow = 2,
+       dimnames = list(Guess = c(&quot;Milk&quot;, &quot;Tea&quot;),
+                       Truth = c(&quot;Milk&quot;, &quot;Tea&quot;)))
+fisher.test(TeaTasting, alternative = &quot;greater&quot;)</code></pre>
+<pre><code>## 
+##  Fisher&#39;s Exact Test for Count Data
+## 
+## data:  TeaTasting
+## p-value = 0.2429
+## alternative hypothesis: true odds ratio is greater than 1
+## 95 percent confidence interval:
+##  0.3135693       Inf
+## sample estimates:
+## odds ratio 
+##   6.408309</code></pre>
+<p>当样本数比较多时，使用卡方检验代替</p>
+<pre class="r"><code>chisq.test(TeaTasting)</code></pre>
+<pre><code>## Warning in chisq.test(TeaTasting): Chi-squared approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  TeaTasting
+## X-squared = 0.5, df = 1, p-value = 0.4795</code></pre>
+<p>对于三变量的混合影响，使用 Cochran-Mantel-Haenszel 检验。</p>
+<pre class="r"><code>Rabbits &lt;-
+array(c(0, 0, 6, 5,
+        3, 0, 3, 6,
+        6, 2, 0, 4,
+        5, 6, 1, 0,
+        2, 5, 0, 0),
+      dim = c(2, 2, 5),
+      dimnames = list(
+          Delay = c(&quot;None&quot;, &quot;1.5h&quot;),
+          Response = c(&quot;Cured&quot;, &quot;Died&quot;),
+          Penicillin.Level = c(&quot;1/8&quot;, &quot;1/4&quot;, &quot;1/2&quot;, &quot;1&quot;, &quot;4&quot;)))
+Rabbits</code></pre>
+<pre><code>## , , Penicillin.Level = 1/8
+## 
+##       Response
+## Delay  Cured Died
+##   None     0    6
+##   1.5h     0    5
+## 
+## , , Penicillin.Level = 1/4
+## 
+##       Response
+## Delay  Cured Died
+##   None     3    3
+##   1.5h     0    6
+## 
+## , , Penicillin.Level = 1/2
+## 
+##       Response
+## Delay  Cured Died
+##   None     6    0
+##   1.5h     2    4
+## 
+## , , Penicillin.Level = 1
+## 
+##       Response
+## Delay  Cured Died
+##   None     5    1
+##   1.5h     6    0
+## 
+## , , Penicillin.Level = 4
+## 
+##       Response
+## Delay  Cured Died
+##   None     2    0
+##   1.5h     5    0</code></pre>
+<pre class="r"><code>mantelhaen.test(Rabbits)</code></pre>
+<pre><code>## 
+##  Mantel-Haenszel chi-squared test with continuity correction
+## 
+## data:  Rabbits
+## Mantel-Haenszel X-squared = 3.9286, df = 1, p-value = 0.04747
+## alternative hypothesis: true common odds ratio is not equal to 1
+## 95 percent confidence interval:
+##   1.026713 47.725133
+## sample estimates:
+## common odds ratio 
+##                 7</code></pre>
+</div>
+<div id="列联表非参数检验" class="section level4">
+<h4>列联表非参数检验</h4>
+<p>Friedman 秩和检验是一个非参数版本的双边 ANOVA 检验。</p>
+<pre class="r"><code>## Hollander &amp; Wolfe (1973), p. 140ff.
+## Comparison of three methods (&quot;round out&quot;, &quot;narrow angle&quot;, and
+##  &quot;wide angle&quot;) for rounding first base.  For each of 18 players
+##  and the three method, the average time of two runs from a point on
+##  the first base line 35ft from home plate to a point 15ft short of
+##  second base is recorded.
+RoundingTimes &lt;-
+matrix(c(5.40, 5.50, 5.55,
+         5.85, 5.70, 5.75,
+         5.20, 5.60, 5.50,
+         5.55, 5.50, 5.40,
+         5.90, 5.85, 5.70,
+         5.45, 5.55, 5.60,
+         5.40, 5.40, 5.35,
+         5.45, 5.50, 5.35,
+         5.25, 5.15, 5.00,
+         5.85, 5.80, 5.70,
+         5.25, 5.20, 5.10,
+         5.65, 5.55, 5.45,
+         5.60, 5.35, 5.45,
+         5.05, 5.00, 4.95,
+         5.50, 5.50, 5.40,
+         5.45, 5.55, 5.50,
+         5.55, 5.55, 5.35,
+         5.45, 5.50, 5.55,
+         5.50, 5.45, 5.25,
+         5.65, 5.60, 5.40,
+         5.70, 5.65, 5.55,
+         6.30, 6.30, 6.25),
+       nrow = 22,
+       byrow = TRUE,
+       dimnames = list(1 : 22,
+                       c(&quot;Round Out&quot;, &quot;Narrow Angle&quot;, &quot;Wide Angle&quot;)))
+friedman.test(RoundingTimes)</code></pre>
+<pre><code>## 
+##  Friedman rank sum test
+## 
+## data:  RoundingTimes
+## Friedman chi-squared = 11.143, df = 2, p-value = 0.003805</code></pre>
+</div>
+</div>
+</div>
