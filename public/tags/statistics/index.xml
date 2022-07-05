@@ -80,12 +80,39 @@
     </item>
     
     <item>
+      <title>超几何分布和二项分布</title>
+      <link>https://mooners.netlify.app/post/2019-02-11-hpyergeometric/</link>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-02-11-hpyergeometric/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>关于C-index计算的相关问题</title>
+      <link>https://mooners.netlify.app/post/2019-01-09-c-index/</link>
+      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-01-09-c-index/</guid>
+      <description>背景 在进行Cox模型的预后能力评估比较时，C-index作为一个重要的评价指标被广泛的使用。目前有多个R包 可以实现C-index的计算，如：Hmisc，survcomp等。但是，当进行计算时，发现一个</description>
+    </item>
+    
+    <item>
       <title>卡方检验</title>
       <link>https://mooners.netlify.app/post/2018-12-21-chisq/</link>
       <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>https://mooners.netlify.app/post/2018-12-21-chisq/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title>Cox回归分析</title>
+      <link>https://mooners.netlify.app/post/2018-04-13-cox/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-04-13-cox/</guid>
+      <description>Cox回归分析是在生存分析中最常用的影响因素分析，回归模型的前提假设只有一个：分析的因素必须满足比例风险假设，即协变量不随时间的变化而变化。 Cox比例风险模型 Cox回归模型建模的主要对象是危险率（Ha</description>
     </item>
     
   </channel>

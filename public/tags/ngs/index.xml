@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NGS on Mooners</title>
+    <link>https://mooners.netlify.app/tags/ngs/</link>
+    <description>Recent content in NGS on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 05 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/ngs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>测序数据常见文件类型</title>
+      <link>https://mooners.netlify.app/post/2022-07-05-ngs/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-05-ngs/</guid>
+      <description>各行各业都有在自己的标准体系，生物信息学数据分析也不例外，各个厂商出品的芯片系列，还有各种NGS组学分析，都会涉及到不同的分析步骤，有着丰富多样的中间文件。其中一些常用的文件就被规定成文件格式。 文件格</description>
+    </item>
+    
+    <item>
+      <title>高通量测序常用概念</title>
+      <link>https://mooners.netlify.app/post/2019-10-10-ngs-name/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-10-10-ngs-name/</guid>
+      <description>高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,50 @@
+---
+title: 多组比较的box图
+author: Jeason
+date: '2022-07-05'
+slug: box
+categories:
+  - R
+  - ggplot2
+tags:
+  - R
+  - ggplot2
+---
+
+## 背景  
+
+我们经常会碰到连续变量的多组比较，比如比较基因在不同分组(如分期、分级和亚型等)的表达差异。两个分组之间的比较可以使用T检验或Wilcox秩和检验，三个及三个以上分组的比较可以使用方差检验和kruskal检验。同样的，我们可以将不同分组的差异结果进行可视化展示。  
+
+
+
+## 绘图  
+
+```{r}
+# 生成数据
+set.seed(40)
+data <- data.frame(exp=c(rnorm(30,0,1.3),rnorm(30,0.5,1.6),
+                          rnorm(30,1,1.9),rnorm(30,1.5,1.9)),
+                   Stage=c(rep(paste0('Stage-',1:4),each=30)))
+data$Stage <- factor(data$Stage, levels = c("Stage-1", "Stage-2", "Stage-3", "Stage-4"))
+# 绘制图片
+library(ggplot2)
+library(ggsci)
+library(ggpubr)
+ggplot(data,aes(Stage,exp,fill=Stage))+
+  geom_boxplot(outlier.colour = NA,notch = T,size = 0.4)+ # 箱式图
+  geom_jitter(shape = 21,size=2,width = 0.2)+             # 散点
+  geom_violin(position = position_dodge(width = .75),
+              size = 0.4,alpha = 0.4,trim = T)+           # 小提琴图
+  theme_classic()+
+  theme(legend.position = 'none',
+        axis.title.y = element_text(size=12),
+        axis.text = element_text(size=12),
+        axis.title.x = element_blank())+
+  scale_fill_npg()+
+  stat_compare_means(comparisons = split(t(combn(levels(data$Stage),2)),1:nrow(t(combn(levels(data$Stage),2)))),
+                     label = 'p.signif') +
+  stat_compare_means(label.y = max(data$exp)+5.7)
+```
+
+
+如图分析：四组整体是存在显著的差异的,并且第一组和其他三组两两之间都有显著的差异；但是后三组两两之间的差异不明显。为了获得一个较优的选择，通过观察他们的中位值可以发现第四组的中位值是最高的，因此可能选择第四组作为最终的选择。

@@ -6,7 +6,16 @@
     <description>Recent content in R on Mooners</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多组比较的box图</title>
+      <link>https://mooners.netlify.app/post/2022-07-05-box/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-05-box/</guid>
+      <description>背景 我们经常会碰到连续变量的多组比较，比如比较基因在不同分组(如分期、分级和亚型等)的表达差异。两个分组之间的比较可以使用T检验或Wilcox秩和检验，三个及三个以上分组的比较可以使用方差检验和kru</description>
+    </item>
+    
     <item>
       <title>inferCNV 推断拷贝数</title>
       <link>https://mooners.netlify.app/post/2022-07-04-infercnv/</link>
@@ -44,6 +53,15 @@
       
       <guid>https://mooners.netlify.app/post/2020-09-23-go/</guid>
       <description>绘制GO富集的圈圈图实例 载入R包 library(clusterProfiler) library(org.Hs.eg.db) library(GOplot) library(stringr) 载入差异表达数据 ## Warning in readChar(con, 5L, useBytes = TRUE): cannot open compressed file &#39;F:/ ## diff_expr.Rdata&#39;, probable reason &#39;No such file or directory&#39; ## Error in readChar(con, 5L, useBytes = TRUE): cannot open the connection ## logFC AveExpr t P.Value adj.P.Val B probe_id symbol change ## 1 -5.780170 7.370282 -82.94833 3.495205e-12 1.163798e-07 16.32898 8133876 CD36 down ## 2 4.212683 9.106625 68.40113 1.437468e-11 2.393169e-07 15.71739 7965335 DUSP6 up ## 3 -5.633027 8.763220 -57.61985 5.053466e-11</description>
+    </item>
+    
+    <item>
+      <title>ggplot2小部件参考</title>
+      <link>https://mooners.netlify.app/post/2020-09-22-ggplot2/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-22-ggplot2/</guid>
+      <description>添加原件 添加竖线或者横线 geom_abline(mapping = NULL, data = NULL, ..., slope, intercept, na.rm = FALSE, show.legend = NA) geom_hline(mapping = NULL, data = NULL, ..., yintercept, na.rm = FALSE, show.legend = NA) geom_vline(mapping = NULL, data = NULL, ..., xintercept, na.rm = FALSE, show.legend = NA) 三个函数的作用分别是，geom_abline添加斜线， geom_hline添加水平线，ge</description>
     </item>
     
     <item>
@@ -101,6 +119,33 @@
     </item>
     
     <item>
+      <title>Ubuntu 系统下Rstudio不能输入中文的解决办法</title>
+      <link>https://mooners.netlify.app/post/2019-09-10-ubuntu-rstudio/</link>
+      <pubDate>Tue, 10 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-10-ubuntu-rstudio/</guid>
+      <description>背景 Rstudio作为一个R编程的神器竟然在Ubuntu中不能输入中文，经过搜索发现RStudio软件不能使用系统自带的QT5，因此需要我们自己编译安装qt5相关的库，但是由于Rstudio版本的不断</description>
+    </item>
+    
+    <item>
+      <title>stringr处理字符串</title>
+      <link>https://mooners.netlify.app/post/2019-08-08-stringr/</link>
+      <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-08-08-stringr/</guid>
+      <description>用R语言处理字符串，总觉得很麻烦，即不能用向量的方法进行分割，也不能用循环遍历索引。grep()家族函数常常记不住，paste()函数默认以空格分割，各种不顺手啊！随着使用R语言的场景越来越多，字符串</description>
+    </item>
+    
+    <item>
+      <title>从源码安装R3.6(Ubuntu 18.04LTS)</title>
+      <link>https://mooners.netlify.app/post/2019-08-02-r3-6-ubuntu-18-04lts/</link>
+      <pubDate>Fri, 02 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-08-02-r3-6-ubuntu-18-04lts/</guid>
+      <description>根据R官方提供的安装方法，感觉在Ubuntu18.04上毫无作用，因此尝试从源码手动编译安装R ## 安装依赖 sudo apt-get install xorg-dev libreadline-dev sudo apt-get install libcurl4-openssl-dev sudo apt-get install libbz2-dev sudo apt-get install libcairo2-dev libgtk2.0-dev sudo apt-get install texinfo texlive wget http://mirrors.ctan.org/fonts/inconsolata.zip sudo cp -Rfp inconsolata/* /usr/share/texmf/ # 或者 sudo cp -r inconsolata/ /usr/share/texlive/texmf-dist/tex/latex/ sudo mktexlsr # 刷新一下 # 如果</description>
+    </item>
+    
+    <item>
       <title>R语言高级程序设计</title>
       <link>https://mooners.netlify.app/post/index.zh/</link>
       <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
@@ -110,12 +155,60 @@
     </item>
     
     <item>
+      <title>R并行运算</title>
+      <link>https://mooners.netlify.app/post/2019-05-15-r/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-05-15-r/</guid>
+      <description>R的并行运算 R作为主要流行的统计分析软件之一，其处理数据一般都是单线程的。随着数据量的增大，R运行的时间会大大增加；为了充分发挥计算机的性能和进一步提升R运行速度，使用并行运算不失为一种有效的手段。 简</description>
+    </item>
+    
+    <item>
+      <title>关于C-index计算的相关问题</title>
+      <link>https://mooners.netlify.app/post/2019-01-09-c-index/</link>
+      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-01-09-c-index/</guid>
+      <description>背景 在进行Cox模型的预后能力评估比较时，C-index作为一个重要的评价指标被广泛的使用。目前有多个R包 可以实现C-index的计算，如：Hmisc，survcomp等。但是，当进行计算时，发现一个</description>
+    </item>
+    
+    <item>
       <title>R的更新</title>
       <link>https://mooners.netlify.app/post/2018-07-04-r-update/</link>
       <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://mooners.netlify.app/post/2018-07-04-r-update/</guid>
       <description>!&amp;ndash;more&amp;ndash;&amp;gt; 背景 在windows中R和Rstudio的更新是非常头疼的问题，每次更新都需要把之前的版本删掉重新安装，甚是麻烦。所以一直在想是否有R包可以实现R的自动更新和配置。 R的更新 目前R已经提供了insta</description>
+    </item>
+    
+    <item>
+      <title>Cox模型的R实现</title>
+      <link>https://mooners.netlify.app/post/2018-05-08-cox-r/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-05-08-cox-r/</guid>
+      <description>载入需要的R包 survival用于计算生存分析 survminer用于可视化生存分析结果 library(&amp;quot;survival&amp;quot;) library(&amp;quot;survminer&amp;quot;) 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下： coxph(formula, data, method) formula : 是通过 Surv构建的生存对象 ，如</description>
+    </item>
+    
+    <item>
+      <title>survminer包绘制生存曲线</title>
+      <link>https://mooners.netlify.app/post/2018-04-23-survminer/</link>
+      <pubDate>Mon, 23 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-04-23-survminer/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Cox回归分析</title>
+      <link>https://mooners.netlify.app/post/2018-04-13-cox/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-04-13-cox/</guid>
+      <description>Cox回归分析是在生存分析中最常用的影响因素分析，回归模型的前提假设只有一个：分析的因素必须满足比例风险假设，即协变量不随时间的变化而变化。 Cox比例风险模型 Cox回归模型建模的主要对象是危险率（Ha</description>
     </item>
     
   </channel>

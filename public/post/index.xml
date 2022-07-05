@@ -6,7 +6,34 @@
     <description>Recent content in Posts on Mooners</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>emoji表情收集</title>
+      <link>https://mooners.netlify.app/post/2022-07-05-emoji/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-05-emoji/</guid>
+      <description>Table of Contents Table of Contents People Nature Objects Places Symbols Uncategorized People ico emoji ico emoji top :bowtie: :bowtie: 😄 😄 top 😆 😆 😊 😊 top 😃 😃 ☺️ ☺️ top 😏 😏 😍 😍 top 😘 😘 😚 😚 top 😳 😳 😌 😌 top 😆 😆 😁 😁 top 😉 😉 😜 😜 top 😝 😝 😀 😀 top 😗 😗 😙 😙 top 😛 😛 😴 😴 top 😟 😟 😦 😦 top 😧 😧 😮 😮 top 😬 😬 😕 😕 top 😯 😯 😑 😑 top 😒 😒 😅 😅 top</description>
+    </item>
+    
+    <item>
+      <title>多组比较的box图</title>
+      <link>https://mooners.netlify.app/post/2022-07-05-box/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-05-box/</guid>
+      <description>背景 我们经常会碰到连续变量的多组比较，比如比较基因在不同分组(如分期、分级和亚型等)的表达差异。两个分组之间的比较可以使用T检验或Wilcox秩和检验，三个及三个以上分组的比较可以使用方差检验和kru</description>
+    </item>
+    
+    <item>
+      <title>测序数据常见文件类型</title>
+      <link>https://mooners.netlify.app/post/2022-07-05-ngs/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-05-ngs/</guid>
+      <description>各行各业都有在自己的标准体系，生物信息学数据分析也不例外，各个厂商出品的芯片系列，还有各种NGS组学分析，都会涉及到不同的分析步骤，有着丰富多样的中间文件。其中一些常用的文件就被规定成文件格式。 文件格</description>
+    </item>
+    
     <item>
       <title>inferCNV 推断拷贝数</title>
       <link>https://mooners.netlify.app/post/2022-07-04-infercnv/</link>
@@ -196,6 +223,42 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>shell脚本构建的基本函数</title>
+      <link>https://mooners.netlify.app/post/2020-11-02-shell/</link>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-02-shell/</guid>
+      <description>shell脚本的构建 在创建脚本文件时，必须在文件的第一行指定要使用的shell，格式为： #!/bin/bash 脚本文件的第一行中#后的惊叹号会告诉shell使用哪个shell来运行脚本，其他地方的#作为注释行使用。 为了运</description>
+    </item>
+    
+    <item>
+      <title>Aspera的安装与使用</title>
+      <link>https://mooners.netlify.app/post/2020-10-09-aspera/</link>
+      <pubDate>Fri, 09 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-10-09-aspera/</guid>
+      <description>当我们需要一些NGS数据时，一般会想到去NCBI或者EBI的数据库中下载。但是当我们使用wget进行下载时，真的是慢到令人发指。这时我们可以使用Aspera来下载NGS数据，来加速数据的下载。 安装 根据</description>
+    </item>
+    
+    <item>
+      <title>FastQC安装与使用</title>
+      <link>https://mooners.netlify.app/post/2020-09-23-fastqc/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-23-fastqc/</guid>
+      <description>FastQC是一款用于对RNA-seq数据进行质量检测和控制的软件（对单细胞和bulk的测序数据都适用） fastqc安装 首先需要从官网下载FastQC的安装文件 http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc 将下载到的.zip文件解压在特定的安装</description>
+    </item>
+    
+    <item>
+      <title>ggplot2常用theme参数参考</title>
+      <link>https://mooners.netlify.app/post/2020-09-23-ggplot2-theme/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-23-ggplot2-theme/</guid>
+      <description>大佬总结的ggplot2常用调节参数</description>
+    </item>
+    
+    <item>
       <title>GO富集圈圈图</title>
       <link>https://mooners.netlify.app/post/2020-09-23-go/</link>
       <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
@@ -205,12 +268,30 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>ggplot2小部件参考</title>
+      <link>https://mooners.netlify.app/post/2020-09-22-ggplot2/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-22-ggplot2/</guid>
+      <description>添加原件 添加竖线或者横线 geom_abline(mapping = NULL, data = NULL, ..., slope, intercept, na.rm = FALSE, show.legend = NA) geom_hline(mapping = NULL, data = NULL, ..., yintercept, na.rm = FALSE, show.legend = NA) geom_vline(mapping = NULL, data = NULL, ..., xintercept, na.rm = FALSE, show.legend = NA) 三个函数的作用分别是，geom_abline添加斜线， geom_hline添加水平线，ge</description>
+    </item>
+    
+    <item>
       <title>WGCNA教程</title>
       <link>https://mooners.netlify.app/post/index.zh/</link>
       <pubDate>Sat, 15 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://mooners.netlify.app/post/index.zh/</guid>
       <description>&lt;p&gt;WGCNA的基本原理和操作&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>scRNA的细胞质控</title>
+      <link>https://mooners.netlify.app/post/2020-08-02-scrna/</link>
+      <pubDate>Sun, 02 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-08-02-scrna/</guid>
+      <description></description>
     </item>
     
     <item>
@@ -252,6 +333,15 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>测序质控软件trim_galore安装</title>
+      <link>https://mooners.netlify.app/post/2020-03-09-trim-galore/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-03-09-trim-galore/</guid>
+      <description>trim_galore可以用来对原始的测序数据进行质控 安装trim_galore需要提前安装两个依赖软件：Fastqc和cutadapt Fastqc的安装已经提及，这里不再详述 cutadapt的安装过</description>
+    </item>
+    
+    <item>
       <title>Math Typesetting</title>
       <link>https://mooners.netlify.app/post/math-typesetting/</link>
       <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
@@ -284,6 +374,15 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>hexo 博客搭建</title>
+      <link>https://mooners.netlify.app/post/2019-12-27-hexo/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-12-27-hexo/</guid>
+      <description>前言 使用hexo + github pages 搭建博客的好处: 全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基</description>
+    </item>
+    
+    <item>
       <title>pheatmap使用指南</title>
       <link>https://mooners.netlify.app/post/2019-12-23-pheatmap/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
@@ -302,6 +401,33 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>Shell编程规范</title>
+      <link>https://mooners.netlify.app/post/2019-10-14-shell/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-10-14-shell/</guid>
+      <description>规范的编程格式既可以使代码更加整洁，又能帮助别人理解使用代码，下面是在使用shell脚本的过程中涉及到的一些代码编程规范 命名 命名只能使用字母,数字和下划线,首个字符不能以数字开头。 中间不能有空格,不能</description>
+    </item>
+    
+    <item>
+      <title>高通量测序常用概念</title>
+      <link>https://mooners.netlify.app/post/2019-10-10-ngs-name/</link>
+      <pubDate>Thu, 10 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-10-10-ngs-name/</guid>
+      <description>高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为</description>
+    </item>
+    
+    <item>
+      <title>Linux下百度云快速下载</title>
+      <link>https://mooners.netlify.app/post/2019-09-19-linux/</link>
+      <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-19-linux/</guid>
+      <description>记录一下找到的linux可用的百度云下载工具，项目地址：https://github.com/iikira/BaiduPCS-Go 直接下载文件解压，进入文件夹，命令行下运行： ./BaiduPCS-Go 即可进入BaiduPCS</description>
+    </item>
+    
+    <item>
       <title>TCGA barcode（样本ID）</title>
       <link>https://mooners.netlify.app/post/2019-09-19-tcga-barcode-id/</link>
       <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
@@ -311,12 +437,102 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
+      <title>Ubuntu 系统下Rstudio不能输入中文的解决办法</title>
+      <link>https://mooners.netlify.app/post/2019-09-10-ubuntu-rstudio/</link>
+      <pubDate>Tue, 10 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-10-ubuntu-rstudio/</guid>
+      <description>背景 Rstudio作为一个R编程的神器竟然在Ubuntu中不能输入中文，经过搜索发现RStudio软件不能使用系统自带的QT5，因此需要我们自己编译安装qt5相关的库，但是由于Rstudio版本的不断</description>
+    </item>
+    
+    <item>
+      <title>SRAtoolkit 安装与使用</title>
+      <link>https://mooners.netlify.app/post/2019-09-03-sratoolkit/</link>
+      <pubDate>Tue, 03 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-03-sratoolkit/</guid>
+      <description>SRAtoolkit是NCBI开发的一个用于SRA文件处理的软件包，包含许多有用的工具。 下载SRAtoolkit软件包 软件包下载地址在NCBI网站：https://trace.ncbi.nlm.nih</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 18.04 安装有道词典</title>
+      <link>https://mooners.netlify.app/post/2019-08-22-ubuntu-18-04/</link>
+      <pubDate>Thu, 22 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-08-22-ubuntu-18-04/</guid>
+      <description>下载编译过的安装包 wget https://github.com/yomun/youdaodict_5.5/raw/master/youdao-dict_1.1.1-0~ubuntu_amd64.deb 查询并卸载QT5 # 如有显示 PyQt5 (5.10.1), 卸载 pip3 list | grep PyQt5 pip3 uninstall pyqt5 # root 用户 sudo sudo pip3 list | grep PyQt5 sudo sudo pip3 uninstall pyqt5 安装依赖包 sudo apt install python3 sudo apt install python3-dbus python3-lxml python3-pil python3-requests python3-xdg python3-xlib sudo apt install python3-pyqt5 python3-pyqt5.qtmultimedia python3-pyqt5.qtquick python3-pyqt5.qtwebkit sudo apt install gir1.2-appindicator3-0.1 qml-module-qtgraphicaleffects qml-module-qtquick-controls sudo apt install libqt5multimedia5-plugins ttf-wqy-microhei sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-chi-sim tesseract-ocr-chi-tra sudo apt install ubuntu-restricted-extras #</description>
+    </item>
+    
+    <item>
+      <title>stringr处理字符串</title>
+      <link>https://mooners.netlify.app/post/2019-08-08-stringr/</link>
+      <pubDate>Thu, 08 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-08-08-stringr/</guid>
+      <description>用R语言处理字符串，总觉得很麻烦，即不能用向量的方法进行分割，也不能用循环遍历索引。grep()家族函数常常记不住，paste()函数默认以空格分割，各种不顺手啊！随着使用R语言的场景越来越多，字符串</description>
+    </item>
+    
+    <item>
+      <title>从源码安装R3.6(Ubuntu 18.04LTS)</title>
+      <link>https://mooners.netlify.app/post/2019-08-02-r3-6-ubuntu-18-04lts/</link>
+      <pubDate>Fri, 02 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-08-02-r3-6-ubuntu-18-04lts/</guid>
+      <description>根据R官方提供的安装方法，感觉在Ubuntu18.04上毫无作用，因此尝试从源码手动编译安装R ## 安装依赖 sudo apt-get install xorg-dev libreadline-dev sudo apt-get install libcurl4-openssl-dev sudo apt-get install libbz2-dev sudo apt-get install libcairo2-dev libgtk2.0-dev sudo apt-get install texinfo texlive wget http://mirrors.ctan.org/fonts/inconsolata.zip sudo cp -Rfp inconsolata/* /usr/share/texmf/ # 或者 sudo cp -r inconsolata/ /usr/share/texlive/texmf-dist/tex/latex/ sudo mktexlsr # 刷新一下 # 如果</description>
+    </item>
+    
+    <item>
+      <title>Jekyll &#43; NexT &#43; GitHub Pages 主题优化</title>
+      <link>https://mooners.netlify.app/post/2019-07-10-jekyll-next-github-pages/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-07-10-jekyll-next-github-pages/</guid>
+      <description>设置主题风格 打开 _config.yml 文件，找到 scheme 相关配置内容，去掉启用主题前的 # 注释即可 # --------------------------------------------------------------- # Scheme Settings 设置主题 # --------------------------------------------------------------- # Schemes #scheme: Muse # 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白 #scheme: Mist # Muse 的紧凑版本，整洁有序的单栏外观 scheme: Pisces #</description>
+    </item>
+    
+    <item>
+      <title>HTML基本语法</title>
+      <link>https://mooners.netlify.app/post/2019-06-12-html/</link>
+      <pubDate>Wed, 12 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-06-12-html/</guid>
+      <description>HTML 超文本标记语言（英语：HyperText Markup Language，简称：HTML）是一种用于创建网页的标准标记语言。HTML可以用 来建立自己的 WEB 站点，HTML 运行在浏览器上，由浏览器来解析。 HTML 不是一种编程</description>
+    </item>
+    
+    <item>
+      <title>Python基本数据类型</title>
+      <link>https://mooners.netlify.app/post/2019-06-09-python/</link>
+      <pubDate>Sun, 09 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-06-09-python/</guid>
+      <description>基本数据类型 Number（数字） String（字符串） List（列表） Tuple（元组） Set（集合） Dictionary（字典） 不可变数据（3 个）：Number（数字）、String（字符串）、Tu</description>
+    </item>
+    
+    <item>
       <title>R语言高级程序设计</title>
       <link>https://mooners.netlify.app/post/index.zh/</link>
       <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://mooners.netlify.app/post/index.zh/</guid>
       <description>数据结构 R 语言的基础数据结构可以按照维度来划分(1 维、 2 维&amp;hellip;n 维)；也可以按照它们所包含的数据类型是否相同来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的： Homogeneous Heterogeneous 1d Atomic vector List 2d Matrix Data frame</description>
+    </item>
+    
+    <item>
+      <title>R并行运算</title>
+      <link>https://mooners.netlify.app/post/2019-05-15-r/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-05-15-r/</guid>
+      <description>R的并行运算 R作为主要流行的统计分析软件之一，其处理数据一般都是单线程的。随着数据量的增大，R运行的时间会大大增加；为了充分发挥计算机的性能和进一步提升R运行速度，使用并行运算不失为一种有效的手段。 简</description>
+    </item>
+    
+    <item>
+      <title>linux screen 命令使用</title>
+      <link>https://mooners.netlify.app/post/2019-04-14-linux-screen/</link>
+      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-04-14-linux-screen/</guid>
+      <description>screen screen 是一个非常有用的命令，提供从单个 SSH 会话中使用多个 shell 窗口（会话）的能力。当会话被分离或网络中断时，screen 会话中启动的进程仍将运行，你可以随时重新连接到 screen 会话。如果你想运行一个持久的进程或者从多</description>
     </item>
     
     <item>
@@ -354,6 +570,24 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p&gt;<
     </item>
     
     <item>
+      <title>超几何分布和二项分布</title>
+      <link>https://mooners.netlify.app/post/2019-02-11-hpyergeometric/</link>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-02-11-hpyergeometric/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>关于C-index计算的相关问题</title>
+      <link>https://mooners.netlify.app/post/2019-01-09-c-index/</link>
+      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-01-09-c-index/</guid>
+      <description>背景 在进行Cox模型的预后能力评估比较时，C-index作为一个重要的评价指标被广泛的使用。目前有多个R包 可以实现C-index的计算，如：Hmisc，survcomp等。但是，当进行计算时，发现一个</description>
+    </item>
+    
+    <item>
       <title>卡方检验</title>
       <link>https://mooners.netlify.app/post/2018-12-21-chisq/</link>
       <pubDate>Fri, 21 Dec 2018 00:00:00 +0000</pubDate>
@@ -378,6 +612,36 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.&lt;/p&gt;<
       
       <guid>https://mooners.netlify.app/post/2018-07-04-r-update/</guid>
       <description>!&amp;ndash;more&amp;ndash;&amp;gt; 背景 在windows中R和Rstudio的更新是非常头疼的问题，每次更新都需要把之前的版本删掉重新安装，甚是麻烦。所以一直在想是否有R包可以实现R的自动更新和配置。 R的更新 目前R已经提供了insta</description>
+    </item>
+    
+    <item>
+      <title>Cox模型的R实现</title>
+      <link>https://mooners.netlify.app/post/2018-05-08-cox-r/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-05-08-cox-r/</guid>
+      <description>载入需要的R包 survival用于计算生存分析 survminer用于可视化生存分析结果 library(&amp;quot;survival&amp;quot;) library(&amp;quot;survminer&amp;quot;) 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下： coxph(formula, data, method) formula : 是通过 Surv构建的生存对象 ，如</description>
+    </item>
+    
+    <item>
+      <title>survminer包绘制生存曲线</title>
+      <link>https://mooners.netlify.app/post/2018-04-23-survminer/</link>
+      <pubDate>Mon, 23 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-04-23-survminer/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+    <item>
+      <title>Cox回归分析</title>
+      <link>https://mooners.netlify.app/post/2018-04-13-cox/</link>
+      <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-04-13-cox/</guid>
+      <description>Cox回归分析是在生存分析中最常用的影响因素分析，回归模型的前提假设只有一个：分析的因素必须满足比例风险假设，即协变量不随时间的变化而变化。 Cox比例风险模型 Cox回归模型建模的主要对象是危险率（Ha</description>
     </item>
     
     <item>

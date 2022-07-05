@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://mooners.netlify.app/tags/r/" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="og:updated_time" content="2022-07-04T00:00:00+00:00" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="og:updated_time" content="2022-07-05T00:00:00+00:00" />
 
 
 <style>
@@ -110,6 +110,91 @@
 
 <div class="post">
   <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-12-23-pheatmap/">pheatmap使用指南</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-12-23</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2388 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/pheatmap">pheatmap</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    pheatmap包 简介 官方介绍： A function to draw clustered heatmaps where one has better control over some graphical parameters such as cell size, etc 实际上，pheatmap是 Pretty Heatmaps 的缩写，是我认为目前最好用的绘制聚类热图的R包（尽管有很多其他的函数。。。） 使用方法 pheatmap(mat, color = colorRampPalette(rev(brewer.pal(n = 7, name
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/">R graphics cookbook</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-11-28</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1225 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/ggplot2">ggplot2</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    R语言绘制基础图形 R语言绘制图像主要有三种方式：（1）由graphics包提供的基础绘图方式；（2）基于ggplot2的qplot()快捷绘图函数；（3）ggplot2图层绘图风格 散点图 ## 方法一 plot(mtcars$wt, mtcars$mpg) ##
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-09-10-ubuntu-rstudio/">Ubuntu 系统下Rstudio不能输入中文的解决办法</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-09-10</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;650 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/linux">linux</a>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    背景 Rstudio作为一个R编程的神器竟然在Ubuntu中不能输入中文，经过搜索发现RStudio软件不能使用系统自带的QT5，因此需要我们自己编译安装qt5相关的库，但是由于Rstudio版本的不断
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-08-08-stringr/">stringr处理字符串</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-08-08</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;3008 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    用R语言处理字符串，总觉得很麻烦，即不能用向量的方法进行分割，也不能用循环遍历索引。grep()家族函数常常记不住，paste()函数默认以空格分割，各种不顺手啊！随着使用R语言的场景越来越多，字符串
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-08-02-r3-6-ubuntu-18-04lts/">从源码安装R3.6(Ubuntu 18.04LTS)</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-08-02</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;273 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/linux">linux</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    根据R官方提供的安装方法，感觉在Ubuntu18.04上毫无作用，因此尝试从源码手动编译安装R ## 安装依赖 sudo apt-get install xorg-dev libreadline-dev sudo apt-get install libcurl4-openssl-dev sudo apt-get install libbz2-dev sudo apt-get install libcairo2-dev libgtk2.0-dev sudo apt-get install texinfo texlive wget http://mirrors.ctan.org/fonts/inconsolata.zip sudo cp -Rfp inconsolata/* /usr/share/texmf/ # 或者 sudo cp -r inconsolata/ /usr/share/texlive/texmf-dist/tex/latex/ sudo mktexlsr # 刷新一下 # 如果
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
     <a href="https://mooners.netlify.app/post/index.zh/">R语言高级程序设计</a>
   </h2>
   <div class="post-item post-meta">
@@ -122,6 +207,40 @@
   </div>
   <div class="post-item post-summary markdown-body">
     数据结构 R 语言的基础数据结构可以按照维度来划分(1 维、 2 维&hellip;n 维)；也可以按照它们所包含的数据类型是否相同来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的： Homogeneous Heterogeneous 1d Atomic vector List 2d Matrix Data frame
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-05-15-r/">R并行运算</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-05-15</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;625 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    R的并行运算 R作为主要流行的统计分析软件之一，其处理数据一般都是单线程的。随着数据量的增大，R运行的时间会大大增加；为了充分发挥计算机的性能和进一步提升R运行速度，使用并行运算不失为一种有效的手段。 简
+  </div>
+</div>
+
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2019-01-09-c-index/">关于C-index计算的相关问题</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-01-09</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;387 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/statistics">statistics</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    背景 在进行Cox模型的预后能力评估比较时，C-index作为一个重要的评价指标被广泛的使用。目前有多个R包 可以实现C-index的计算，如：Hmisc，survcomp等。但是，当进行计算时，发现一个
   </div>
 </div>
 
@@ -142,6 +261,23 @@
   </div>
 </div>
 
+<div class="post">
+  <h2 class="post-item post-title">
+    <a href="https://mooners.netlify.app/post/2018-05-08-cox-r/">Cox模型的R实现</a>
+  </h2>
+  <div class="post-item post-meta">
+    <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-05-08</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1488 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/survival">survival</a>&nbsp;</span>
+
+  </div>
+  <div class="post-item post-summary markdown-body">
+    载入需要的R包 survival用于计算生存分析 survminer用于可视化生存分析结果 library(&quot;survival&quot;) library(&quot;survminer&quot;) 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下： coxph(formula, data, method) formula : 是通过 Surv构建的生存对象 ，如
+  </div>
+</div>
+
 
 <div class="pagination"><div class="pag-first">
     <a href="/tags/r/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
@@ -151,6 +287,12 @@
     <a href="/tags/r/">1</a>
   </div><div class="pag-item pag-current">
     <a href="/tags/r/page/2/">2</a>
+  </div><div class="pag-item">
+    <a href="/tags/r/page/3/">3</a>
+  </div><div class="pag-next">
+    <a href="/tags/r/page/3/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
+  </div><div class="pag-last">
+    <a href="/tags/r/page/3/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
   </div></div>
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
@@ -202,6 +344,10 @@
             </span>
             
             <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
                 <a href="/tags/cjk/">cjk</a>
             </span>
             
@@ -242,7 +388,15 @@
             </span>
             
             <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
                 <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
             </span>
             
             <span>
@@ -251,6 +405,10 @@
             
             <span>
                 <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
             </span>
             
             <span>
@@ -278,7 +436,15 @@
             </span>
             
             <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
                 <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
             </span>
             
             <span>
@@ -287,6 +453,10 @@
             
             <span>
                 <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
             </span>
             
             <span>
@@ -386,6 +556,10 @@
             </span>
             
             <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
                 <a href="/tags/cjk/">cjk</a>
             </span>
             
@@ -426,7 +600,15 @@
             </span>
             
             <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
                 <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
             </span>
             
             <span>
@@ -435,6 +617,10 @@
             
             <span>
                 <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
             </span>
             
             <span>
@@ -462,7 +648,15 @@
             </span>
             
             <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
                 <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
             </span>
             
             <span>
@@ -471,6 +665,10 @@
             
             <span>
                 <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
             </span>
             
             <span>

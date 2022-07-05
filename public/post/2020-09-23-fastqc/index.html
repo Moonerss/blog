@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>FastQC安装与使用 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="software" />
+
+
+<meta property="og:title" content="FastQC安装与使用" />
+<meta name="twitter:title" content="FastQC安装与使用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-09-23-fastqc/" /><meta property="og:description" content="FastQC是一款用于对RNA-seq数据进行质量检测和控制的软件（对单细胞和bulk的测序数据都适用） fastqc安装 首先需要从官网下载FastQC的安装文件 http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc 将下载到的.zip文件解压在特定的安装" />
+<meta name="twitter:description" content="FastQC是一款用于对RNA-seq数据进行质量检测和控制的软件（对单细胞和bulk的测序数据都适用） fastqc安装 首先需要从官网下载FastQC的安装文件 http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc 将下载到的.zip文件解压在特定的安装" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-09-23T00:00:00+00:00" /><meta property="article:modified_time" content="2020-09-23T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-09-23-fastqc/">FastQC安装与使用</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-09-23</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2494 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/software">software</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>FastQC是一款用于对RNA-seq数据进行质量检测和控制的软件（对单细胞和bulk的测序数据都适用）</p>
+<h2 id="fastqc安装">fastqc安装</h2>
+<p>首先需要从官网下载FastQC的安装文件<br>
+<a href="http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc" target="_blank">http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc</a></p>
+<p>将下载到的<code>.zip</code>文件解压在特定的安装位置</p>
+<pre><code class="language-sh">cd ~/sofware
+unzip ~/download/fastqc_v0.11.9.zip
+</code></pre>
+<p>解压之后需要将其中的<code>fastqc</code>文件改成可执行文件</p>
+<pre><code class="language-sh">cd ./FastQC
+chmod 755 fastqc
+</code></pre>
+<p>为了能在任意文件夹下运行程序，创建fastqc的软连接</p>
+<pre><code class="language-sh">sudo ln -s /home/ubuntu/software/FastQC/fastqc /usr/local/bin/fastqc # 文件地址必须是绝对路径
+</code></pre>
+<p>就此安装成功，可以运行<code>fastqc -h</code>查看命令参数</p>
+<h2 id="fastqc使用">fastqc使用</h2>
+<p><strong>FastQC参数</strong></p>
+<p>-o &ndash;outdir:输出路径
+&ndash;extract：结果文件解压缩
+&ndash;noextract：结果文件压缩
+-f &ndash;format:输入文件格式.支持bam,sam,fastq文件格式
+-t &ndash;threads:线程数
+-c &ndash;contaminants：制定污染序列。文件格式 name[tab]sequence
+-a &ndash;adapters：指定接头序列。文件格式name[tab]sequence
+-k &ndash;kmers：指定kmers长度（2-10bp,默认7bp）
+-q &ndash;quiet： 安静模式</p>
+<p>示例：</p>
+<pre><code class="language-sh">cd ~/SingleCell
+mkdir fastqc_results
+fastqc -t 30 -o fastqc_results Share/ERR522959_1.fastq Share/ERR522959_2.fastq
+</code></pre>
+<h2 id="fastqc结果查看">fastqc结果查看</h2>
+<p>fastqc产生两个结果文件：</p>
+<p>**html：**网页版结果
+**zip：**本地结果压缩文件</p>
+<p>需要重点关注的信息有：</p>
+<ul>
+<li>Basic Statistics：对数据量的概览</li>
+<li>Per base sequence quality：reads每个位置测序质量最直接的展示</li>
+<li>Per sequence quality scores：总体reads测序质量趋势</li>
+<li>Per base sequence content：ATGC含量估计测序是否存在偏差</li>
+<li>Sequence Duplication Levels：影响测序的因素太多，查看是否存在污染，数据处理时是否需要去冗余；现在数据量都可以满足需求，因此前期数据处理时，尽量高标准，严格质控</li>
+</ul>
+<p>网页结果汇总如下 ：</p>
+<p><img class="img-zoomable" src="images/summary.jpg" alt="" />
+</p>
+<p><strong>各种颜色是各项标准分析结果：绿色代表&quot;PASS&quot;；黄色代表&quot;WARN&quot;；红色代表&quot;FAIL&quot;。</strong></p>
+<p><img class="img-zoomable" src="images/basic.jpg" alt="" />
+</p>
+<p><strong>reads上每个位置碱基质量</strong>
+质量分数使用Fred quality，Q=-10*log10(p)，p为碱基测序错误概率。
+横轴碱基的位置，纵轴是质量分数。红色表示中位数，黄色是25%-75%区间，触须是10%-90%区间，蓝线是平均数。
+平均每个碱基的测序质量boxplot下四分位线在30分以上，则认为测序质量非常好；一般情况下，reads首尾质量较差。
+若任一位置的下四分位数低于10或中位数低于25，报&quot;WARN&quot;；
+若任一位置的下四分位数低于5或中位数低于20，报&quot;FAIL&quot;。</p>
+<p><img class="img-zoomable" src="images/quality.jpg" alt="" />
+</p>
+<p><strong>每条序列的测序质量分布</strong>
+横轴为序列测序质量，纵轴是reads数目。一般认为90%的reads测序质量在35分以上，则认为该测序质量非常好。
+当测序质量峰值小于27（错误率0.2%）时报&quot;WARN&quot;;
+当峰值小于20（错误率1%）时报&quot;FAIL&quot;。</p>
+<p><img class="img-zoomable" src="images/seq.jpg" alt="" />
+</p>
+<p><strong>统计reads每个位置ATCG四种碱基的分布：</strong>
+横轴为碱基位置，纵轴为百分比。因为随机的文库中，正常情况下所有位置出现某种碱基的概率是相近的，因此好的测序结果中四条线应该平行且接近。当部分位置碱基的比例出现bias时，即四条线在某些位置纷乱交织，往往提示我们有overrepresented sequence的污染。当所有位置的碱基比例一致的表现出bias时，即四条线平行但分开，往往代表文库有bias (建库过程或本身特点)，或者是测序中的系统误差。
+当任一位置的A/T比例与G/C比例相差超过10%，报&quot;WARN&quot;；
+当任一位置的A/T比例与G/C比例相差超过20%，报&quot;FAIL&quot;。</p>
+<p><img class="img-zoomable" src="images/base.jpg" alt="" />
+</p>
+<p><strong>统计reads的平均GC含量分布</strong>
+红线是实际情况，蓝线是理论分布（正态分布，均值不一定在50%，而是由平均GC含量推断的）。 曲线形状的偏差往往是由于文库的污染或是部分reads构成的子集有偏差（overrepresented reads）。形状接近正态但偏离理论分布的情况提示我们可能有系统偏差。偏离理论分布的reads超过15%时，报&quot;WARN&quot;；偏离理论分布的reads超过30%时，报&quot;FAIL&quot;。</p>
+<p><img class="img-zoomable" src="images/gc.jpg" alt="" />
+</p>
+<p><strong>统计reads每个位置N的比率</strong>
+reads某个位置无法确定是何种碱基时，使用N代替；
+正常情况下，N的比例是很小的，所以图上常常看到一条直线，但放大Y轴之后会发现还是有N的存在，这不算问题。当Y轴在0%-100%的范围内也能看到“鼓包”时，说明测序系统出了问题。
+当任意位置的N的比例超过5%，报&quot;WARN&quot;；
+当任意位置的N的比例超过20%，报&quot;FAIL&quot;。</p>
+<p><img class="img-zoomable" src="images/n.jpg" alt="" />
+</p>
+<p><strong>reads长度分布</strong>
+为了防止建库或者测序时有一些不规则长度的序列也被进行测序而进行的一个对长度的统计，当所有序列的长度不一样，fastqc就会警告。
+当reads长度不一致时报&quot;WARN&quot;；
+当有长度为0的read时报“FAIL”。</p>
+<p><img class="img-zoomable" src="images/length.jpg" alt="" />
+</p>
+<p>统计reads重复水平
+测序本身就会产生重复reads,测序深度越高,reads重复数越大；如果重复出现峰值，就提示可能b存在偏差（如建库过程中的PCR duplication）。
+横坐标是重复的次数，纵坐标是duplicated reads占unique reads种数百分比。</p>
+<p>fastqc抽取reads文件前200,000条reads统计其重复情况。重复数目大于等于10的reads被合并统计，这也是为什么我们看到上图的最右侧略有上扬。大于75bp的reads只取50bp进行比较。由于reads越长错误率越高，所以其重复程度仍有可能被低估。
+当非unique的reads占总数的比例大于20%时，报&quot;WARN&quot;；
+当非unique的reads占总数的比例大于50%时，报&quot;FAIL“。</p>
+<p><img class="img-zoomable" src="images/level.jpg" alt="" />
+</p>
+<p><strong>过度重复出现的序列的统计信息</strong></p>
+<p><img class="img-zoomable" src="images/over.jpg" alt="" />
+</p>
+<p><strong>Adapter序列在reads中出现概率</strong>
+接头序列统计，&gt;5%时是Warning，&gt;10%时是Failure。</p>
+<p><img class="img-zoomable" src="images/adapter.jpg" alt="" />
+</p>
+<hr>
+<p>参考：</p>
+<p><a href="https://www.jianshu.com/p/835fd925d6ee" target="_blank">https://www.jianshu.com/p/835fd925d6ee</a></p>
+<p><a href="https://www.jianshu.com/p/a1eb03d63083" target="_blank">https://www.jianshu.com/p/a1eb03d63083</a></p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#fastqc安装">fastqc安装</a></li>
+    <li><a href="#fastqc使用">fastqc使用</a></li>
+    <li><a href="#fastqc结果查看">fastqc结果查看</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#fastqc安装">fastqc安装</a></li>
+    <li><a href="#fastqc使用">fastqc使用</a></li>
+    <li><a href="#fastqc结果查看">fastqc结果查看</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

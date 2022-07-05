@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shell on Mooners</title>
+    <link>https://mooners.netlify.app/tags/shell/</link>
+    <description>Recent content in shell on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>shell脚本构建的基本函数</title>
+      <link>https://mooners.netlify.app/post/2020-11-02-shell/</link>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-11-02-shell/</guid>
+      <description>shell脚本的构建 在创建脚本文件时，必须在文件的第一行指定要使用的shell，格式为： #!/bin/bash 脚本文件的第一行中#后的惊叹号会告诉shell使用哪个shell来运行脚本，其他地方的#作为注释行使用。 为了运</description>
+    </item>
+    
+    <item>
+      <title>Shell编程规范</title>
+      <link>https://mooners.netlify.app/post/2019-10-14-shell/</link>
+      <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-10-14-shell/</guid>
+      <description>规范的编程格式既可以使代码更加整洁，又能帮助别人理解使用代码，下面是在使用shell脚本的过程中涉及到的一些代码编程规范 命名 命名只能使用字母,数字和下划线,首个字符不能以数字开头。 中间不能有空格,不能</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Python基本数据类型 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="Python" />
+
+
+<meta property="og:title" content="Python基本数据类型" />
+<meta name="twitter:title" content="Python基本数据类型" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2019-06-09-python/" /><meta property="og:description" content="基本数据类型 Number（数字） String（字符串） List（列表） Tuple（元组） Set（集合） Dictionary（字典） 不可变数据（3 个）：Number（数字）、String（字符串）、Tu" />
+<meta name="twitter:description" content="基本数据类型 Number（数字） String（字符串） List（列表） Tuple（元组） Set（集合） Dictionary（字典） 不可变数据（3 个）：Number（数字）、String（字符串）、Tu" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2019-06-09T00:00:00+00:00" /><meta property="article:modified_time" content="2019-06-09T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-06-09-python/">Python基本数据类型</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-06-09</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2920 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/python">Python</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h3 id="基本数据类型">基本数据类型</h3>
+<ul>
+<li>Number（数字）</li>
+<li>String（字符串）</li>
+<li>List（列表）</li>
+<li>Tuple（元组）</li>
+<li>Set（集合）</li>
+<li>Dictionary（字典）</li>
+</ul>
+<blockquote>
+<p>不可变数据（3 个）：Number（数字）、String（字符串）、Tuple（元组）<br>
+可变数据（3 个）：List（列表）、Dictionary（字典）、Set（集合）</p>
+</blockquote>
+<h4 id="数字类型">数字类型</h4>
+<p>Python3 支持 int、float、bool、complex（复数）。</p>
+<p>内置的 <code>type()</code> 函数可以用来查询变量所指的对象类型。 <code>isinstance()</code> 用来判断数据类型</p>
+<blockquote>
+<p>isinstance 和 type 的区别在于:</p>
+<ul>
+<li><code>type()</code> 不会认为子类是一种父类类型</li>
+<li><code>isinstance()</code> 会认为子类是一种父类类型</li>
+</ul>
+</blockquote>
+<h4 id="string字符串">String（字符串）</h4>
+<p>Python中的字符串用单引号 <code>'</code> 或双引号 <code>&quot;</code> 括起来，同时使用反斜杠 <code>\</code> 转义特殊字符。</p>
+<p>Python 使用反斜杠(<code>\</code>)转义特殊字符，如果你不想让反斜杠发生转义，可以在字符串前面添加一个 <code>r</code> ，表示原始字符串</p>
+<p>另外，反斜杠(<code>\</code>)可以作为续行符，表示下一行是上一行的延续。也可以使用 <code>&quot;&quot;&quot;...&quot;&quot;&quot;</code> 或者 <code>'''...'''</code> 跨越多行。</p>
+<p><strong>注意</strong>，Python 没有单独的字符类型，一个字符就是长度为1的字符串。</p>
+<blockquote>
+<ol>
+<li>反斜杠可以用来转义，使用r可以让反斜杠不发生转义。</li>
+<li>字符串可以用+运算符连接在一起，用*运算符重复。</li>
+<li>Python中的字符串有两种索引方式，从左往右以0开始，从右往左以-1开始。</li>
+<li>Python中的字符串不能改变。</li>
+</ol>
+</blockquote>
+<h4 id="list列表">List（列表）</h4>
+<p>列表可以完成大多数集合类的数据结构实现。列表中元素的类型可以不相同，它支持数字，字符串甚至可以包含列表（所谓嵌套）。</p>
+<p>列表是写在方括号 [] 之间、用逗号分隔开的元素列表。</p>
+<p>列表索引：<br>
+<img class="img-zoomable" src="/images/dataformat/list_slicing1.png" alt="list_slicing1" />
+</p>
+<p>与Python字符串不一样的是，列表中的元素是可以改变的。</p>
+<blockquote>
+<ol>
+<li>List写在方括号之间，元素用逗号隔开。</li>
+<li>和字符串一样，list可以被索引和切片。</li>
+<li>List可以使用+操作符进行拼接。</li>
+<li>List中的元素是可以改变的。</li>
+</ol>
+</blockquote>
+<h4 id="tuple元组">Tuple（元组）</h4>
+<p>元组（tuple）与列表类似，不同之处在于元组的元素不能修改。元组写在小括号 <code>()</code> 里，元素之间用逗号隔开。元组中的元素类型也可以不相同。</p>
+<p>虽然tuple的元素不可改变，但它可以包含可变的对象，比如list列表。</p>
+<p>string、list 和 tuple 都属于 sequence（序列）。</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>与字符串一样，元组的元素不能修改。</li>
+<li>元组也可以被索引和切片，方法一样。</li>
+<li>注意构造包含 0 或 1 个元素的元组的特殊语法规则。</li>
+<li>元组也可以使用+操作符进行拼接。</li>
+</ol>
+<h4 id="set集合">Set（集合）</h4>
+<p>集合（set）是由一个或数个形态各异的大小整体组成的，构成集合的事物或对象称作元素或是成员，是一个无序的不重复元素序列。</p>
+<p>基本功能是进行成员关系测试和删除重复元素。</p>
+<p>可以使用大括号 <code>{ }</code> 或者 <code>set()</code> 函数创建集合，注意：创建一个空集合必须用 <code>set()</code> 而不是 <code>{ }</code>，因为 <code>{ }</code> 是用来创建一个空字典。</p>
+<h4 id="dictionary字典">Dictionary（字典）</h4>
+<p>字典（dictionary）是Python中另一个非常有用的内置数据类型。</p>
+<p>列表是有序的对象集合，字典是无序的对象集合。两者之间的区别在于：字典当中的元素是通过键来存取的，而不是通过偏移存取。</p>
+<p>字典是一种映射类型，字典用 { } 标识，它是一个无序的 键(key) : 值(value) 的集合。</p>
+<p>键(key)必须使用不可变类型。</p>
+<p>在同一个字典中，键(key)必须是唯一的。</p>
+<blockquote>
+<ol>
+<li>字典是一种映射类型，它的元素是键值对。</li>
+<li>字典的关键字必须为不可变类型，且不能重复。</li>
+<li>创建空字典使用 <code>{ }</code>。</li>
+</ol>
+</blockquote>
+<h3 id="python数据类型转换">Python数据类型转换</h3>
+<p>有时候，我们需要对数据内置的类型进行转换，数据类型的转换，你只需要将数据类型作为函数名即可。</p>
+<p>以下几个内置的函数可以执行数据类型之间的转换。这些函数返回一个新的对象，表示转换的值。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>int(x [,base])</code></td>
+<td style="text-align:center">将x转换为一个整数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>float(x)</code></td>
+<td style="text-align:center">将x转换到一个浮点数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>complex(real [,imag])</code></td>
+<td style="text-align:center">创建一个复数</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>str(x)</code></td>
+<td style="text-align:center">将对象 x 转换为字符串</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>repr(x)</code></td>
+<td style="text-align:center">将对象 x 转换为表达式字符串</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>eval(str)</code></td>
+<td style="text-align:center">用来计算在字符串中的有效Python表达式,并返回一个对象</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>tuple(s)</code></td>
+<td style="text-align:center">将序列 s 转换为一个元组</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>list(s)</code></td>
+<td style="text-align:center">将序列 s 转换为一个列表</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>set(s)</code></td>
+<td style="text-align:center">转换为可变集合</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>dict(d)</code></td>
+<td style="text-align:center">创建一个字典。d 必须是一个序列 (key,value)元组。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>frozenset(s)</code></td>
+<td style="text-align:center">转换为不可变集合</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>chr(x)</code></td>
+<td style="text-align:center">将一个整数转换为一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>ord(x)</code></td>
+<td style="text-align:center">将一个字符转换为它的整数值</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>hex(x)</code></td>
+<td style="text-align:center">将一个整数转换为一个十六进制字符串</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>oct(x)</code></td>
+<td style="text-align:center">将一个整数转换为一个八进制字符串</td>
+</tr>
+</tbody>
+</table>
+<h3 id="运算符">运算符</h3>
+<h4 id="算术运算符">算术运算符</h4>
+<p>加（<code>+</code>）、减（<code>-</code>）、乘（<code>*</code>）、除（<code>/</code>）、取余（<code>%</code>）、乘幂（<code>**</code>）、向下整除（<code>//</code>）</p>
+<h4 id="比较运算符">比较运算符</h4>
+<p>等于（<code>==</code>）、不等于（<code>!=</code>）、大于（<code>&gt;</code>）、小于（<code>&lt;</code>）、大于等于（<code>&gt;=</code>）、小于等于（<code>&lt;=</code>）</p>
+<blockquote>
+<p>返回布尔值：<strong>TRUE</strong>或<strong>FALSE</strong></p>
+</blockquote>
+<h4 id="赋值运算符">赋值运算符</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">=</td>
+<td style="text-align:center">简单的赋值运算符</td>
+<td style="text-align:center">c = a + b 将 a + b 的运算结果赋值为 c</td>
+</tr>
+<tr>
+<td style="text-align:center">+=</td>
+<td style="text-align:center">加法赋值运算符</td>
+<td style="text-align:center">c += a 等效于 c = c + a</td>
+</tr>
+<tr>
+<td style="text-align:center">-=</td>
+<td style="text-align:center">减法赋值运算符</td>
+<td style="text-align:center">c -= a 等效于 c = c - a</td>
+</tr>
+<tr>
+<td style="text-align:center">*=</td>
+<td style="text-align:center">乘法赋值运算符</td>
+<td style="text-align:center">c *= a 等效于 c = c * a</td>
+</tr>
+<tr>
+<td style="text-align:center">/=</td>
+<td style="text-align:center">除法赋值运算符</td>
+<td style="text-align:center">c /= a 等效于 c = c / a</td>
+</tr>
+<tr>
+<td style="text-align:center">%=</td>
+<td style="text-align:center">取模赋值运算符</td>
+<td style="text-align:center">c %= a 等效于 c = c % a</td>
+</tr>
+<tr>
+<td style="text-align:center">**=</td>
+<td style="text-align:center">幂赋值运算符</td>
+<td style="text-align:center">c **= a 等效于 c = c ** a</td>
+</tr>
+<tr>
+<td style="text-align:center">//=</td>
+<td style="text-align:center">取整除赋值运算符</td>
+<td style="text-align:center">c //= a 等效于 c = c // a</td>
+</tr>
+</tbody>
+</table>
+<h4 id="按位运算符">按位运算符</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">按位与运算符：参与运算的两个值,如果两个相应位都为1,则该位的结果为1,否则为0</td>
+<td style="text-align:center">(a &amp; b) 输出结果 12 ，二进制解释： 0000 1100</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">按位或运算符：只要对应的二个二进位有一个为1时，结果位就为1。</td>
+<td style="text-align:center">(a</td>
+</tr>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">按位异或运算符：当两对应的二进位相异时，结果为1</td>
+<td style="text-align:center">(a ^ b) 输出结果 49 ，二进制解释： 0011 0001</td>
+</tr>
+<tr>
+<td style="text-align:center">~</td>
+<td style="text-align:center">按位取反运算符：对数据的每个二进制位取反,即把1变为0,把0变为1。<code>~x</code> 类似于 <code>-x-1</code></td>
+<td style="text-align:center">(~a ) 输出结果 -61 ，二进制解释： 1100 0011， 在一个有符号二进制数的补码形式。</td>
+</tr>
+<tr>
+<td style="text-align:center">&laquo;</td>
+<td style="text-align:center">左移动运算符：运算数的各二进位全部左移若干位，由&quot;&laquo;&ldquo;右边的数指定移动的位数，高位丢弃，低位补0。</td>
+<td style="text-align:center">a &laquo; 2 输出结果 240 ，二进制解释： 1111 0000</td>
+</tr>
+<tr>
+<td style="text-align:center">&raquo;</td>
+<td style="text-align:center">右移动运算符：把&rdquo;&raquo;&ldquo;左边的运算数的各二进位全部右移若干位，&quot;&raquo;&ldquo;右边的数指定移动的位数</td>
+<td style="text-align:center">a &raquo; 2  输出结果 15 ，二进制解释： 0000 1111</td>
+</tr>
+</tbody>
+</table>
+<h4 id="逻辑运算符">逻辑运算符</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">逻辑表达式</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">and</td>
+<td style="text-align:center">x and y</td>
+<td style="text-align:center">布尔&quot;与&rdquo; - 如果 x 为 False，x and y 返回 False，否则它返回 y 的计算值。</td>
+</tr>
+<tr>
+<td style="text-align:center">or</td>
+<td style="text-align:center">x or y</td>
+<td style="text-align:center">布尔&quot;或&rdquo; - 如果 x 是 True，它返回 x 的值，否则它返回 y 的计算值。</td>
+</tr>
+<tr>
+<td style="text-align:center">not</td>
+<td style="text-align:center">not x</td>
+<td style="text-align:center">布尔&quot;非&quot; - 如果 x 为 True，返回 False 。如果 x 为 False，它返回 True。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="成员运算符">成员运算符</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">in</td>
+<td style="text-align:center">如果在指定的序列中找到值返回 True，否则返回 False。</td>
+<td style="text-align:center">x 在 y 序列中 , 如果 x 在 y 序列中返回 True。</td>
+</tr>
+<tr>
+<td style="text-align:center">not in</td>
+<td style="text-align:center">如果在指定的序列中没有找到值返回 True，否则返回 False。</td>
+<td style="text-align:center">x 不在 y 序列中 , 如果 x 不在 y 序列中返回 True。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="身份运算符">身份运算符</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">is</td>
+<td style="text-align:center">is 是判断两个标识符是不是引用自一个对象</td>
+<td style="text-align:center">x is y, 类似 id(x) == id(y) , 如果引用的是同一个对象则返回 True，否则返回 False</td>
+</tr>
+<tr>
+<td style="text-align:center">is not</td>
+<td style="text-align:center">is not 是判断两个标识符是不是引用自不同对象</td>
+<td style="text-align:center">x is not y ， 类似 id(a) != id(b)。如果引用的不是同一个对象则返回结果 True，否则返回 False。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="运算符优先级">运算符优先级</h3>
+<p>运算符由高到低优先级为：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">**</td>
+<td style="text-align:center">指数 (最高优先级)</td>
+</tr>
+<tr>
+<td style="text-align:center">~ + -</td>
+<td style="text-align:center">按位翻转, 一元加号和减号 (最后两个的方法名为 +@ 和 -@)</td>
+</tr>
+<tr>
+<td style="text-align:center">* / % //</td>
+<td style="text-align:center">乘，除，取模和取整除</td>
+</tr>
+<tr>
+<td style="text-align:center">+ -</td>
+<td style="text-align:center">加法减法</td>
+</tr>
+<tr>
+<td style="text-align:center">&raquo; &laquo;</td>
+<td style="text-align:center">右移，左移运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">&amp;</td>
+<td style="text-align:center">位 &lsquo;AND&rsquo;</td>
+</tr>
+<tr>
+<td style="text-align:center">^ `</td>
+<td style="text-align:center">`</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;= &lt; &gt; &gt;=</td>
+<td style="text-align:center">比较运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;&gt; == !=</td>
+<td style="text-align:center">等于运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">= %= /= //= -= += *= **=</td>
+<td style="text-align:center">赋值运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">is is not</td>
+<td style="text-align:center">身份运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">in not in</td>
+<td style="text-align:center">成员运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">and or not</td>
+<td style="text-align:center">逻辑运算符</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#基本数据类型">基本数据类型</a></li>
+        <li><a href="#python数据类型转换">Python数据类型转换</a></li>
+        <li><a href="#运算符">运算符</a></li>
+        <li><a href="#运算符优先级">运算符优先级</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#基本数据类型">基本数据类型</a></li>
+        <li><a href="#python数据类型转换">Python数据类型转换</a></li>
+        <li><a href="#运算符">运算符</a></li>
+        <li><a href="#运算符优先级">运算符优先级</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

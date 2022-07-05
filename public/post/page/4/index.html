@@ -38,7 +38,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://mooners.netlify.app/post/" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="og:updated_time" content="2022-07-04T00:00:00+00:00" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="og:updated_time" content="2022-07-05T00:00:00+00:00" />
 
 
 <style>
@@ -106,72 +106,31 @@
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/index.zh/">R语言高级程序设计</a>
+        <a href="https://mooners.netlify.app/post/index.zh/">R 语言统计检验函数汇总</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-05-27</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-07-31</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1792 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1959 words</span>
 
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/statistics">statistics</a>&nbsp;</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
-        数据结构 R 语言的基础数据结构可以按照维度来划分(1 维、 2 维&hellip;n 维)；也可以按照它们所包含的数据类型是否相同来划分。 这样就产生了五种数据类型，它们是数据分析中最常用的： Homogeneous Heterogeneous 1d Atomic vector List 2d Matrix Data frame
+        连续型数据 基于分布的检验 T检验 t.test(1:10, 10:20) ## ## Welch Two Sample t-test ## ## data: 1:10 and 10:20 ## t = -6.862, df = 18.998, p-value = 1.513e-06 ## alternative hypothesis: true difference in means is not equal to 0 ## 95 percent confidence interval: ## -12.397677 -6.602323 ## sample estimates: ## mean of x mean of y ## 5.5 15.0 配对 t 检验： t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE) ## ## Paired t-test ## ## data: rnorm(10) and rnorm(10, mean = 1) ##
     </div>
 </div>
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/placeholder-text/">Placeholder Text</a>
+        <a href="https://mooners.netlify.app/post/2020-07-14-r-docker-tutorial/">R Docker tutorial</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-03-09</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-07-14</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;269 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5825 words</span>
 
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/markdown">markdown</a>&nbsp;<a href="/tags/text">text</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>Lorem est tota propiore conpellat pectoribus de
-pectora summo. Redit teque digerit hominumque toris verebor lumina non cervice
-subde tollit usus habet Arctonque, furores quas nec ferunt. Quoque montibus nunc
-caluere tempus inhospita parcite confusaque translucet patri vestro qui optatis
-lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/emoji-support/">Emoji Support</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-03-05</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;138 words</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/emoji">emoji</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        <p>Emoji can be enabled in a Hugo project in a number of ways.</p>
-<p>The <a href="https://gohugo.io/functions/emojify/" target="_blank"><code>emojify</code></a> function can be called directly in templates or <a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes" target="_blank">Inline Shortcodes</a>.</p>
-<p>To enable emoji globally, set <code>enableEmoji</code> to <code>true</code> in your site’s <a href="https://gohugo.io/getting-started/configuration/" target="_blank">configuration</a> and then you can type emoji shorthand codes directly in content files; e.g.</p>
-<p><code>:s ee_no_evil:[Remove the space]</code> 🙈 <code>:h ear_no_evil:[Remove the space]</code> 🙉 <code>:s peak_no_evil:[Remove the space]</code> 🙊</p>
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/index.zh/">Fisher精确检验</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-02-19</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;921 words</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/statistics">statistics</a>&nbsp;</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/docker">docker</a>&nbsp;</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
@@ -181,29 +140,12 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/2018-12-21-chisq/">卡方检验</a>
+        <a href="https://mooners.netlify.app/post/2020-05-30-markdown/">Markdown语法说明</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-12-21</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-30</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1703 words</span>
-
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/statistics">statistics</a>&nbsp;</span>
-
-    </div>
-    <div class="post-item post-summary markdown-body">
-        
-    </div>
-</div>
-
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/2018-11-20-markdown/">Markdown常用语法</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-11-20</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2084 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;6270 words</span>
 
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/markdown">markdown</a>&nbsp;</span>
 
@@ -215,53 +157,136 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/2018-07-04-r-update/">R的更新</a>
+        <a href="https://mooners.netlify.app/post/markdown-syntax/">Markdown Syntax</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-07-04</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-05-11</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;330 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;424 words</span>
 
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/markdown">markdown</a>&nbsp;<a href="/tags/css">css</a>&nbsp;<a href="/tags/html">html</a>&nbsp;<a href="/tags/themes">themes</a>&nbsp;</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
-        !&ndash;more&ndash;&gt; 背景 在windows中R和Rstudio的更新是非常头疼的问题，每次更新都需要把之前的版本删掉重新安装，甚是麻烦。所以一直在想是否有R包可以实现R的自动更新和配置。 R的更新 目前R已经提供了insta
+        <p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.</p>
+<h2 id="headings">Headings</h2>
+<p>The following HTML <code>&lt;h1&gt;</code>—<code>&lt;h6&gt;</code> elements represent six levels of section headings. <code>&lt;h1&gt;</code> is the highest section level while <code>&lt;h6&gt;</code> is the lowest.</p>
     </div>
 </div>
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/cjk-unicode-test/">CJK Unicode Test</a>
+        <a href="https://mooners.netlify.app/post/2020-03-09-trim-galore/">测序质控软件trim_galore安装</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-03-09</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-03-09</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1549 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;869 words</span>
 
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/test">test</a>&nbsp;<a href="/tags/cjk">cjk</a>&nbsp;</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/software">software</a>&nbsp;</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
-        <p>The following is part of the CJK text, this page is for test use only.</p>
+        trim_galore可以用来对原始的测序数据进行质控 安装trim_galore需要提前安装两个依赖软件：Fastqc和cutadapt Fastqc的安装已经提及，这里不再详述 cutadapt的安装过
     </div>
 </div>
 
 <div class="post">
     <h2 class="post-item post-title">
-        <a href="https://mooners.netlify.app/post/wtf-article/">纯简体中文测试文章</a>
+        <a href="https://mooners.netlify.app/post/math-typesetting/">Math Typesetting</a>
     </h2>
     <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2017-04-01</span>
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-03-08</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;11542 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;122 words</span>
 
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/test">test</a>&nbsp;<a href="/tags/wtf">wtf</a>&nbsp;</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;No tag</span>
 
     </div>
     <div class="post-item post-summary markdown-body">
-        <p>本文内容无实际意义，由狗屁不通文章生成器自动生成，不代表作者本人观点。</p>
-<p>可是，即使是这样，一段代码写一天的出现仍然代表了一定的意义。一段代码写一天，到底应该如何实现。马克思在不经意间这样说过，一切节省，归根到底都归结为时间的节省。这不禁令我深思。马克思曾经说过，一切节省，归根到底都归结为时间的节省。</p>
+        <p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.</p>
+<p>In this example we will be using <a href="https://katex.org/" target="_blank">KaTeX</a></p>
+<ul>
+<li>Create a partial under <code>/layouts/partials/math.html</code></li>
+<li>Within this partial reference the <a href="https://katex.org/docs/autorender.html" target="_blank">Auto-render Extension</a> or host these scripts locally.</li>
+<li>Include the partial in your templates like so:</li>
+</ul>
+<pre><code>{{ if or .Params.math .Site.Params.math }}
+{{ partial &quot;math.html&quot; . }}
+{{ end }}
+</code></pre>
+<ul>
+<li>To enable KaTex globally set the parameter <code>math</code> to <code>true</code> in a project&rsquo;s configuration</li>
+<li>To enable KaTex on a per page basis include the parameter <code>math: true</code> in content files.</li>
+</ul>
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-01-07-pie-plot/">复合饼图</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-01-07</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;520 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/ggplot2">ggplot2</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种： 散点复合饼图（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-12-27-hexo/">hexo 博客搭建</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-12-27</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2321 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/blog">blog</a>&nbsp;<a href="/tags/hexo">hexo</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        前言 使用hexo + github pages 搭建博客的好处: 全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-12-23-pheatmap/">pheatmap使用指南</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-12-23</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2388 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/pheatmap">pheatmap</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        pheatmap包 简介 官方介绍： A function to draw clustered heatmaps where one has better control over some graphical parameters such as cell size, etc 实际上，pheatmap是 Pretty Heatmaps 的缩写，是我认为目前最好用的绘制聚类热图的R包（尽管有很多其他的函数。。。） 使用方法 pheatmap(mat, color = colorRampPalette(rev(brewer.pal(n = 7, name
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-11-28-r-graphics-cookbook/">R graphics cookbook</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-11-28</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1225 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/ggplot2">ggplot2</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        R语言绘制基础图形 R语言绘制图像主要有三种方式：（1）由graphics包提供的基础绘图方式；（2）基于ggplot2的qplot()快捷绘图函数；（3）ggplot2图层绘图风格 散点图 ## 方法一 plot(mtcars$wt, mtcars$mpg) ##
     </div>
 </div>
 <div class="pagination"><div class="pag-first">
@@ -269,13 +294,19 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
   </div><div class="pag-previous">
     <a href="/post/page/3/"><i class="iconfont icon-chevron-back-circle-sharp"></i></a>
   </div><div class="pag-item">
-    <a href="/post/">1</a>
-  </div><div class="pag-item">
     <a href="/post/page/2/">2</a>
   </div><div class="pag-item">
     <a href="/post/page/3/">3</a>
   </div><div class="pag-item pag-current">
     <a href="/post/page/4/">4</a>
+  </div><div class="pag-item">
+    <a href="/post/page/5/">5</a>
+  </div><div class="pag-item">
+    <a href="/post/page/6/">6</a>
+  </div><div class="pag-next">
+    <a href="/post/page/5/"><i class="iconfont icon-chevron-forward-circle-sharp"></i></a>
+  </div><div class="pag-last">
+    <a href="/post/page/7/"><i class="iconfont icon-caret-forward-circle-sharp"></i></a>
   </div></div>
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
@@ -327,6 +358,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             </span>
             
             <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
                 <a href="/tags/cjk/">cjk</a>
             </span>
             
@@ -367,7 +402,15 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             </span>
             
             <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
                 <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
             </span>
             
             <span>
@@ -376,6 +419,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             
             <span>
                 <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
             </span>
             
             <span>
@@ -403,7 +450,15 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             </span>
             
             <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
                 <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
             </span>
             
             <span>
@@ -412,6 +467,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             
             <span>
                 <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
             </span>
             
             <span>
@@ -511,6 +570,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             </span>
             
             <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
                 <a href="/tags/cjk/">cjk</a>
             </span>
             
@@ -551,7 +614,15 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             </span>
             
             <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
                 <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
             </span>
             
             <span>
@@ -560,6 +631,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             
             <span>
                 <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
             </span>
             
             <span>
@@ -587,7 +662,15 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             </span>
             
             <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
                 <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
             </span>
             
             <span>
@@ -596,6 +679,10 @@ lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
             
             <span>
                 <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
             </span>
             
             <span>

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Jekyll &#43; NexT &#43; GitHub Pages 主题优化 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="blog" />
+
+
+<meta property="og:title" content="Jekyll &#43; NexT &#43; GitHub Pages 主题优化" />
+<meta name="twitter:title" content="Jekyll &#43; NexT &#43; GitHub Pages 主题优化" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2019-07-10-jekyll-next-github-pages/" /><meta property="og:description" content="设置主题风格 打开 _config.yml 文件，找到 scheme 相关配置内容，去掉启用主题前的 # 注释即可 # --------------------------------------------------------------- # Scheme Settings 设置主题 # --------------------------------------------------------------- # Schemes #scheme: Muse # 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白 #scheme: Mist # Muse 的紧凑版本，整洁有序的单栏外观 scheme: Pisces #" />
+<meta name="twitter:description" content="设置主题风格 打开 _config.yml 文件，找到 scheme 相关配置内容，去掉启用主题前的 # 注释即可 # --------------------------------------------------------------- # Scheme Settings 设置主题 # --------------------------------------------------------------- # Schemes #scheme: Muse # 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白 #scheme: Mist # Muse 的紧凑版本，整洁有序的单栏外观 scheme: Pisces #" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2019-07-10T00:00:00+00:00" /><meta property="article:modified_time" content="2019-07-10T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-07-10-jekyll-next-github-pages/">Jekyll &#43; NexT &#43; GitHub Pages 主题优化</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-07-10</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1565 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/blog">blog</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="设置主题风格">设置主题风格</h2>
+<p>打开 <font color = "red"><code>_config.yml</code></font> 文件，找到 <code>scheme</code> 相关配置内容，去掉启用主题前的 <code>#</code> 注释即可</p>
+<pre><code class="language-yml"># ---------------------------------------------------------------
+# Scheme Settings 设置主题
+# ---------------------------------------------------------------
+
+# Schemes
+#scheme: Muse   # 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白
+#scheme: Mist   # Muse 的紧凑版本，整洁有序的单栏外观
+scheme: Pisces  # 双栏 Scheme
+</code></pre>
+<h2 id="设置菜单项的显示文本和图标">设置菜单项的显示文本和图标</h2>
+<p>NexT 使用的是 <a href="http://fontawesome.dashgame.com/" target="_blank">Font Awesome</a> 提供的图标， <a href="http://fontawesome.dashgame.com/" target="_blank">Font Awesome</a> 提供了 600+ 的图标，可以满足绝大的多数的场景，同时无须担心在 Retina 屏幕下图标模糊的问题。</p>
+<h3 id="设置菜单项的显示中文文本">设置菜单项的显示中文文本</h3>
+<p>打开 <code>/_data/languages/zh-Hans.yml</code> 文件，找到 <code>menu</code> 菜单，新增或者修改菜单项</p>
+<pre><code class="language-yml">menu:
+  home: 首页
+  archives: 归档
+  categories: 分类
+  tags: 标签
+  about: 关于
+  search: 搜索
+  schedule: 日程表
+  sitemap: 站点地图
+  commonweal: 公益404
+  # 新增menu
+  book: 书单
+</code></pre>
+<h3 id="设定菜单项的文件目录和对应图标">设定菜单项的文件目录和对应图标</h3>
+<p>打开 <code>_config.yml</code> 文件，搜索 <code>menu</code> 关键字，修改对应图标名称或者新增对应 menu 的图标。</p>
+<pre><code class="language-yml"># ---------------------------------------------------------------
+# Menu Settings
+# ---------------------------------------------------------------
+
+# When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -&gt; archives)
+## 这里添加或修改menu目录
+menu:
+  home: /
+  categories: /categories/
+  about: /about/
+  archives: /archives/
+  tags: /tags/
+  #sitemap: /sitemap.xml
+  #commonweal: /404.html
+
+
+# Enable/Disable menu icons.
+# Icon Mapping:
+#   Map a menu item to a specific FontAwesome icon name.
+#   Key is the name of menu item and value is the name of FontAwesome icon. Key is case-senstive.
+#   When an question mask icon presenting up means that the item has no mapping icon.
+# 这里启用相应的FontAwesome图标
+menu_icons:
+  enable: true
+  #KeyMapsToMenuItemKey: NameOfTheIconFromFontAwesome
+  home: home
+  about: user
+#  book: book
+#  note: pencil
+  categories: th
+  schedule: calendar
+  tags: tags
+  archives: archive
+  sitemap: sitemap
+  commonweal: heartbeat
+#  myseo: internet-explorer
+#  top: signal
+#  resume: handshake-o
+#  message: commenting
+#  friends: link
+#  file: file-archive-o
+#  ariang: cloud-download
+</code></pre>
+<blockquote>
+<p><strong>注意</strong>：除了 <code>home</code>， <code>archives</code> ,<code> /</code>后面都需要手动创建这个页面对应的文件夹及文件，且文件需要以 <code>index.md</code> 命名</p>
+</blockquote>
+<h2 id="头像设置">头像设置</h2>
+<h3 id="添加头像">添加头像</h3>
+<p>打开 <code>/_config.yml</code> 文件，搜索 <code>Sidebar Avatar</code> 关键字，去掉 <code>avatar</code> 前面的<code>#</code>，并添加相应的图片链接或者文件路径：</p>
+<pre><code class="language-yml"># Sidebar Avatar（侧栏头像）
+# in directory: /assets/images/avatar.gif
+avatar: /assets/images/avatar.jpg
+</code></pre>
+<h3 id="设置头像边框为圆形框">设置头像边框为圆形框</h3>
+<p>打开 <code>/_sass/_common/components/sidebar/sidebar-author.scss</code> 文件,修改如下:</p>
+<pre><code class="language-scss">.site-author-image {
+  display: block;
+  margin: 0 auto;
+  padding: $site-author-image-padding;
+  max-width: $site-author-image-width;
+  height: $site-author-image-height;
+  border: $site-author-image-border-width solid $site-author-image-border-color;
+ // 修改头像边框
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+</code></pre>
+<h3 id="特效鼠标放置头像上旋转">特效：鼠标放置头像上旋转</h3>
+<p>打开 <code>/_sass/_common/components/sidebar/sidebar-author.scss</code> 文件,修改如下:</p>
+<pre><code class="language-scss">.site-author-image {
+  display: block;
+  margin: 0 auto;
+  padding: $site-author-image-padding;
+  max-width: $site-author-image-width;
+  height: $site-author-image-height;
+  border: $site-author-image-border-width solid $site-author-image-border-color;
+ // 修改头像边框
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  // 设置旋转
+  transition: 1.4s all;
+}
+// 可旋转的圆形头像,`hover`动作
+.site-author-image:hover {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -transform: rotate(360deg);
+}
+</code></pre>
+<h2 id="浏览页面的时候显示当前浏览进度">浏览页面的时候显示当前浏览进度</h2>
+<p>打开 <code>/_config.yml</code> ,搜索关键字 <code>scrollpercent</code> ,把 <code>false</code> 改为 <code>true</code>。</p>
+<pre><code class="language-yml"># Scroll percent label in b2t button
+  scrollpercent: true
+</code></pre>
+<p>如果想把 top按钮放在侧边栏,打开 <code>/_config.yml</code> ,搜索关键字 <code>b2t</code> ,把 <code>false</code> 改为 <code>true</code>。</p>
+<pre><code class="language-yml"># Back to top in sidebar
+  b2t: true
+
+  # Scroll percent label in b2t button
+  scrollpercent: true
+</code></pre>
+<h2 id="侧边栏设置">侧边栏设置</h2>
+<h3 id="社交链接">社交链接</h3>
+<p>打开 <code>/_config.yml</code> 文件,搜索关键字 <code>social</code> ,然后添加社交站点名称与地址即可。</p>
+<pre><code class="language-yml"># ---------------------------------------------------------------
+# Sidebar Settings 
+# ---------------------------------------------------------------
+
+
+# Social Links
+# Key is the link label showing to end users.
+# Value is the target link (E.g. GitHub: https://github.com/iissnan)
+#social:
+  #LinkLabel: Link
+social:
+  CSDN: https://blog.csdn.net/yourname
+  GitHub: https://github.com/yourname
+</code></pre>
+<h3 id="社交链接图标">社交链接图标</h3>
+<p>与菜单栏的设置类似，打开 <code>/_config.yml</code> 文件,搜索关键字 <code>social_icons</code> ，添加社交站点名称（注意大小写）图标，<a href="http://fontawesome.dashgame.com" target="_blank">Font Awesome</a>图标地。</p>
+<pre><code class="language-yml"># Social Links Icons
+# Icon Mapping:
+#   Map a menu item to a specific FontAwesome icon name.
+#   Key is the name of the item and value is the name of FontAwesome icon. Key is case-senstive.
+#   When an globe mask icon presenting up means that the item has no mapping icon.
+social_icons:
+  enable: true
+  # Icon Mappings.
+  # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
+  GitHub: github
+  Twitter: twitter
+  Weibo: weibo
+</code></pre>
+<h3 id="rss设置">RSS设置</h3>
+<p>当前 Next 主题好像可以直接使用RSS，可以在 <code>/_config.yml</code> 文件中搜索 <code>feed</code> 添加如下配置：</p>
+<pre><code class="language-yml"># Atom feed
+feed:
+  path: atom.xml
+</code></pre>
+<h3 id="友情链接">友情链接</h3>
+<p>打开 <code>/_config.yml</code> 文件,搜索关键字 <code>Blog rolls</code>：</p>
+<pre><code class="language-yml"># Blog rolls
+links_title: 友情链接 #标题
+links_layout: block #布局，一行一个连接
+#links_layout: inline
+links: 
+  Title: http://example.com/
+</code></pre>
+<h2 id="主页文章添加边框阴影效果">主页文章添加边框阴影效果</h2>
+<p>打开 <code>/_sass/_custom/custom.scss</code> ,向里面加代码:</p>
+<pre><code class="language-scss">// 主页文章添加阴影效果
+.post {
+   margin-top: 0px;
+   margin-bottom: 60px;
+   padding: 25px;
+   -webkit-box-shadow: 0 0 5px rgba(202, 203, 203, .5);
+   -moz-box-shadow: 0 0 5px rgba(202, 203, 204, .5);
+}
+</code></pre>
+<h2 id="代码块自定义样式">代码块自定义样式</h2>
+<pre><code class="language-scss">// Custom styles.
+code {
+    color: #ff7600;
+    background: #fbf7f8;
+    margin: 2px;
+}
+// 边框的自定义样式
+.highlight, pre {
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 3px;
+}
+.highlight, code, pre {
+    border: 1px solid #d6d6d6;
+}
+</code></pre>
+<h2 id="开启版权声明">开启版权声明</h2>
+<p>主题配置文件下,搜索关键字 <code>post_copyright</code> , <code>enable</code> 改为 <code>true</code></p>
+<pre><code class="language-yml"># Declare license on posts
+post_copyright:
+  enable: ture
+  license: CC BY-NC-SA 3.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/3.0/
+</code></pre>
+<h2 id="在右上角或者左上角实现fork-me-on-github">在右上角或者左上角实现fork me on github</h2>
+<p>可以在<a href="https://github.blog/2008-12-19-github-ribbons/" target="_blank">GitHub Ribbons</a>选择不同的样式,修改图片跳转链接,并复制文本框中的代码,将如下地方代码换为自己Github主页：</p>
+<p><img class="img-zoomable" src="imagesforkgithub.png" alt="png1" />
+</p>
+<p>打开 <code>/_layouts/layout.html</code> 文件，把代码复制到 <code>&lt;div class=&quot;headband&quot;&gt;&lt;/div&gt;</code> 下面。</p>
+<h2 id="修改内容区域的宽度">修改内容区域的宽度</h2>
+<p>打开 <font color = "red">_sass/_custom/custom.scss</font> 文件，新增变量：</p>
+<pre><code class="language-css">// 修改成你期望的宽度
+$content-desktop = 700px
+
+// 当视窗超过 1600px 后的宽度
+$content-desktop-large = 900px
+</code></pre>
+<blockquote>
+<p>此方法不适用于 Pisces Scheme</p>
+</blockquote>
+<p>当你使用Pisces风格时可以用下面的方法：</p>
+<ul>
+<li>
+<p>编辑 Pisces Scheme 的 <font color = "red">_sass/_schemes/Pisces/_layout.scss</font> 文件，在最底部添加如下代码：</p>
+<pre><code class="language-css">header{ width: 90%; }
+.container .main-inner { width: 90%; }
+.content-wrap { width: calc(100% - 260px); }
+</code></pre>
+<blockquote>
+<p>对于有些浏览器或是移动设备，效果可能不是太好</p>
+</blockquote>
+</li>
+<li>
+<p>编辑 Pisces Scheme 的 <font color = "red">_sass/_schemes/Pisces/_layout.scss</font> 文件，修改以下内容：</p>
+<pre><code class="language-css">// 将 .header 中的 
+width: $main-desktop;
+// 改为：
+width: 80%;
+
+// 将 .container .main-inner 中的：
+width: $main-desktop;
+// 改为：
+width: 80%;
+
+// 将 .content-wrap 中的：
+width: $content-desktop;
+// 改为：
+width: calc(100% - 260px);
+</code></pre>
+</li>
+</ul>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#设置主题风格">设置主题风格</a></li>
+    <li><a href="#设置菜单项的显示文本和图标">设置菜单项的显示文本和图标</a>
+      <ul>
+        <li><a href="#设置菜单项的显示中文文本">设置菜单项的显示中文文本</a></li>
+        <li><a href="#设定菜单项的文件目录和对应图标">设定菜单项的文件目录和对应图标</a></li>
+      </ul>
+    </li>
+    <li><a href="#头像设置">头像设置</a>
+      <ul>
+        <li><a href="#添加头像">添加头像</a></li>
+        <li><a href="#设置头像边框为圆形框">设置头像边框为圆形框</a></li>
+        <li><a href="#特效鼠标放置头像上旋转">特效：鼠标放置头像上旋转</a></li>
+      </ul>
+    </li>
+    <li><a href="#浏览页面的时候显示当前浏览进度">浏览页面的时候显示当前浏览进度</a></li>
+    <li><a href="#侧边栏设置">侧边栏设置</a>
+      <ul>
+        <li><a href="#社交链接">社交链接</a></li>
+        <li><a href="#社交链接图标">社交链接图标</a></li>
+        <li><a href="#rss设置">RSS设置</a></li>
+        <li><a href="#友情链接">友情链接</a></li>
+      </ul>
+    </li>
+    <li><a href="#主页文章添加边框阴影效果">主页文章添加边框阴影效果</a></li>
+    <li><a href="#代码块自定义样式">代码块自定义样式</a></li>
+    <li><a href="#开启版权声明">开启版权声明</a></li>
+    <li><a href="#在右上角或者左上角实现fork-me-on-github">在右上角或者左上角实现fork me on github</a></li>
+    <li><a href="#修改内容区域的宽度">修改内容区域的宽度</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#设置主题风格">设置主题风格</a></li>
+    <li><a href="#设置菜单项的显示文本和图标">设置菜单项的显示文本和图标</a>
+      <ul>
+        <li><a href="#设置菜单项的显示中文文本">设置菜单项的显示中文文本</a></li>
+        <li><a href="#设定菜单项的文件目录和对应图标">设定菜单项的文件目录和对应图标</a></li>
+      </ul>
+    </li>
+    <li><a href="#头像设置">头像设置</a>
+      <ul>
+        <li><a href="#添加头像">添加头像</a></li>
+        <li><a href="#设置头像边框为圆形框">设置头像边框为圆形框</a></li>
+        <li><a href="#特效鼠标放置头像上旋转">特效：鼠标放置头像上旋转</a></li>
+      </ul>
+    </li>
+    <li><a href="#浏览页面的时候显示当前浏览进度">浏览页面的时候显示当前浏览进度</a></li>
+    <li><a href="#侧边栏设置">侧边栏设置</a>
+      <ul>
+        <li><a href="#社交链接">社交链接</a></li>
+        <li><a href="#社交链接图标">社交链接图标</a></li>
+        <li><a href="#rss设置">RSS设置</a></li>
+        <li><a href="#友情链接">友情链接</a></li>
+      </ul>
+    </li>
+    <li><a href="#主页文章添加边框阴影效果">主页文章添加边框阴影效果</a></li>
+    <li><a href="#代码块自定义样式">代码块自定义样式</a></li>
+    <li><a href="#开启版权声明">开启版权声明</a></li>
+    <li><a href="#在右上角或者左上角实现fork-me-on-github">在右上角或者左上角实现fork me on github</a></li>
+    <li><a href="#修改内容区域的宽度">修改内容区域的宽度</a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

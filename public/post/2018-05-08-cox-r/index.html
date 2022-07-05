@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>Cox模型的R实现 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="R, survival" />
+
+
+<meta property="og:title" content="Cox模型的R实现" />
+<meta name="twitter:title" content="Cox模型的R实现" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2018-05-08-cox-r/" /><meta property="og:description" content="载入需要的R包 survival用于计算生存分析 survminer用于可视化生存分析结果 library(&quot;survival&quot;) library(&quot;survminer&quot;) 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下： coxph(formula, data, method) formula : 是通过 Surv构建的生存对象 ，如" />
+<meta name="twitter:description" content="载入需要的R包 survival用于计算生存分析 survminer用于可视化生存分析结果 library(&quot;survival&quot;) library(&quot;survminer&quot;) 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下： coxph(formula, data, method) formula : 是通过 Surv构建的生存对象 ，如" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2018-05-08T00:00:00+00:00" /><meta property="article:modified_time" content="2018-05-08T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2018-05-08-cox-r/">Cox模型的R实现</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2018-05-08</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;1488 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/r">R</a>&nbsp;<a href="/tags/survival">survival</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h3 id="载入需要的r包">载入需要的R包</h3>
+<ul>
+<li>
+<p><strong>survival</strong>用于计算生存分析</p>
+</li>
+<li>
+<p><strong>survminer</strong>用于可视化生存分析结果</p>
+</li>
+</ul>
+<pre><code class="language-R">library(&quot;survival&quot;)
+library(&quot;survminer&quot;)
+</code></pre>
+<h3 id="计算cox-model--coxph">计算COX model : coxph()</h3>
+<p><code>coxph</code> 可以用于构建计算 Cox proportional hazards regression model，常见用法如下：</p>
+<pre><code class="language-R">coxph(formula, data, method)
+</code></pre>
+<blockquote>
+<p>formula : 是通过	<code>Surv</code>构建的生存对象 ，如：<em>Surv(time, event)</em></p>
+<p>data：包含变量的data.frame</p>
+<p>method：计算各项指标所用的检验方法</p>
+</blockquote>
+<h3 id="univariate-cox-regression">Univariate Cox regression</h3>
+<p>以<code>survival</code>包提供的<code>lung</code>数据为例，进行单变量的cox回归分析</p>
+<pre><code class="language-R">res.cox &lt;- coxph(Surv(time, status) ~ sex, data = lung)
+res.cox
+</code></pre>
+<pre><code class="language-R">Call:
+coxph(formula = Surv(time, status) ~ sex, data = lung)
+      coef exp(coef) se(coef)     z      p
+sex -0.531     0.588    0.167 -3.18 0.0015
+Likelihood ratio test=10.6  on 1 df, p=0.00111
+n= 228, number of events= 165 
+</code></pre>
+<p>使用<code>summary</code>函数显示更加详细的结果：</p>
+<pre><code class="language-R">summary(res.cox)
+</code></pre>
+<pre><code class="language-R">Call:
+coxph(formula = Surv(time, status) ~ sex, data = lung)
+  n= 228, number of events= 165 
+       coef exp(coef) se(coef)      z Pr(&gt;|z|)   
+sex -0.5310    0.5880   0.1672 -3.176  0.00149 **  
+---
+Signif. codes:  0 '*' 0.001 '' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    exp(coef) exp(-coef) lower .95 upper .95
+sex     0.588      1.701    0.4237     0.816
+Concordance= 0.579  (se = 0.022 )
+Rsquare= 0.046   (max possible= 0.999 )
+Likelihood ratio test= 10.63  on 1 df,   p=0.001111
+Wald test            = 10.09  on 1 df,   p=0.001491
+Score (logrank) test = 10.33  on 1 df,   p=0.001312
+</code></pre>
+<p>结果的各项指标解释如下：</p>
+<ol>
+<li><em><strong>Statistical significance</strong></em>. z值给出了Wald统计值。它对应于每个回归系数与其标准误差的比率（z = coef / se（coef））。 wald统计量评估给定变量的系数（β）是否在统计学上显著，由上可知，变量性别具有高度统计上显著的系数。</li>
+<li><em><strong>The regression coefficients</strong></em>. Cox模型结果中要注意的第二个特征是回归系数（coef）的符号。如果回归系数为正值，说明死亡风险高，预后差；为负值，则风险低，预后好。 R给出的是第二组相对于第一组的风险比（HR），即女性对男性。在这些数据中，性别的β系数= -0.53表明女性的死亡风险（低存活率）低于男性。</li>
+<li><em><strong>Hazard ratios</strong></em>. 指数系数（exp（coef）= exp（-0.53）= 0.59）也称为风险比，给出协变量的效应大小。 例如，女性（性别= 2）的风险降低了0.59倍，即41％。 女性与预后良好相关。</li>
+<li><em><strong>Confidence intervals of the hazard ratios</strong></em>. 给出了风险比（exp（coef））的95％置信区间的上限和下限。</li>
+<li><em><strong>Global statistical significance of the model</strong></em>.  三个检验模型的P值：The likelihood-ratio test, Wald test, and score logrank statistics.这三种方法是类似的，如果样本量足够大，则三个方法会得到相同的结果，当样本量较小时，The likelihood-ratio test能得到较好的结果。</li>
+</ol>
+<h3 id="multivariate-cox-regression-analysis">Multivariate Cox regression analysis</h3>
+<p>当我们纳入多个变量时，我们可以这样操作：</p>
+<pre><code class="language-R">res.cox &lt;- coxph(Surv(time, status) ~ age + sex + ph.ecog, data =  lung)
+summary(res.cox)
+</code></pre>
+<pre><code class="language-R">Call:
+coxph(formula = Surv(time, status) ~ age + sex + ph.ecog, data = lung)
+  n= 227, number of events= 164 
+   (1 observation deleted due to missingness)
+             coef exp(coef)  se(coef)      z Pr(&gt;|z|)    
+age      0.011067  1.011128  0.009267  1.194 0.232416    
+sex     -0.552612  0.575445  0.167739 -3.294 0.000986 ***
+ph.ecog  0.463728  1.589991  0.113577  4.083 4.45e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+        exp(coef) exp(-coef) lower .95 upper .95
+age        1.0111     0.9890    0.9929    1.0297
+sex        0.5754     1.7378    0.4142    0.7994
+ph.ecog    1.5900     0.6289    1.2727    1.9864
+Concordance= 0.637  (se = 0.026 )
+Rsquare= 0.126   (max possible= 0.999 )
+Likelihood ratio test= 30.5  on 3 df,   p=1.083e-06
+Wald test            = 29.93  on 3 df,   p=1.428e-06
+Score (logrank) test = 30.5  on 3 df,   p=1.083e-06
+</code></pre>
+<p>由上可知：在三种检验方法中，p值都是显著的。这表明了该模型的重要性。</p>
+<p>在多变量Cox分析中，协变量<code>sex</code>和<code>ph.ecog</code>仍然显着（p &lt;0.05）。然而，协变量<code>age</code>并不显着（p = 0.23）。</p>
+<blockquote>
+<p><code>sex</code>的p值为0.000986，危险比HR = exp（coef）= 0.58，表明患者性别与死亡风险降低之间有很强的关系。协变量的风险比可以解释为对风险的倍增效应。例如，将其他协变量保持不变，即女性（<code>sex</code>= 2）可将风险降低0.58倍，即降低42％。我们的结论是，女性与良好的预后相关。</p>
+<p>类似地，<code>ph.ecog</code>的p值为4.45e-05，危险比HR = 1.59，表明<code>ph.ecog</code>值与死亡风险增加之间的强关系。保持其他协变量不变，<code>ph.ecog</code>的较高值与生存率较差相关。</p>
+<p>相比之下，<code>age</code>的p = 0.23。风险比HR = exp（coef）= 1.01，95％置信区间为0.99至1.03。由于HR的置信区间包括1，因此这些结果表明年龄在调整<code>ph.ecog</code>和<code>sex</code>后对HR差异的贡献较小，并且仅趋向于显着性。例如，将其他协变量保持不变，额外的一年会导致每日死亡风险的因数为exp（beta）= 1.01或1％，这不是一个重大贡献。</p>
+</blockquote>
+<h3 id="references">References:</h3>
+<p>Cox Proportional Hazards Model<a href="http://www.sthda.com/english/wiki/cox-proportional-hazards-model" target="_blank">http://www.sthda.com/english/wiki/cox-proportional-hazards-model</a></p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#载入需要的r包">载入需要的R包</a></li>
+        <li><a href="#计算cox-model--coxph">计算COX model : coxph()</a></li>
+        <li><a href="#univariate-cox-regression">Univariate Cox regression</a></li>
+        <li><a href="#multivariate-cox-regression-analysis">Multivariate Cox regression analysis</a></li>
+        <li><a href="#references">References:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#载入需要的r包">载入需要的R包</a></li>
+        <li><a href="#计算cox-model--coxph">计算COX model : coxph()</a></li>
+        <li><a href="#univariate-cox-regression">Univariate Cox regression</a></li>
+        <li><a href="#multivariate-cox-regression-analysis">Multivariate Cox regression analysis</a></li>
+        <li><a href="#references">References:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

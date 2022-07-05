@@ -1,0 +1,77 @@
+---
+title: survminer包绘制生存曲线
+author: Jeason
+date: '2018-04-23'
+slug: survminer
+categories:
+  - R
+  - survival
+tags:
+  - R
+  - survival
+---
+
+
+
+<!--more-->
+<p><code>survminer</code>包是一个绘制生存曲线的R包，它的主要函数是<code>ggsurvplot()</code>函数，它可以绘制由<code>survival</code>包产生的<code>survfit</code>生存对象。</p>
+<p>一般用法如下：</p>
+<pre class="r"><code>ggsurvplot(fit, data = NULL, fun = NULL, color = NULL, palette = NULL,
+  linetype = 1, conf.int = FALSE, pval = FALSE, pval.method = FALSE,
+  test.for.trend = FALSE, surv.median.line = &quot;none&quot;, risk.table = FALSE,
+  cumevents = FALSE, cumcensor = FALSE, tables.height = 0.25,
+  group.by = NULL, facet.by = NULL, add.all = FALSE, combine = FALSE,
+  ggtheme = theme_survminer(), tables.theme = ggtheme, ...)</code></pre>
+<div id="主要参数" class="section level3">
+<h3>主要参数</h3>
+<p><code>fit</code> <code>survfit</code>产生的生存对象</p>
+<p><code>data</code> 一个用于拟合生存曲线的数据集</p>
+<p><code>fun</code> 定义生存曲线的函数类型。 经常使用的转换可以用字符参数指定：“事件”绘制累积事件（<code>f（y）= 1- y</code>），“cumhaz”绘制累积危险函数（<code>f（y）= -log（y）</code>）， “pct”为生存概率百分比。</p>
+<p><code>color</code> 绘制生存曲线用的颜色，默认为<code>strata</code></p>
+<p><code>palette</code> 绘制颜色所用的色板</p>
+<p><code>conf.int</code> 是否绘制置信区间，逻辑向量</p>
+<p><code>pval</code> 是否给出p值逻辑值，数字或字符串。如果逻辑和TRUE，p值将被添加到图上。如果是numeric，则将使用此参数传递的值替换computet的p值。如果是字符，则自定义的字符串会出现在图上。</p>
+<p><code>surv.median.line</code> 在中位生存时绘制水平/垂直线。允许的值包括c（“none”，“hv”，“h”，“v”）中的一个。</p>
+<p><code>risk.table</code> 允许的值有：<br />
++ 是否显示风险表的TRUE或FALSE。 默认值为FALSE。</p>
+<ul>
+<li><p>“absolute” 或者”percentage” 。分别显示绝对数量和风险对象的百分比。</p></li>
+<li><p>“abs_pct”显示绝对数量和百分比。</p></li>
+<li><p>“nrisk_cumcensor” 和 “nrisk_cumevents”。分别显示风险数量和审查和事件的累计数量。</p></li>
+<li><p>tables.height 数值在[0，1]之间，指定主要存活图下所有表的一般高度。</p></li>
+</ul>
+<p><code>ggtheme</code> 使用的ggplot2主题的名字。</p>
+</div>
+<div id="图例标题标签和位置" class="section level3">
+<h3>图例标题，标签和位置</h3>
+<p><code>title</code> 主标题</p>
+<p><code>xlab</code>,<code>ylab</code> x,y轴标签</p>
+<p><code>legend</code> 指定图例位置的字符。允许的值是（“top”，“bottom”，“left”，“right”，“none”）之一。也可使 用数字表示</p>
+<p><code>legend.title</code> 图例的title</p>
+<p><code>legend.labs</code> 图例的标签</p>
+</div>
+<div id="例子" class="section level3">
+<h3>例子</h3>
+<pre class="r"><code>require(&quot;survival&quot;)</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre class="r"><code>library(survminer)</code></pre>
+<pre><code>## Warning: package &#39;survminer&#39; was built under R version 4.2.1</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.2.1</code></pre>
+<pre><code>## Loading required package: ggpubr</code></pre>
+<pre><code>## Warning: package &#39;ggpubr&#39; was built under R version 4.2.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;survminer&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:survival&#39;:
+## 
+##     myeloma</code></pre>
+<pre class="r"><code>fit&lt;- survfit(Surv(time, status) ~ sex, data = lung)
+# Drawing survival curves
+ggsurvplot(fit)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>添加risk.table</p>
+<pre class="r"><code># Add risk table and change risk table y text colors by strata
+ggsurvplot(fit, pval = TRUE, conf.int = TRUE,
+           risk.table = TRUE, risk.table.y.text.col = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>

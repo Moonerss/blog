@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blog on Mooners</title>
+    <link>https://mooners.netlify.app/tags/blog/</link>
+    <description>Recent content in blog on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hexo 博客搭建</title>
+      <link>https://mooners.netlify.app/post/2019-12-27-hexo/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-12-27-hexo/</guid>
+      <description>前言 使用hexo + github pages 搭建博客的好处: 全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基</description>
+    </item>
+    
+    <item>
+      <title>Jekyll &#43; NexT &#43; GitHub Pages 主题优化</title>
+      <link>https://mooners.netlify.app/post/2019-07-10-jekyll-next-github-pages/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-07-10-jekyll-next-github-pages/</guid>
+      <description>设置主题风格 打开 _config.yml 文件，找到 scheme 相关配置内容，去掉启用主题前的 # 注释即可 # --------------------------------------------------------------- # Scheme Settings 设置主题 # --------------------------------------------------------------- # Schemes #scheme: Muse # 默认 Scheme，这是 NexT 最初的版本，黑白主调，大量留白 #scheme: Mist # Muse 的紧凑版本，整洁有序的单栏外观 scheme: Pisces #</description>
+    </item>
+    
+  </channel>
+</rss>

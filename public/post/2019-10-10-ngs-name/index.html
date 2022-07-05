@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>高通量测序常用概念 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="NGS" />
+
+
+<meta property="og:title" content="高通量测序常用概念" />
+<meta name="twitter:title" content="高通量测序常用概念" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2019-10-10-ngs-name/" /><meta property="og:description" content="高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为" />
+<meta name="twitter:description" content="高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2019-10-10T00:00:00+00:00" /><meta property="article:modified_time" content="2019-10-10T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2019-10-10-ngs-name/">高通量测序常用概念</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2019-10-10</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2629 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/ngs">NGS</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>高通量测序技术（High-throughput sequencing，HTS）是对传统Sanger测序（称为一代测序技术）革命性的改变,一次对几十万到几百万条核酸分子进行序列测定, 因此在有些文献中称其为下一代测序技术(next generation sequencing，NGS )足见其划时代的改变, 同时高通量测序使得对一个物种的转录组和基因组进行细致全貌的分析成为可能, 所以又被称为深度测序(Deep sequencing)。</p>
+<h2 id="什么是sanger法测序一代测序"><strong>什么是Sanger法测序（一代测序）</strong></h2>
+<p>Sanger法测序利用一种DNA聚合酶来延伸结合在待定序列模板上的引物。直到掺入一种链终止核苷酸为止。每一次序列测定由一套四个单独的反应构成，每个反应含有所有四种脱氧核苷酸三磷酸(dNTP)，并混入限量的一种不同的双脱氧核苷三磷酸(ddNTP)。由于ddNTP缺乏延伸所需要的3-OH基团，使延长的寡聚核苷酸选择性地在G、A、T或C处终止。终止点由反应中相应的双脱氧而定。每一种dNTPs和ddNTPs的相对浓度可以调整，使反应得到一组长几百至几千碱基的链终止产物。它们具有共同的起始点，但终止在不同的的核苷酸上，可通过高分辨率变性凝胶电泳分离大小不同的片段，凝胶处理后可用X-光胶片放射自显影或非同位素标记进行检测。</p>
+<h2 id="什么是基因组重测序genome-re-sequencing"><strong>什么是基因组重测序（Genome Re-sequencing）</strong></h2>
+<p>全基因组重测序是对基因组序列已知的个体进行基因组测序，并在个体或群体水平上进行差异性分析的方法。随着基因组测序成本的不断降低，人类疾病的致病突变研究由外显子区域扩大到全基因组范围。通过构建不同长度的插入片段文库和短序列、双末端测序相结合的策略进行高通量测序，实现在全基因组水平上检测疾病关联的常见、低频、甚至是罕见的突变位点，以及结构变异等，具有重大的科研和产业价值。</p>
+<h2 id="什么是de-novo测序"><strong>什么是de novo测序</strong></h2>
+<p>de novo测序也称为从头测序：其不需要任何现有的序列资料就可以对某个物 种进行测序，利用生物信息学分析手段对序列进行拼接，组装，从而获得该物种的基因组图谱。获得一个物种的全基因组序列是加快对此物种了解的重要捷径。随着新一代测序技术的飞速发展，基因组测序所需的成本和时间较传统技术都大大降低，大规模基因组测序渐入佳境，基因组学研究也迎来新的发展契机和革命性突破。利用新一代高通量、高效率测序技术以及强大的生物信息分析能力，可以高效、低成本地测定并分析所有生物的基因组序列。</p>
+<h2 id="什么是外显子测序whole-exon-sequencing"><strong>什么是外显子测序（whole exon sequencing）</strong></h2>
+<p>外显子组测序是指利用序列捕获技术将全基因组外显子区域DNA捕捉并富集后进行高通量测序的基因组分析方法。外显子测序相对于基因组重测序成本较低，对研究已知基因的SNP、Indel等具有较大的优势，但无法研究基因组结构变异如染色体断裂重组等。</p>
+<h2 id="什么是mrna测序-rna-seq"><strong>什么是mRNA测序 （RNA-seq）</strong></h2>
+<p>转录组学（transcriptomics）是在基因组学后新兴的一门学科，即研究特定细胞在某一功能状态下所能转录出来的所有RNA（包括mRNA和非编码RNA）的类型与拷贝数。Illumina提供的mRNA测序技术可在整个mRNA领域进行各种相关研究和新的发现。mRNA测序不对引物或探针进行设计，可自由提供关于转录的客观和权威信息。研究人员仅需要一次试验即可快速生成完整的poly-A尾的RNA完整序列信息，并分析基因表达、cSNP、全新的转录、全新异构体、剪接位点、等位基因特异性表达和罕见转录等最全面的转录组信息。简单的样品制备和数据分析软件支持在所有物种中的mRNA测序研究。</p>
+<h2 id="什么是chip-seq"><strong>什么是Chip-seq</strong></h2>
+<p>染色质免疫共沉淀技术（ChromatinImmunoprecipitation，ChIP）也称结合位点分析法，是研究体内蛋白质与DNA相互作用的有力工具，通常用于转录因子结合位点或组蛋白特异性修饰位点的研究。将ChIP与第二代测序技术相结合的ChIP-Seq技术，能够高效地在全基因组范围内检测与组蛋白、转录因子等互作的DNA区段。 ChIP-Seq的原理是：首先通过染色质免疫共沉淀技术（ChIP）特异性地富集目的蛋白结合的DNA片段，并对其进行纯化与文库构建；然后对富集得到的DNA片段进行高通量测序。研究人员通过将获得的数百万条序列标签精确定位到基因组上，从而获得全基因组范围内与组蛋白、转录因子等互作的DNA区段信息。</p>
+<h2 id="单核苷酸多态性"><strong>单核苷酸多态性</strong></h2>
+<p>个体间基因组DNA序列同一位置单个核苷酸变异(替代、插入或缺失)所引起的多态性。不同物种、个体基因组DNA序列同一位置上的单个核苷酸存在差别的现象。有这种差别的基因座、DNA序列等可作为基因组作图的标志。人基因组上平均约每1000个核苷酸即可能出现1个单核苷酸多态性的变化，其中有些单核苷酸多态性可能与疾病有关，但可能大多数与疾病无关。单核苷酸多态性是研究人类家族和动植物品系遗传变异的重要依据。在研究癌症基因组变异时，相对于正常组织，癌症中特异的单核苷酸变异是一种体细胞突变（somatic mutation），称做SNV。</p>
+<h2 id="什么是copy-number-variation-cnv"><strong>什么是copy number variation （CNV）</strong></h2>
+<p>基因组拷贝数变异是基因组变异的一种形式，通常使基因组中大片段的DNA形成非正常的拷贝数量。例如人类正常染色体拷贝数是2，有些染色体区域拷贝数变成1或3，这样，该区域发生拷贝数缺失或增加，位于该区域内的基因表达量也会受到影响。如果把一条染色体分成A-B-C-D四个区域，则A-B-C-C-D/A-C-B-C-D/A-C-C-B-C-D/A-B-D分别发生了C区域的扩增及缺失，扩增的位置可以是连续扩增如A-B-C-C-D也可以是在其他位置的扩增，如A-C-B-C-D。</p>
+<h2 id="什么是structure-variation-sv"><strong>什么是structure variation （SV）</strong></h2>
+<p>染色体结构变异是指在染色体上发生了大片段的变异。主要包括染色体大片段的插入和缺失（引起CNV的变化），染色体内部的某块区域发生翻转颠换，两条染色体之间发生重组（inter-chromosome trans-location）等。一般SV的展示利用Circos 软件。</p>
+<h2 id="什么是rpkmfpkm"><strong>什么是RPKM、FPKM</strong></h2>
+<p><strong>RPKM,Reads Per Kilobase of exon model per Million mapped reads, is defined in this way</strong> [Mortazavi etal., 2008]: 每1百万个map上的reads中map到外显子的每1K个碱基上的reads个数。</p>
+<p><strong>FPKM</strong>(<strong>fragments per kilobase of exon per million fragments mapped</strong>). FPKM与RPKM计算方法基本一致。不同点就是FPKM计算的是fragments，而RPKM计算的是reads。Fragment比read的含义更广，因此FPKM包含的意义也更广，可以是pair-end的一个fragment，也可以是一个read。</p>
+
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是sanger法测序一代测序"><strong>什么是Sanger法测序（一代测序）</strong></a></li>
+    <li><a href="#什么是基因组重测序genome-re-sequencing"><strong>什么是基因组重测序（Genome Re-sequencing）</strong></a></li>
+    <li><a href="#什么是de-novo测序"><strong>什么是de novo测序</strong></a></li>
+    <li><a href="#什么是外显子测序whole-exon-sequencing"><strong>什么是外显子测序（whole exon sequencing）</strong></a></li>
+    <li><a href="#什么是mrna测序-rna-seq"><strong>什么是mRNA测序 （RNA-seq）</strong></a></li>
+    <li><a href="#什么是chip-seq"><strong>什么是Chip-seq</strong></a></li>
+    <li><a href="#单核苷酸多态性"><strong>单核苷酸多态性</strong></a></li>
+    <li><a href="#什么是copy-number-variation-cnv"><strong>什么是copy number variation （CNV）</strong></a></li>
+    <li><a href="#什么是structure-variation-sv"><strong>什么是structure variation （SV）</strong></a></li>
+    <li><a href="#什么是rpkmfpkm"><strong>什么是RPKM、FPKM</strong></a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是sanger法测序一代测序"><strong>什么是Sanger法测序（一代测序）</strong></a></li>
+    <li><a href="#什么是基因组重测序genome-re-sequencing"><strong>什么是基因组重测序（Genome Re-sequencing）</strong></a></li>
+    <li><a href="#什么是de-novo测序"><strong>什么是de novo测序</strong></a></li>
+    <li><a href="#什么是外显子测序whole-exon-sequencing"><strong>什么是外显子测序（whole exon sequencing）</strong></a></li>
+    <li><a href="#什么是mrna测序-rna-seq"><strong>什么是mRNA测序 （RNA-seq）</strong></a></li>
+    <li><a href="#什么是chip-seq"><strong>什么是Chip-seq</strong></a></li>
+    <li><a href="#单核苷酸多态性"><strong>单核苷酸多态性</strong></a></li>
+    <li><a href="#什么是copy-number-variation-cnv"><strong>什么是copy number variation （CNV）</strong></a></li>
+    <li><a href="#什么是structure-variation-sv"><strong>什么是structure variation （SV）</strong></a></li>
+    <li><a href="#什么是rpkmfpkm"><strong>什么是RPKM、FPKM</strong></a></li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

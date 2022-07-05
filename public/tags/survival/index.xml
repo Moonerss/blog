@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>survival on Mooners</title>
+    <link>https://mooners.netlify.app/tags/survival/</link>
+    <description>Recent content in survival on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 08 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/survival/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cox模型的R实现</title>
+      <link>https://mooners.netlify.app/post/2018-05-08-cox-r/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-05-08-cox-r/</guid>
+      <description>载入需要的R包 survival用于计算生存分析 survminer用于可视化生存分析结果 library(&amp;quot;survival&amp;quot;) library(&amp;quot;survminer&amp;quot;) 计算COX model : coxph() coxph 可以用于构建计算 Cox proportional hazards regression model，常见用法如下： coxph(formula, data, method) formula : 是通过 Surv构建的生存对象 ，如</description>
+    </item>
+    
+    <item>
+      <title>survminer包绘制生存曲线</title>
+      <link>https://mooners.netlify.app/post/2018-04-23-survminer/</link>
+      <pubDate>Mon, 23 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2018-04-23-survminer/</guid>
+      <description>
+
+
+</description>
+    </item>
+    
+  </channel>
+</rss>

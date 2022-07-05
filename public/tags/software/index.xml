@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>software on Mooners</title>
+    <link>https://mooners.netlify.app/tags/software/</link>
+    <description>Recent content in software on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 09 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/software/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Aspera的安装与使用</title>
+      <link>https://mooners.netlify.app/post/2020-10-09-aspera/</link>
+      <pubDate>Fri, 09 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-10-09-aspera/</guid>
+      <description>当我们需要一些NGS数据时，一般会想到去NCBI或者EBI的数据库中下载。但是当我们使用wget进行下载时，真的是慢到令人发指。这时我们可以使用Aspera来下载NGS数据，来加速数据的下载。 安装 根据</description>
+    </item>
+    
+    <item>
+      <title>FastQC安装与使用</title>
+      <link>https://mooners.netlify.app/post/2020-09-23-fastqc/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-23-fastqc/</guid>
+      <description>FastQC是一款用于对RNA-seq数据进行质量检测和控制的软件（对单细胞和bulk的测序数据都适用） fastqc安装 首先需要从官网下载FastQC的安装文件 http://www.bioinformatics.babraham.ac.uk/projects/download.html#fastqc 将下载到的.zip文件解压在特定的安装</description>
+    </item>
+    
+    <item>
+      <title>测序质控软件trim_galore安装</title>
+      <link>https://mooners.netlify.app/post/2020-03-09-trim-galore/</link>
+      <pubDate>Mon, 09 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-03-09-trim-galore/</guid>
+      <description>trim_galore可以用来对原始的测序数据进行质控 安装trim_galore需要提前安装两个依赖软件：Fastqc和cutadapt Fastqc的安装已经提及，这里不再详述 cutadapt的安装过</description>
+    </item>
+    
+    <item>
+      <title>Linux下百度云快速下载</title>
+      <link>https://mooners.netlify.app/post/2019-09-19-linux/</link>
+      <pubDate>Thu, 19 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-19-linux/</guid>
+      <description>记录一下找到的linux可用的百度云下载工具，项目地址：https://github.com/iikira/BaiduPCS-Go 直接下载文件解压，进入文件夹，命令行下运行： ./BaiduPCS-Go 即可进入BaiduPCS</description>
+    </item>
+    
+    <item>
+      <title>SRAtoolkit 安装与使用</title>
+      <link>https://mooners.netlify.app/post/2019-09-03-sratoolkit/</link>
+      <pubDate>Tue, 03 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-09-03-sratoolkit/</guid>
+      <description>SRAtoolkit是NCBI开发的一个用于SRA文件处理的软件包，包含许多有用的工具。 下载SRAtoolkit软件包 软件包下载地址在NCBI网站：https://trace.ncbi.nlm.nih</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 18.04 安装有道词典</title>
+      <link>https://mooners.netlify.app/post/2019-08-22-ubuntu-18-04/</link>
+      <pubDate>Thu, 22 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-08-22-ubuntu-18-04/</guid>
+      <description>下载编译过的安装包 wget https://github.com/yomun/youdaodict_5.5/raw/master/youdao-dict_1.1.1-0~ubuntu_amd64.deb 查询并卸载QT5 # 如有显示 PyQt5 (5.10.1), 卸载 pip3 list | grep PyQt5 pip3 uninstall pyqt5 # root 用户 sudo sudo pip3 list | grep PyQt5 sudo sudo pip3 uninstall pyqt5 安装依赖包 sudo apt install python3 sudo apt install python3-dbus python3-lxml python3-pil python3-requests python3-xdg python3-xlib sudo apt install python3-pyqt5 python3-pyqt5.qtmultimedia python3-pyqt5.qtquick python3-pyqt5.qtwebkit sudo apt install gir1.2-appindicator3-0.1 qml-module-qtgraphicaleffects qml-module-qtquick-controls sudo apt install libqt5multimedia5-plugins ttf-wqy-microhei sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-chi-sim tesseract-ocr-chi-tra sudo apt install ubuntu-restricted-extras #</description>
+    </item>
+    
+  </channel>
+</rss>

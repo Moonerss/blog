@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.101.0" />
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png" />
+<link rel="manifest" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest" />
+<link rel="mask-icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg" color="#8aa2d3" />
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico" />
+<meta name="theme-color" content="#ffffff" />
+
+
+<title>scRNA的细胞质控 - Mooners</title>
+
+
+<meta name="author" content="Jeason" />
+
+
+<meta name="description" content="A minimal Hugo theme with nice theme color." />
+
+
+<meta name="keywords" content="single cell" />
+
+
+<meta property="og:title" content="scRNA的细胞质控" />
+<meta name="twitter:title" content="scRNA的细胞质控" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mooners.netlify.app/post/2020-08-02-scrna/" /><meta property="og:description" content="" />
+<meta name="twitter:description" content="" /><meta property="og:image" content="https://mooners.netlify.app/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://mooners.netlify.app/img/og.png" /><meta property="article:published_time" content="2020-08-02T00:00:00+00:00" /><meta property="article:modified_time" content="2020-08-02T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mooners.netlify.app/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='true'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mooners.netlify.app/">Mooners</a>
+            
+            <span class="title-sub">山不向我走来，我便向它走去。</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mooners.netlify.app/post/2020-08-02-scrna/">scRNA的细胞质控</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2020-08-02</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;5677 words</span>
+
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/single-cell">single cell</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h2 id="动机">动机</h2>
+<p>scRNA-seq数据的低质量文库可能来自于：细胞分选环节的破坏、文库制备失误（没有足够的反转录或PCR次数）… 表现在：细胞总表达量低、基本没有表达的基因、高线粒体或spike-in占比。</p>
+<p>这些低质量的库是有问题的，因为它们可能在下游分析中导致误导的结果 。</p>
+<ul>
+<li><strong>聚类问题：</strong> 低质量的细胞会聚集成一群，对结果的解释造成干扰，因为从这群细胞中得不到什么有用的信息，但是它的确也是一群。这种现象产生的原因有可能是：细胞破坏以后，线粒体或核RNAs占比升高。  最差的情况就是：不同类型的低质量细胞，也能聚在一起，因为相比于固有的生物差异，更相似的低质量让它们相依相偎。除此以外，本来非常小的细胞文库也能聚成一群，因为log转换后它们的平均表达量会发生很大的变化(A. Lun <a href="https://osca.bioconductor.org/quality-control.html#ref-lun2018overcoming" target="_blank">2018</a>).</li>
+<li><strong>方差估计或主成分分析</strong>:首先在PCA分析时，低质量和高质量之间的差异相比于生物学差异会体现更明显，占据主要的成分，减少降维结果的可靠性。另外，某个基因可能在两个细胞之间没什么表达差异，但是如果所处环境差异很大（一个细胞质量很低，另一个细胞质量正常），那么在差异估算过程中，就会把这个差异也会被当成差异表达基因。例如：一个低质量细胞文库的总表达量非常低（接近0），但恰巧还存在一个基因有表达量，那么这个基因的表达量在后续的文库归一化过程中就会尤为突出</li>
+<li><strong>奇怪的转录本上调</strong>：实验难免会混入外源的污染转录本，但这个量很少并且在所有细胞中都应该是差不多水平的。但如果某个细胞质量低，文库小，那么在校正文库差异过程中，其中的污染转录本表达量就会“突飞猛进”，看起来是一些明显上调的“奇怪基因”。实际上，这些奇怪的基因依然在其他细胞中存在，并且真实的表达量差不多，并且是不应该占据主体地位的。</li>
+</ul>
+<p>为了最大程度避免上面一种或多种情况的发生，应该在归一化之前去掉这些低质量的细胞，这个过程就是**细胞的质控 **</p>
+<p>使用A. T. L. Lun et al. (2017)的小型scRNA数据（未进行QC）进行测试</p>
+<pre><code class="language-r">#--- loading ---#
+library(scRNAseq)
+sce.416b &lt;- LunSpikeInData(which=&quot;416b&quot;) 
+table(sce.416b$block)
+20160113 20160325 
+      96       96 
+sce.416b$block &lt;- factor(sce.416b$block)
+sce.416b
+</code></pre>
+<pre><code class="language-r">## class: SingleCellExperiment 
+## dim: 46604 192 
+## metadata(0):
+## assays(1): counts
+## rownames(46604): ENSMUSG00000102693 ENSMUSG00000064842 ...
+##   ENSMUSG00000095742 CBFB-MYH11-mcherry
+## rowData names(1): Length
+## colnames(192): SLX-9555.N701_S502.C89V9ANXX.s_1.r_1
+##   SLX-9555.N701_S503.C89V9ANXX.s_1.r_1 ...
+##   SLX-11312.N712_S508.H5H5YBBXX.s_8.r_1
+##   SLX-11312.N712_S517.H5H5YBBXX.s_8.r_1
+## colData names(9): Source Name cell line ... spike-in addition block
+## reducedDimNames(0):
+## altExpNames(2): ERCC SIRV
+</code></pre>
+<h2 id="qc指标的选择">QC指标的选择</h2>
+<p>鉴定细胞是否是低质量的，需要用到几个指标。虽然下面这些指标是使用SMART-seq2数据进行展示的，但依然适用于UMI数据（比如MARS-seq、droplet-based技术）</p>
+<ul>
+<li><strong>文库大小（library size）</strong> ：指的是每个细胞中所有基因的表达量之和。细胞的文库如果很小，说明在文库制备过程中存在RNA的损失，要么是由于细胞裂解，要么是cDNA捕获不足导致后续的扩增量少</li>
+<li><strong>每个细胞中表达基因的数目（number of expressed features in each cell）</strong>：指的是细胞中非0表达量的基因数量。如果细胞中基本没有基因表达，很可能是转录本捕获失败</li>
+<li><strong>比对到spike-in转录本的reads比例（proportion of reads mapped to spike-in transcripts）</strong>：计算方法是：<code>spike-in counts / all features (including spike-ins) for each cell</code>。每个细胞都应该加入等量的外源转录本（spike-in），如果哪个细胞的spike-in比例提高了，说明它的内源RNA含量减少（比如在细胞分选阶段出现的细胞裂解或者RNA降解）</li>
+<li><strong>比对到线粒体基因组的reads比例（proportion of reads mapped to genes in the mitochondrial genome）</strong> ：如果没有spike-in，那么使用线粒体指标也是能说明问题的(Islam et al. 2014; Ilicic et al. 2016)。比对到线粒体的reads增多，说明细胞质中的RNA减少，可能存在细胞穿孔的情况，而这个孔的大小，可能只是将细胞质中存在的mRNA流出去，但线粒体的体积超过了孔的大小，所以还留在了细胞中，造成一定程度的富集，导致线粒体RNA占比升高。</li>
+</ul>
+<p>对于每个细胞，可以用scater包的<code>perCellQCMetrics()</code>函数进行计算，其中<code>sum</code>这一列表示每个细胞的文库大小；<code>detected</code>这一列表示检测到的基因数量；<code>subsets_Mito_percent</code>这一列表示比对到线粒体基因组的reads占比；<code>altexps_ERCC_percent</code>表示比对到ERCC spike-in的reads占比</p>
+<pre><code class="language-r"># Retrieving the mitochondrial transcripts using genomic locations included in
+# the row-level annotation for the SingleCellExperiment.
+location &lt;- rowRanges(sce.416b)
+is.mito &lt;- any(seqnames(location)==&quot;MT&quot;)
+
+# ALTERNATIVELY: using resources in AnnotationHub to retrieve chromosomal
+# locations given the Ensembl IDs; this should yield the same result.
+library(AnnotationHub)
+ens.mm.v97 &lt;- AnnotationHub()[[&quot;AH73905&quot;]]
+chr.loc &lt;- mapIds(ens.mm.v97, keys=rownames(sce.416b),
+    keytype=&quot;GENEID&quot;, column=&quot;SEQNAME&quot;)
+is.mito.alt &lt;- which(chr.loc==&quot;MT&quot;)
+
+library(scater)
+df &lt;- perCellQCMetrics(sce.416b, subsets=list(Mito=is.mito))
+df
+</code></pre>
+<pre><code class="language-r">## DataFrame with 192 rows and 16 columns
+##           sum  detected percent_top_50 percent_top_100 percent_top_200
+##     &lt;integer&gt; &lt;integer&gt;      &lt;numeric&gt;       &lt;numeric&gt;       &lt;numeric&gt;
+## 1      865936      7618        26.7218         32.2773         39.7208
+## 2     1076277      7521        29.4043         35.0354         42.2581
+## 3     1180138      8306        27.3454         32.4770         39.3296
+## 4     1342593      8143        35.8092         40.2666         46.2460
+## 5     1668311      7154        34.1198         39.0901         45.6660
+## ...       ...       ...            ...             ...             ...
+## 188    776622      8174        45.9362         49.7010         54.6101
+## 189   1299950      8956        38.0829         42.8930         49.0622
+## 190   1800696      9530        30.6675         35.5839         41.8550
+## 191     46731      6649        32.2998         37.9149         44.5999
+## 192   1866692     10964        26.6632         31.2584         37.5608
+##     percent_top_500 subsets_Mito_sum subsets_Mito_detected subsets_Mito_percent
+##           &lt;numeric&gt;        &lt;integer&gt;             &lt;integer&gt;            &lt;numeric&gt;
+## 1           52.9038            78790                    20              9.09882
+## 2           55.7454            98613                    20              9.16242
+## 3           51.9337           100341                    19              8.50248
+## 4           57.1210           104882                    20              7.81190
+## 5           58.2004           129559                    22              7.76588
+## ...             ...              ...                   ...                  ...
+## 188         64.4249            48126                    20              6.19684
+## 189         60.6675           112225                    25              8.63302
+## 190         53.6781           135693                    23              7.53559
+## 191         56.5235             3505                    16              7.50037
+## 192         48.9489           150375                    29              8.05569
+##     altexps_ERCC_sum altexps_ERCC_detected altexps_ERCC_percent
+##            &lt;integer&gt;             &lt;integer&gt;            &lt;numeric&gt;
+## 1              65278                    39              6.80658
+## 2              74748                    40              6.28030
+## 3              60878                    42              4.78949
+## 4              60073                    42              4.18567
+## 5             136810                    44              7.28887
+## ...              ...                   ...                  ...
+## 188            61575                    39              7.17620
+## 189            94982                    41              6.65764
+## 190           113707                    40              5.81467
+## 191             7580                    44             13.48898
+## 192            48664                    39              2.51930
+##     altexps_SIRV_sum altexps_SIRV_detected altexps_SIRV_percent     total
+##            &lt;integer&gt;             &lt;integer&gt;            &lt;numeric&gt; &lt;integer&gt;
+## 1              27828                     7              2.90165    959042
+## 2              39173                     7              3.29130   1190198
+## 3              30058                     7              2.36477   1271074
+## 4              32542                     7              2.26741   1435208
+## 5              71850                     7              3.82798   1876971
+## ...              ...                   ...                  ...       ...
+## 188            19848                     7             2.313165    858045
+## 189            31729                     7             2.224004   1426661
+## 190            41116                     7             2.102562   1955519
+## 191             1883                     7             3.350892     56194
+## 192            16289                     7             0.843271   1931645
+</code></pre>
+<p>另外，还可以使用<code>addPerCellQC()</code>，它会把每个细胞的QC指标加到<code>SingleCellExperiment</code>对象的<code>colData</code>中，方便后面调取</p>
+<pre><code class="language-r">sce.416b &lt;- addPerCellQC(sce.416b, subsets=list(Mito=is.mito))
+colnames(colData(sce.416b))
+</code></pre>
+<pre><code class="language-r">##  [1] &quot;Source Name&quot;              &quot;cell line&quot;               
+##  [3] &quot;cell type&quot;                &quot;single cell well quality&quot;
+##  [5] &quot;genotype&quot;                 &quot;phenotype&quot;               
+##  [7] &quot;strain&quot;                   &quot;spike-in addition&quot;       
+##  [9] &quot;block&quot;                    &quot;sum&quot;                     
+## [11] &quot;detected&quot;                 &quot;percent_top_50&quot;          
+## [13] &quot;percent_top_100&quot;          &quot;percent_top_200&quot;         
+## [15] &quot;percent_top_500&quot;          &quot;subsets_Mito_sum&quot;        
+## [17] &quot;subsets_Mito_detected&quot;    &quot;subsets_Mito_percent&quot;    
+## [19] &quot;altexps_ERCC_sum&quot;         &quot;altexps_ERCC_detected&quot;   
+## [21] &quot;altexps_ERCC_percent&quot;     &quot;altexps_SIRV_sum&quot;        
+## [23] &quot;altexps_SIRV_detected&quot;    &quot;altexps_SIRV_percent&quot;    
+## [25] &quot;total&quot;
+</code></pre>
+<p>当然，这里做QC统计的前提假设是：每个细胞的qc指标都是独立于生物学状态的。也就是说，qc指标不会那么智能地识别细胞类型然后进行判断。它会认为（如文库太小、高线粒体占比）都是由技术误差引起的，而非生物因素。但是有一个问题，<strong>如果某些细胞类型本身的RNA含量就很低，或者它们本来就含有很多的线粒体转录本呢？再根据这个指标进行过滤，会不会损失一些细胞类型呢？</strong></p>
+<h2 id="识别低质量细胞">识别低质量细胞</h2>
+<h3 id="1-使用固定的阈值">1. 使用固定的阈值</h3>
+<p>识别低质量细胞最简单方法是在QC度量上应用阈值。例如设定文库低于10万reads的细胞是低质量的，或者表达基因数量少于5000个，spike-in或线粒体占比高于10%。</p>
+<pre><code class="language-r">qc.lib &lt;- df$sum &lt; 1e5
+qc.nexprs &lt;- df$detected &lt; 5e3
+qc.spike &lt;- df$altexps_ERCC_percent &gt; 10
+qc.mito &lt;- df$subsets_Mito_percent &gt; 10
+discard &lt;- qc.lib | qc.nexprs | qc.spike | qc.mito
+
+# Summarize the number of cells removed for each reason.
+DataFrame(LibSize=sum(qc.lib), NExprs=sum(qc.nexprs),
+    SpikeProp=sum(qc.spike), MitoProp=sum(qc.mito), Total=sum(discard))
+</code></pre>
+<pre><code class="language-r">## DataFrame with 1 row and 5 columns
+##     LibSize    NExprs SpikeProp  MitoProp     Total
+##   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+## 1         3         0        19        14        33
+</code></pre>
+<p>虽然看起来简单，但使用这种方法需要丰富的经验，了解实验设计和细胞状态；另外即使使用同一种文库制备方法，但由于细胞捕获效率和测序深度的不同，这个阈值依然需要适时调整。因此对于研究人员要求很高。</p>
+<h3 id="2-使用相对阈值">2. 使用相对阈值</h3>
+<h4 id="鉴定离群点">鉴定离群点</h4>
+<p>为了获得相对阈值，先假设大部分细胞都是高质量的，然后去找离群点作为低质量。那么按照什么方法找离群点呢？常用的一个函数<code>isOutlier</code>使用的是MAD指标（绝对中位差来估计方差,先计算出数据与它们的中位数之间的偏差，然后这些偏差的绝对值的中位数就是MAD，median absolute deviation）。如果<strong>超过中位数3倍MAD的值就是离群值</strong>。</p>
+<p>使用<code>isOutlier</code>时，如果要相减（例如：<code>df$sum - 3* MAD</code>），就用<code>type=&quot;lower&quot;</code>，此时一般还要做个log转换<code>log=TRUE</code> ，保证得到的结果不是负数</p>
+<pre><code class="language-r">qc.lib2 &lt;- isOutlier(df$sum, log=TRUE, type=&quot;lower&quot;)
+qc.nexprs2 &lt;- isOutlier(df$detected, log=TRUE, type=&quot;lower&quot;)
+qc.spike2 &lt;- isOutlier(df$altexps_ERCC_percent, type=&quot;higher&quot;)
+qc.mito2 &lt;- isOutlier(df$subsets_Mito_percent, type=&quot;higher&quot;)
+</code></pre>
+<pre><code class="language-r">attr(qc.lib2, &quot;thresholds&quot;)
+   lower   higher 
+434082.9      Inf 
+attr(qc.nexprs2, &quot;thresholds&quot;)
+   lower   higher 
+5231.468      Inf 
+attr(qc.spike2, &quot;thresholds&quot;)
+   lower   higher 
+    -Inf 14.15371 
+attr(qc.mito2, &quot;thresholds&quot;)
+   lower   higher 
+    -Inf 11.91734 
+</code></pre>
+<p>用相对阈值过滤的细胞数量统计：</p>
+<pre><code class="language-r">discard2 &lt;- qc.lib2 | qc.nexprs2 | qc.spike2 | qc.mito2
+
+# Summarize the number of cells removed for each reason.
+DataFrame(LibSize=sum(qc.lib2), NExprs=sum(qc.nexprs2),
+    SpikeProp=sum(qc.spike2), MitoProp=sum(qc.mito2), Total=sum(discard2))
+</code></pre>
+<pre><code class="language-r">## DataFrame with 1 row and 5 columns
+##     LibSize    NExprs SpikeProp  MitoProp     Total
+##   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+## 1         4         0         1         2         6
+</code></pre>
+<p><strong>除此以外，还有一种更快的计算方法，一步整合了上面的操作：</strong></p>
+<pre><code class="language-r">reasons &lt;- quickPerCellQC(df, percent_subsets=c(&quot;subsets_Mito_percent&quot;,
+    &quot;altexps_ERCC_percent&quot;))
+colSums(as.matrix(reasons))
+</code></pre>
+<pre><code class="language-r">##              low_lib_size            low_n_features high_subsets_Mito_percent 
+##                         4                         0                         2 
+## high_altexps_ERCC_percent                   discard 
+##                         1                         6
+</code></pre>
+<p>使用”相对“的阈值一个好处就是可以根据测序深度、cDNA捕获效率、线粒体含量等等进行阈值的调整，在经验不是足够丰富的时候，可以辅助判断。但仍需要注意的是，<strong>使用相对阈值是有前提的，那就是：认为大部分细胞都是高质量的</strong></p>
+<h3 id="离群点检测的假设">离群点检测的假设</h3>
+<ul>
+<li>离群点的检测的假设是<strong>大部分细胞的质量都不错</strong>。这一点假设可以通过实验去验证（比如肉眼检查细胞完整性）。<strong>但当大部分细胞质量都很低，使用相对阈值结果就对大量的低质量细胞无计可施</strong>。因为它使用了MAD值，和中位数有关系，那么可以试想：如果一堆数都不合格，那么它们的中位数也不合格，因此原来正确的值，其实在这群不合格的数值中，就是“离群”的。</li>
+<li>另一个假设就是：<strong>每个细胞的qc指标都是独立于生物学状态的</strong>。也就是说，qc指标不会那么智能地识别细胞类型然后进行判断。在异质性很高的组织中， 就是存在内源RNA含量低，而线粒体基因占比高的细胞。如果使用”一刀切“的固定阈值，它们就很可能会被当成离群点被过滤。而是用MAD计算方法检测的结果可能就是：虽然一堆细胞的某个qc指标差异很大，但中位数也在变，随之变化的还有MAD值，这样最后的结果不至于和真实生物学情况差太多</li>
+</ul>
+<h3 id="考虑实验的因素">考虑实验的因素</h3>
+<p>很多大型的实验都包含多个细胞系，而且可能采用的实验方法不同（比如选用不同的测序深度），这就产生了实验的不同批次。<strong>这种情况下， 应该对每个批次分别进行检测。</strong></p>
+<p>如果每个批次都是一个<code>SingleCellExperiment</code>对象，那么<code>isOutlier()</code>函数可以按上面的方法直接使用；但是如果不同批次的细胞已经混合成一整个<code>SingleCellExperiment</code>对象，那么<code>batch=</code>这个参数就派上用场了。</p>
+<p>同样以这个416B数据集为例，他包含了两种不同的实验类型。然后我们就可以使用<code>batch=</code>参数去进行质控。</p>
+<pre><code class="language-r">batch &lt;- paste0(sce.416b$phenotype, &quot;-&quot;, sce.416b$Plate)
+batch.reasons &lt;- quickPerCellQC(df, percent_subsets=c(&quot;subsets_Mito_percent&quot;,
+    &quot;altexps_ERCC_percent&quot;), batch=batch)
+colSums(as.matrix(batch.reasons))
+</code></pre>
+<pre><code class="language-r">##              low_lib_size            low_n_features high_subsets_Mito_percent 
+##                         4                         2                         2 
+## high_altexps_ERCC_percent                   discard 
+##                         4                         7
+</code></pre>
+<p><strong>但是，<code>batch</code>参数不是万能的</strong>，之前也说过，这种相对阈值需要一个<strong>假设：每个批次的大部分细胞都是高质量的</strong>。当某个批次的细胞整体质量偏低，离群点检测很有可能失败</p>
+<p>例如，在Grun et al. (2016)的数据集中有两个donor的实验是失败的。它们的ERCC含量相对其他批次高，增加了中位数和MAD值，导致过滤低质量细胞失败。因此这种情况下，可以先算其他几个批次的中位数和MAD值，然后参考这些值去对有问题的批次进行过滤。</p>
+<pre><code class="language-r">library(scRNAseq)
+sce.grun &lt;- GrunPancreasData()
+sce.grun &lt;- addPerCellQC(sce.grun)
+
+# First attempt with batch-specific thresholds.
+discard.ercc &lt;- isOutlier(sce.grun$altexps_ERCC_percent,
+    type=&quot;higher&quot;, batch=sce.grun$donor)
+with.blocking &lt;- plotColData(sce.grun, x=&quot;donor&quot;, y=&quot;altexps_ERCC_percent&quot;,
+    colour_by=I(discard.ercc))
+
+# Second attempt, sharing information across batches
+# to avoid dramatically different thresholds for unusual batches.
+discard.ercc2 &lt;- isOutlier(sce.grun$altexps_ERCC_percent,
+    type=&quot;higher&quot;, batch=sce.grun$donor,
+    subset=sce.grun$donor %in% c(&quot;D17&quot;, &quot;D2&quot;, &quot;D7&quot;))
+without.blocking &lt;- plotColData(sce.grun, x=&quot;donor&quot;, y=&quot;altexps_ERCC_percent&quot;,
+    colour_by=I(discard.ercc2))
+
+gridExtra::grid.arrange(with.blocking, without.blocking, ncol=2) 
+</code></pre>
+<p><img class="img-zoomable" src="images/qc-plot-pancreas-1.png" alt="" />
+</p>
+<blockquote>
+<p>注：可以看到，左图是按照每个批次分别鉴定的离群点；右图是用质量好的批次计算的阈值，然后运用到差的批次上的结果</p>
+</blockquote>
+<p>为了鉴别有问题的批次，可以先将每个批次分别计算结果，然后比较它们的阈值，如果比同类批次超出太多，就要警觉。</p>
+<pre><code class="language-r">ercc.thresholds &lt;- attr(discard.ercc, &quot;thresholds&quot;)[&quot;higher&quot;,]
+ercc.thresholds
+##        D10        D17         D2         D3         D7 
+##  73.610696   7.599947   6.010975 113.105828  15.216956
+
+names(ercc.thresholds)[isOutlier(ercc.thresholds, type=&quot;higher&quot;)]
+## [1] &quot;D10&quot; &quot;D3&quot;
+</code></pre>
+<blockquote>
+<p>可以看到D10、D3的阈值就超过其他批次很多</p>
+</blockquote>
+<p>但是这么做的前提都是：我们认为批次中的细胞质量整体还不错。如果我们保证不了细胞质量，那么这种计算相对阈值的方法就不成立，还是要使用绝对阈值，手动去除。</p>
+<h3 id="3-其他方法">3. 其他方法</h3>
+<p>另一个策略是根据每个细胞的QC指标来在高维空间中识别异常值。利用<code>robustbase</code> 包，将细胞放在高维空间，根据他们的QC指标（文库大小、表达基因数、spike-in比例、线粒体比例），然后使用<code>isOutlier()</code>来识别表现出异常高outlylier水平的低质量细胞</p>
+<pre><code class="language-r">stats &lt;- cbind(log10(df$sum), log10(df$detected),
+    df$subsets_Mito_percent, df$altexps_ERCC_percent)
+
+library(robustbase)
+outlying &lt;- adjOutlyingness(stats, only.outlyingness = TRUE)
+multi.outlier &lt;- isOutlier(outlying, type = &quot;higher&quot;)
+summary(multi.outlier)
+##    Mode   FALSE    TRUE 
+## logical     182      10
+</code></pre>
+<p>除此以外，有时<strong>还可以根据基因表达量进行过滤</strong>，不过在bulk转录组中用的比较多，但是在scRNA中这样操作可能会损失一些本身数量就比较少的高质量细胞群体（比如一些罕见细胞，本身基因表达量就不是很高）</p>
+<h2 id="画图检查">画图检查</h2>
+<p>检查QC度量的分布以确定可能的问题是一个很好的实践。在最理想的情况下，我们会看到正态分布，可以证明在离群值检测中使用的<code>3 MAD</code>阈值是合理的。另一种模式下的大量细胞表明QC指标可能与某些生物状态相关，可能导致过滤过程中不同细胞类型的丢失;或者有不一致的库准备为一个子集的细胞，一个非罕见的现象在板的协议。</p>
+<pre><code class="language-r"># 把QC指标和原来的sce.416b细胞信息整合起来
+colData(sce.416b) &lt;- cbind(colData(sce.416b), df)
+# 修改一下整合后的信息
+sce.416b$block &lt;- factor(sce.416b$block)
+sce.416b$phenotype &lt;- ifelse(grepl(&quot;induced&quot;, sce.416b$phenotype),
+    &quot;induced&quot;, &quot;wild type&quot;)
+sce.416b$discard &lt;- reasons$discard
+# 绘图
+gridExtra::grid.arrange(
+    plotColData(sce.416b, x=&quot;block&quot;, y=&quot;sum&quot;, colour_by=&quot;discard&quot;,
+        other_fields=&quot;phenotype&quot;) + facet_wrap(~phenotype) + 
+        scale_y_log10() + ggtitle(&quot;Total count&quot;),
+    plotColData(sce.416b, x=&quot;block&quot;, y=&quot;detected&quot;, colour_by=&quot;discard&quot;, 
+        other_fields=&quot;phenotype&quot;) + facet_wrap(~phenotype) + 
+        scale_y_log10() + ggtitle(&quot;Detected features&quot;),
+    plotColData(sce.416b, x=&quot;block&quot;, y=&quot;subsets_Mito_percent&quot;, 
+        colour_by=&quot;discard&quot;, other_fields=&quot;phenotype&quot;) + 
+        facet_wrap(~phenotype) + ggtitle(&quot;Mito percent&quot;),
+    plotColData(sce.416b, x=&quot;block&quot;, y=&quot;altexps_ERCC_percent&quot;, 
+        colour_by=&quot;discard&quot;, other_fields=&quot;phenotype&quot;) + 
+        facet_wrap(~phenotype) + ggtitle(&quot;ERCC percent&quot;),
+    ncol=1
+)
+</code></pre>
+<p><img class="img-zoomable" src="images/qc-dist-416b-1.png" alt="" />
+</p>
+<blockquote>
+<p>展示的是不同批次的QC指标</p>
+</blockquote>
+<p>另一种有用的诊断方法是绘制相对于其他QC指标的线粒体计数比例图。</p>
+<p>为了确保不存在这样的细胞：虽然细胞文库大，但它的线粒体占比也高。另外也是为了避免意外过滤掉本来是高质量但同时具有高代谢活性（即高线粒体占比）的细胞（如肝脏细胞）</p>
+<p>======未完</p>
+<h2 id="针对droplet数据的细胞判断">针对Droplet数据的细胞判断</h2>
+<h3 id="背景">背景</h3>
+<p>由于这种建库方法的独特性，我们没办法事先知道某一个细胞文库（比如一个cell barcode）是真正包含一个细胞还是只是一个空的液滴（droplet）。因此，<strong>第一步是需要根据得到的表达量信息，来推断液滴是不是空的</strong>。但仅仅根据表达量判断还是不太靠谱，因为还有可能在空的液滴中依然包含外源RNA，最后的细胞文库依旧不为0，但确实不包含细胞。</p>
+<p>这里为了说明这个问题，<strong>使用了一个未过滤的10X PBMC数据</strong></p>
+<pre><code class="language-r"># 数据下载
+library(BiocFileCache)
+bfc &lt;- BiocFileCache(&quot;raw_data&quot;, ask = FALSE)
+raw.path &lt;- bfcrpath(bfc, file.path(&quot;http://cf.10xgenomics.com/samples&quot;,
+    &quot;cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz&quot;))
+# 解压数据
+untar(raw.path, exdir=file.path(tempdir(), &quot;pbmc4k&quot;))
+
+library(DropletUtils)
+library(Matrix)
+fname &lt;- file.path(tempdir(), &quot;pbmc4k/raw_gene_bc_matrices/GRCh38&quot;)
+sce.pbmc &lt;- read10xCounts(fname, col.names=TRUE)
+sce.pbmc
+</code></pre>
+<pre><code class="language-r">## class: SingleCellExperiment 
+## dim: 33694 737280 
+## metadata(1): Samples
+## assays(1): counts
+## rownames(33694): ENSG00000243485 ENSG00000237613 ... ENSG00000277475
+##   ENSG00000268674
+## rowData names(2): ID Symbol
+## colnames(737280): AAACCTGAGAAACCAT-1 AAACCTGAGAAACCGC-1 ...
+##   TTTGTCATCTTTAGTC-1 TTTGTCATCTTTCCTC-1
+## colData names(2): Sample Barcode
+## reducedDimNames(0):
+## altExpNames(0):
+</code></pre>
+<p><strong>整体观察不同的barcodes（不一定都是真的细胞）的文库大小分布：</strong></p>
+<pre><code class="language-r">bcrank &lt;- barcodeRanks(counts(sce.pbmc))
+
+# Only showing unique points for plotting speed.
+uniq &lt;- !duplicated(bcrank$rank)
+plot(bcrank$rank[uniq], bcrank$total[uniq], log=&quot;xy&quot;,
+    xlab=&quot;Rank&quot;, ylab=&quot;Total UMI count&quot;, cex.lab=1.2)
+
+abline(h=metadata(bcrank)$inflection, col=&quot;darkgreen&quot;, lty=2)
+abline(h=metadata(bcrank)$knee, col=&quot;dodgerblue&quot;, lty=2)
+
+legend(&quot;bottomleft&quot;, legend=c(&quot;Inflection&quot;, &quot;Knee&quot;), 
+        col=c(&quot;darkgreen&quot;, &quot;dodgerblue&quot;), lty=2, cex=1.2)
+</code></pre>
+<p><img class="img-zoomable" src="images/rankplot-1.png" alt="" />
+</p>
+<blockquote>
+<p>看到各个barcodes的文库大小有高有低，并且相差较大，因此可能对应着真实存在的细胞和空液滴。当然最简单的办法还是”一刀切“，<strong>留下那些文库较大的细胞</strong>，不过还是有损失真实细胞类型的风险</p>
+</blockquote>
+<h3 id="检测空的液滴">检测空的液滴</h3>
+<p>我们使用<code>emptyDrops()</code>函数，检查每个barcode的表达量是不是和外源RNA的表达量有显著差异(Lun et al. 2019)。如果存在显著差异，就说明barcode中更有可能是一个细胞。这种方法可<strong>以帮助区分：测序质量好的空液滴 和 包含细胞但RNA含量较少的液滴</strong>。尽管它们总体的表达量可能很相似，但本质不同，还是要区分的。</p>
+<p><code>emptyDrops()</code> 使用Monte Carlo统计模拟计算p值，如果要重复结果，需要设置随机种子。另外设置 false discovery rate (FDR)为0.1%，意味着不超过0.1%的barcodes是空的。</p>
+    </div>
+</article>
+
+
+<div class="license markdown-body">
+    <blockquote>
+        <p>Unless otherwise noted, the content of this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+               target="_blank">CC BY-NC-SA 4.0</a>.</p>
+    </blockquote>
+</div>
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#动机">动机</a></li>
+    <li><a href="#qc指标的选择">QC指标的选择</a></li>
+    <li><a href="#识别低质量细胞">识别低质量细胞</a>
+      <ul>
+        <li><a href="#1-使用固定的阈值">1. 使用固定的阈值</a></li>
+        <li><a href="#2-使用相对阈值">2. 使用相对阈值</a></li>
+        <li><a href="#离群点检测的假设">离群点检测的假设</a></li>
+        <li><a href="#考虑实验的因素">考虑实验的因素</a></li>
+        <li><a href="#3-其他方法">3. 其他方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#画图检查">画图检查</a></li>
+    <li><a href="#针对droplet数据的细胞判断">针对Droplet数据的细胞判断</a>
+      <ul>
+        <li><a href="#背景">背景</a></li>
+        <li><a href="#检测空的液滴">检测空的液滴</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/archives/">Archives</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/Moonerss" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/aplayer/">aplayer</a>
+            </span>
+            
+            <span>
+                <a href="/tags/blog/">blog</a>
+            </span>
+            
+            <span>
+                <a href="/tags/cjk/">cjk</a>
+            </span>
+            
+            <span>
+                <a href="/tags/conda/">conda</a>
+            </span>
+            
+            <span>
+                <a href="/tags/consensus-clustering/">Consensus clustering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/css/">css</a>
+            </span>
+            
+            <span>
+                <a href="/tags/debug/">debug</a>
+            </span>
+            
+            <span>
+                <a href="/tags/docker/">docker</a>
+            </span>
+            
+            <span>
+                <a href="/tags/emoji/">emoji</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ggplot2/">ggplot2</a>
+            </span>
+            
+            <span>
+                <a href="/tags/git/">git</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gsea/">GSEA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/hexo/">hexo</a>
+            </span>
+            
+            <span>
+                <a href="/tags/html/">html</a>
+            </span>
+            
+            <span>
+                <a href="/tags/linux/">linux</a>
+            </span>
+            
+            <span>
+                <a href="/tags/markdown/">markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mathjax/">Mathjax</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ngs/">NGS</a>
+            </span>
+            
+            <span>
+                <a href="/tags/pheatmap/">pheatmap</a>
+            </span>
+            
+            <span>
+                <a href="/tags/plot/">plot</a>
+            </span>
+            
+            <span>
+                <a href="/tags/python/">Python</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r/">R</a>
+            </span>
+            
+            <span>
+                <a href="/tags/r-markdown/">R Markdown</a>
+            </span>
+            
+            <span>
+                <a href="/tags/regression/">regression</a>
+            </span>
+            
+            <span>
+                <a href="/tags/shell/">shell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/single-cell/">single cell</a>
+            </span>
+            
+            <span>
+                <a href="/tags/software/">software</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ssh/">ssh</a>
+            </span>
+            
+            <span>
+                <a href="/tags/statistics/">statistics</a>
+            </span>
+            
+            <span>
+                <a href="/tags/survival/">survival</a>
+            </span>
+            
+            <span>
+                <a href="/tags/tcga/">TCGA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/test/">test</a>
+            </span>
+            
+            <span>
+                <a href="/tags/text/">text</a>
+            </span>
+            
+            <span>
+                <a href="/tags/themes/">themes</a>
+            </span>
+            
+            <span>
+                <a href="/tags/timroc/">timROC</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wgcna/">WGCNA</a>
+            </span>
+            
+            <span>
+                <a href="/tags/wtf/">wtf</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#动机">动机</a></li>
+    <li><a href="#qc指标的选择">QC指标的选择</a></li>
+    <li><a href="#识别低质量细胞">识别低质量细胞</a>
+      <ul>
+        <li><a href="#1-使用固定的阈值">1. 使用固定的阈值</a></li>
+        <li><a href="#2-使用相对阈值">2. 使用相对阈值</a></li>
+        <li><a href="#离群点检测的假设">离群点检测的假设</a></li>
+        <li><a href="#考虑实验的因素">考虑实验的因素</a></li>
+        <li><a href="#3-其他方法">3. 其他方法</a></li>
+      </ul>
+    </li>
+    <li><a href="#画图检查">画图检查</a></li>
+    <li><a href="#针对droplet数据的细胞判断">针对Droplet数据的细胞判断</a>
+      <ul>
+        <li><a href="#背景">背景</a></li>
+        <li><a href="#检测空的液滴">检测空的液滴</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022-2022
+                <a href="https://mooners.netlify.app/">Mooners</a>
+                 | <a href="https://github.com/dsrkafuu/hugo-theme-fuji">Source code</a> 
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

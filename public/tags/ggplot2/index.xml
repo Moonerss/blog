@@ -6,7 +6,16 @@
     <description>Recent content in ggplot2 on Mooners</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 04 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/ggplot2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多组比较的box图</title>
+      <link>https://mooners.netlify.app/post/2022-07-05-box/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2022-07-05-box/</guid>
+      <description>背景 我们经常会碰到连续变量的多组比较，比如比较基因在不同分组(如分期、分级和亚型等)的表达差异。两个分组之间的比较可以使用T检验或Wilcox秩和检验，三个及三个以上分组的比较可以使用方差检验和kru</description>
+    </item>
+    
     <item>
       <title>组合多张ggplot2图片</title>
       <link>https://mooners.netlify.app/post/2022-07-04-ggplot2-combine/</link>
@@ -17,6 +26,24 @@
 
 
 </description>
+    </item>
+    
+    <item>
+      <title>ggplot2常用theme参数参考</title>
+      <link>https://mooners.netlify.app/post/2020-09-23-ggplot2-theme/</link>
+      <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-23-ggplot2-theme/</guid>
+      <description>大佬总结的ggplot2常用调节参数</description>
+    </item>
+    
+    <item>
+      <title>ggplot2小部件参考</title>
+      <link>https://mooners.netlify.app/post/2020-09-22-ggplot2/</link>
+      <pubDate>Tue, 22 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2020-09-22-ggplot2/</guid>
+      <description>添加原件 添加竖线或者横线 geom_abline(mapping = NULL, data = NULL, ..., slope, intercept, na.rm = FALSE, show.legend = NA) geom_hline(mapping = NULL, data = NULL, ..., yintercept, na.rm = FALSE, show.legend = NA) geom_vline(mapping = NULL, data = NULL, ..., xintercept, na.rm = FALSE, show.legend = NA) 三个函数的作用分别是，geom_abline添加斜线， geom_hline添加水平线，ge</description>
     </item>
     
     <item>

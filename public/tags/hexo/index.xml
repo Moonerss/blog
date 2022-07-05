@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hexo on Mooners</title>
+    <link>https://mooners.netlify.app/tags/hexo/</link>
+    <description>Recent content in hexo on Mooners</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://mooners.netlify.app/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hexo 博客搭建</title>
+      <link>https://mooners.netlify.app/post/2019-12-27-hexo/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://mooners.netlify.app/post/2019-12-27-hexo/</guid>
+      <description>前言 使用hexo + github pages 搭建博客的好处: 全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以随意绑定自己的域名，不仔细看的话根本看不出来你的网站是基</description>
+    </item>
+    
+  </channel>
+</rss>
