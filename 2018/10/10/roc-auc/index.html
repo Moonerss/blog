@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>ROC曲线和AUC | Mooner</title><meta name="author" content="Mooner"><meta name="copyright" content="Mooner"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="ROC和AUC简介ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见wiki百科这篇博文主要简单介绍ROC和AUC的特点，以及如何通过R语言绘制ROC曲线和计算AUC值。   ROC曲线意义在这里，我们只讨论二值分类的情况，即“非此即彼”。一般对于二分问题来说，预">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROC曲线和AUC">
+<meta property="og:url" content="http://example.com/2018/10/10/roc-auc/index.html">
+<meta property="og:site_name" content="Mooner">
+<meta property="og:description" content="ROC和AUC简介ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见wiki百科这篇博文主要简单介绍ROC和AUC的特点，以及如何通过R语言绘制ROC曲线和计算AUC值。   ROC曲线意义在这里，我们只讨论二值分类的情况，即“非此即彼”。一般对于二分问题来说，预">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/cover_3.png">
+<meta property="article:published_time" content="2018-10-10T07:19:29.000Z">
+<meta property="article:modified_time" content="2023-03-19T11:36:43.964Z">
+<meta property="article:author" content="Mooner">
+<meta property="article:tag" content="Stats">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/cover_3.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2018/10/10/roc-auc/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"本文上次更新于","messageNext":"天前，文章内容可能已经过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ROC曲线和AUC',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-19 19:36:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">91</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover_3.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Mooner"><span class="site-name">Mooner</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ROC曲线和AUC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-10-10T07:19:29.000Z" title="发表于 2018-10-10 15:19:29">2018-10-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-19T11:36:43.964Z" title="更新于 2023-03-19 19:36:43">2023-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Stats/">Stats</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ROC曲线和AUC"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><span id="more"></span>  
+
+<h2 id="ROC和AUC简介"><a href="#ROC和AUC简介" class="headerlink" title="ROC和AUC简介"></a>ROC和AUC简介</h2><p>ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/ROC%E6%9B%B2%E7%BA%BF">wiki百科</a>这篇博文主要简单介绍ROC和AUC的特点，以及如何通过R语言绘制ROC曲线和计算AUC值。  </p>
+<h3 id="ROC曲线意义"><a href="#ROC曲线意义" class="headerlink" title="ROC曲线意义"></a>ROC曲线意义</h3><p>在这里，我们只讨论二值分类的情况，即“非此即彼”。一般对于二分问题来说，预测分类的结果有四种情况：</p>
+<ol>
+<li><strong>真阳性（TP）</strong>：预测为正样本，真实也是正样本。</li>
+<li><strong>伪阳性（FP）</strong>：预测为正样本，而真实是负样本。</li>
+<li><strong>真阴性（TN）</strong>：预测为负样本，真实也是负样本。</li>
+<li><strong>伪阴性（FN）</strong>：预测为负样本，而真实是正样本。<br>用列联表表示其结果，如下所示，1代表正样本，0代表负样本：</li>
+</ol>
+<p><img src="/images/roc-auc/table.png"></p>
+<p>在这里需要引入两个名词：<br><strong>真阳性率 (TPR, true positive rate)</strong> ：又称：命中率 (hit rate)、敏感度(sensitivity) TPR &#x3D; TP &#x2F; P &#x3D; TP &#x2F; (TP+FN)<br><strong>伪阳性率(FPR, false positive rate)</strong> ：又称：错误命中率，假警报率 (false alarm rate) FPR &#x3D; FP &#x2F; N &#x3D; FP &#x2F; (FP + TN)</p>
+<p>给定一个<strong>二元分类</strong>模型和它的<strong>阈值</strong>，就能从所有样本的（阳性／阴性）真实值和预测值计算出一个 (X&#x3D;FPR, Y&#x3D;TPR) 座标点。如下图所示：  </p>
+<p><img src="/images/roc-auc/Roccurves.png"></p>
+<p>接下来，我们考虑ROC曲线图中的四个点和一条线。第一个点，(0,1)，即FPR&#x3D;0, TPR&#x3D;1，这意味着这是一个完美的分类器，它能够将所有的样本都正确分类。第二个点，(1,0)，即FPR&#x3D;1，TPR&#x3D;0，说明这个分类器完全无效能可言，将所有的样本都错误的分类。第三个点，(0,0)，即FPR&#x3D;TPR&#x3D;0，说明所有的样本全是负样本。类似的，第四个点（1,1），分类器实际上预测所有的样本都为正样本。经过以上的分析，我们可以发现ROC曲线越接近左上角，说明分类器的分类效能越好。</p>
+<p>下面考虑ROC曲线图中的虚线y&#x3D;x上的点。这条对角线上的点其实表示的是一个采用随机猜测策略的分类器的结果，例如(0.5,0.5)，表示该分类器随机对于一半的样本猜测其为正样本，另外一半的样本为负样本。  </p>
+<h3 id="ROC曲线绘制原理"><a href="#ROC曲线绘制原理" class="headerlink" title="ROC曲线绘制原理"></a>ROC曲线绘制原理</h3><p>对于一个分类器来说，其特点是“<strong>概率输出</strong>”,即分类一个样本是根据这个样本有多大概率是正样本（或负样本）来确定的。因此当分类器模型的<strong>阈值</strong>变化时，样本的分类情况也会发生改变，每种阈值的设定会得出不同的FPR和TPR。将<strong>同一分类器模型每个阈值</strong>的 (FPR, TPR) 座标都画在ROC空间里，就成为特定模型的ROC曲线。  </p>
+<p>假如我们已经得到了所有样本的概率输出（属于正样本的概率），现在的问题是如何改变“discrimination threashold”？我们根据每个测试样本属于正样本的概率值从大到小排序。下图是一个示例，图中共有20个测试样本，“Class”一栏表示每个测试样本真正的标签（p表示正样本，n表示负样本），“Score”表示每个测试样本属于正样本的概率  </p>
+<p><img src="/images/roc-auc/score-ranking.png">  </p>
+<p>我们从高到低，依次将“Score”值作为阈值threshold，当测试样本属于正样本的概率大于或等于这个threshold时，我们认为它为正样本，否则为负样本。举例来说，对于图中的第4个样本，其“Score”值为0.6，那么样本1，2，3，4都被认为是正样本，因为它们的“Score”值都大于等于0.6，而其他样本则都认为是负样本。每次选取一个不同的threshold，我们就可以得到一组FPR和TPR，即ROC曲线上的一点。这样一来，我们一共得到了20组FPR和TPR的值，将它们画在ROC曲线的结果如下图：  </p>
+<p><img src="/images/roc-auc/roc-example.png"></p>
+<p>当我们将threshold设置为1和0时，分别可以得到ROC曲线上的(0,0)和(1,1)两个点。将这些(FPR,TPR)对连接起来，就得到了ROC曲线。当threshold取值越多，ROC曲线越平滑。  </p>
+<h3 id="AUC的意义"><a href="#AUC的意义" class="headerlink" title="AUC的意义"></a>AUC的意义</h3><p>AUC（Area Under Curve），又称为曲线下面积，其意义为随机抽取一个阳性样本和一个阴性样本，分类器正确判断阳性样本的值高于阴性样本的机率。<strong>AUC值越大，说明当前分类器分类的正确率越高，分类器模型也就越好。</strong>  </p>
+<ul>
+<li>AUC &#x3D; 1，是完美分类器，采用这个预测模型时，存在至少一个阈值能得出完美预测。绝大多数预测的场合，不存在完美分类器。</li>
+<li>0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</li>
+<li>AUC &#x3D; 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</li>
+<li>AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</li>
+</ul>
+<p>图形示例如下：  </p>
+<p><img src="/images/roc-auc/Curvas.png"></p>
+<hr>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://alexkong.net/2013/06/introduction-to-auc-and-roc/">ROC和AUC介绍以及如何计算AUC</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/ROC%E6%9B%B2%E7%BA%BF">ROC曲线- 维基百科，自由的百科全书</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Mooner</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2018/10/10/roc-auc/">http://example.com/2018/10/10/roc-auc/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Mooner</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Stats/">Stats</a></div><div class="post_share"><div class="social-share" data-image="/img/cover_3.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/11/01/cut/" title="cut()函数的使用"><img class="cover" src="/img/cover_3.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">cut()函数的使用</div></div></a></div><div class="next-post pull-right"><a href="/2018/09/25/more-github/" title="同一电脑配置多个Github账户"><img class="cover" src="/img/cover_2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">同一电脑配置多个Github账户</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/27/pca/" title="StatQuest学习笔记（一）——PCA分析"><img class="cover" src="/img/cover_1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-27</div><div class="title">StatQuest学习笔记（一）——PCA分析</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mooner</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">91</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">37</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC%E5%92%8CAUC%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">ROC和AUC简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ROC%E6%9B%B2%E7%BA%BF%E6%84%8F%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">ROC曲线意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ROC%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%88%B6%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">ROC曲线绘制原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AUC%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.3.</span> <span class="toc-text">AUC的意义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/27/pca/" title="StatQuest学习笔记（一）——PCA分析"><img src="/img/cover_1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="StatQuest学习笔记（一）——PCA分析"/></a><div class="content"><a class="title" href="/2021/11/27/pca/" title="StatQuest学习笔记（一）——PCA分析">StatQuest学习笔记（一）——PCA分析</a><time datetime="2021-11-27T13:41:37.000Z" title="发表于 2021-11-27 21:41:37">2021-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/12/Mathjax/" title="Latex 公式语法参考"><img src="/img/cover_3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Latex 公式语法参考"/></a><div class="content"><a class="title" href="/2021/10/12/Mathjax/" title="Latex 公式语法参考">Latex 公式语法参考</a><time datetime="2021-10-12T04:58:49.000Z" title="发表于 2021-10-12 12:58:49">2021-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/12/data-process-3/" title="归一化与标准化的联系与差别"><img src="/img/cover_3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="归一化与标准化的联系与差别"/></a><div class="content"><a class="title" href="/2021/10/12/data-process-3/" title="归一化与标准化的联系与差别">归一化与标准化的联系与差别</a><time datetime="2021-10-12T02:09:13.000Z" title="发表于 2021-10-12 10:09:13">2021-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/11/data-process-2/" title="数据预处理之标准化"><img src="/img/cover_1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据预处理之标准化"/></a><div class="content"><a class="title" href="/2021/10/11/data-process-2/" title="数据预处理之标准化">数据预处理之标准化</a><time datetime="2021-10-11T13:14:23.000Z" title="发表于 2021-10-11 21:14:23">2021-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/11/data-process-1/" title="数据预处理之归一化"><img src="/img/cover_3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据预处理之归一化"/></a><div class="content"><a class="title" href="/2021/10/11/data-process-1/" title="数据预处理之归一化">数据预处理之归一化</a><time datetime="2021-10-11T12:10:19.000Z" title="发表于 2021-10-11 20:10:19">2021-10-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Mooner</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
