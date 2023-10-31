@@ -2,9 +2,9 @@
 title: 关于C-index计算的相关问题
 date: 2019-01-07 19:47:30
 categories: 
-  - stats
+  - Stats
 tags: 
-  - stats
+  - Stats
 ---
 ## 背景
 

@@ -3,9 +3,9 @@ title: 卡方检验
 date: 2018-11-12
 mathjax: ture
 categories:
-  - stats
+  - Stats
 tags:
-  - stats
+  - Stats
 ---
 <!--more-->
 

@@ -41,7 +41,7 @@ bxp <- ggboxplot(ToothGrowth, x = "dose", y = "len",
 bxp
 ```
 
-![plot of chunk unnamed-chunk-2](/images/combine-ggplot2/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-2](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-2-1.png)
 
 ```r
 # Dot plot (dp)
@@ -50,7 +50,7 @@ dp <- ggdotplot(ToothGrowth, x = "dose", y = "len",
 dp
 ```
 
-![plot of chunk unnamed-chunk-2](/images/combine-ggplot2/unnamed-chunk-2-2.png)
+![plot of chunk unnamed-chunk-2](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-2-2.png)
 
 
 ```r
@@ -85,7 +85,7 @@ bp <- ggbarplot(mtcars, x = "name", y = "mpg",
 bp + font("x.text", size = 8)
 ```
 
-![plot of chunk unnamed-chunk-4](/images/combine-ggplot2/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-4-1.png)
 
 ```r
 # Scatter plots (sp)
@@ -103,7 +103,7 @@ sp
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![plot of chunk unnamed-chunk-4](/images/combine-ggplot2/unnamed-chunk-4-2.png)
+![plot of chunk unnamed-chunk-4](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-4-2.png)
 
 
 ## 组合多张图片在一个面板上  
@@ -117,7 +117,7 @@ ggarrange(bxp, dp, bp + rremove("x.text"),
           ncol = 2, nrow = 2)
 ```
 
-![plot of chunk unnamed-chunk-5](/images/combine-ggplot2/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-5-1.png)
 
 ## 给图片添加注释  
 
@@ -144,7 +144,7 @@ annotate_figure(figure,
                 )
 ```
 
-![plot of chunk unnamed-chunk-6](/images/combine-ggplot2/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-6](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-6-1.png)
 
 ## 图片对齐  
 
@@ -174,7 +174,7 @@ ggarrange(ggsurv$plot, ggsurv$table, heights = c(2, 0.7),
           ncol = 1, nrow = 2)
 ```
 
-![plot of chunk unnamed-chunk-7](/images/combine-ggplot2/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-7](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-7-1.png)
 
 此时，我们可以看出图和表并不是完全垂直对齐的，要对齐他们需要调用`align`参数  
 
@@ -184,7 +184,7 @@ ggarrange(ggsurv$plot, ggsurv$table, heights = c(2, 0.7),
           ncol = 1, nrow = 2, align = "v")
 ```
 
-![plot of chunk unnamed-chunk-8](/images/combine-ggplot2/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-8](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-8-1.png)
 
 ## 改变图形的行列布局排布  
 
@@ -210,7 +210,7 @@ ggarrange(sp,                                                 # First row with s
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![plot of chunk unnamed-chunk-9](/images/combine-ggplot2/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-9](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-9-1.png)
 
 ### 使用`cowplot`包  
 
@@ -218,7 +218,7 @@ ggarrange(sp,                                                 # First row with s
 
 `ggdraw（）`可以初始化一个空的绘图画布，默认情况是这样的：  
 
-![canva]("/images/combine-ggplot2/canva.png")  
+![canva](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/canva.png)  
 
 `draw_plot（）`可以将绘图放置在绘图画布上的某处：  
 
@@ -247,7 +247,7 @@ ggdraw() +
                   x = c(0, 0.5, 0), y = c(1, 1, 0.5))
 ```
 
-![plot of chunk unnamed-chunk-12](/images/combine-ggplot2/unnamed-chunk-12-1.png)
+![plot of chunk unnamed-chunk-12](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-12-1.png)
 
 ### 使用`gridExtra`包  
 
@@ -279,7 +279,7 @@ grid.arrange(sp,                             # First row with one plot spaning o
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![plot of chunk unnamed-chunk-13](/images/combine-ggplot2/unnamed-chunk-13-1.png)
+![plot of chunk unnamed-chunk-13](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-13-1.png)
 
 我们同样可以使用`gird.arrange()`函数中的`lay_matrix`参数来设置，使用方法如下：  
 
@@ -295,7 +295,7 @@ grid.arrange(bp,                                    # bar plot spaning two colum
 ## `geom_smooth()` using formula 'y ~ x'
 ```
 
-![plot of chunk unnamed-chunk-14](/images/combine-ggplot2/unnamed-chunk-14-1.png)
+![plot of chunk unnamed-chunk-14](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-14-1.png)
 
 > 在上面的R代码中，layout_matrix是一个2×2矩阵（2列和2行）。 第一行全是1，这是第一幅图占的地方，横跨两列; 第二行包含分别占据一列的图2和图3  
 
@@ -327,7 +327,7 @@ p <- as_ggplot(gt) +                                # transform to a ggplot
 p
 ```
 
-![plot of chunk unnamed-chunk-15](/images/combine-ggplot2/unnamed-chunk-15-1.png)
+![plot of chunk unnamed-chunk-15](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-15-1.png)
 
 > 在上面的R代码中，我们使用了`arrangeGrob（）`而不`是grid.arrange（）`。  
 > 请注意，这两个函数的主要区别在于，`grid.arrange（）`会自动绘制排列好的图  
@@ -369,7 +369,7 @@ print(dp, vp = define_region(row = 2, col = 2))
 print(bp + rremove("x.text"), vp = define_region(row = 3, col = 1:2))
 ```
 
-![plot of chunk unnamed-chunk-16](/images/combine-ggplot2/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-16](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-16-1.png)
 
 ## 通用图例的设定  
 
@@ -384,7 +384,7 @@ ggarrange(bxp, dp, labels = c("A", "B"),
           common.legend = TRUE, legend = "bottom")
 ```
 
-![plot of chunk unnamed-chunk-17](/images/combine-ggplot2/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-17](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-17-1.png)
 
 ## 实战  
 
@@ -413,7 +413,7 @@ ggarrange(xplot, NULL, sp, yplot,
           common.legend = TRUE)
 ```
 
-![plot of chunk unnamed-chunk-18](/images/combine-ggplot2/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-18](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/combine-ggplot2/unnamed-chunk-18-1.png)
 
 --------------------------------------------------
 

@@ -1,0 +1,668 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>StatQuest学习笔记（一）——PCA分析 | Mooner</title><meta name="author" content="Mooner"><meta name="copyright" content="Mooner"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="PCA的基本思想我们先从最简单的案例入手，先看下面的一堆绿色的圆圈，如下所示：	   我们可以把这些绿色圆圈当成一群正常的细胞,虽然这一群细胞看上去是一样的（至少表面上一样），但是，它们本质上也有可能不一样，例如像下面的这个样子：   这群细胞分成了三群，不过从直观上来看，你太不容易能看出这一群细胞划分成了三群。 为了能够严格地划分这些细胞，我们可以对这些细胞进行测序，确认这些细胞中有哪些基因处于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="StatQuest学习笔记（一）——PCA分析">
+<meta property="og:url" content="https://mooner.netlify.app/2021/11/27/pca/index.html">
+<meta property="og:site_name" content="Mooner">
+<meta property="og:description" content="PCA的基本思想我们先从最简单的案例入手，先看下面的一堆绿色的圆圈，如下所示：	   我们可以把这些绿色圆圈当成一群正常的细胞,虽然这一群细胞看上去是一样的（至少表面上一样），但是，它们本质上也有可能不一样，例如像下面的这个样子：   这群细胞分成了三群，不过从直观上来看，你太不容易能看出这一群细胞划分成了三群。 为了能够严格地划分这些细胞，我们可以对这些细胞进行测序，确认这些细胞中有哪些基因处于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mooner.netlify.app/img/cover_10.png">
+<meta property="article:published_time" content="2021-11-27T13:41:37.000Z">
+<meta property="article:modified_time" content="2023-03-19T13:11:43.171Z">
+<meta property="article:author" content="Mooner">
+<meta property="article:tag" content="StatQuest">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mooner.netlify.app/img/cover_10.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mooner.netlify.app/2021/11/27/pca/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"本文上次更新于","messageNext":"天前，文章内容可能已经过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'StatQuest学习笔记（一）——PCA分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-19 21:11:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover_10.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Mooner"><span class="site-name">Mooner</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">StatQuest学习笔记（一）——PCA分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-11-27T13:41:37.000Z" title="发表于 2021-11-27 21:41:37">2021-11-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-19T13:11:43.171Z" title="更新于 2023-03-19 21:11:43">2023-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Stats/">Stats</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="StatQuest学习笔记（一）——PCA分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="PCA的基本思想"><a href="#PCA的基本思想" class="headerlink" title="PCA的基本思想"></a>PCA的基本思想</h2><p>我们先从最简单的案例入手，先看下面的一堆绿色的圆圈，如下所示：	</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p1.jpg' width = '80%' heigh = '80%'>
+
+<p>我们可以把这些绿色圆圈当成一群正常的细胞,虽然这一群细胞看上去是一样的（至少表面上一样），但是，它们本质上也有可能不一样，例如像下面的这个样子：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p2.jpg' width = '80%' heigh = '80%'>
+
+<p>这群细胞分成了三群，不过从直观上来看，你太不容易能看出这一群细胞划分成了三群。</p>
+<p>为了能够严格地划分这些细胞，我们可以对这些细胞进行测序，确认这些细胞中有哪些基因处于活跃状态，我们就能知道这些细胞的功能，这样就知道了这些细胞的种类，当然了，如果这是一群人，我们可以测量他们的身高，血压等，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p3.jpg' width = '80%' heigh = '80%'>
+
+<p>现在我们测了这些细胞的基因，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p4.jpg' width = '80%' heigh = '80%'>
+
+<p>假设，我们此时没有那么多细胞，只有2个细胞，那么我们就可以把这两个细胞的所有基因画在一个坐标上，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p5.jpg' width = '80%' heigh = '80%'>
+
+<p>就像上图显示的这样，基因1在细胞1中的高表达，而在细胞2中低表达，而基因9正好相反，在细胞1中低表达，而在细胞2中高表达，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p6.jpg' width = '80%' heigh = '80%'>
+
+<p>从我们所列出的数据来看，细胞1和细胞2的基因表达水平很多呈相反的水平，那么我们很容易就知道，这两个细胞必定不是同一种类的细胞，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p7.jpg' width = '80%' heigh = '80%'>
+
+<p>那么现在假设我们有3个细胞，现在利用二维坐标系分别绘制出这三个细胞两两之间的基因表达水平，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p8.jpg' width = '80%' heigh = '80%'>
+
+<p>我们可以直接把它们放到一个三维坐标系中进行比较，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p9.jpg' width = '80%' heigh = '80%'>
+
+<p>在这个三维坐标系中，它的三个坐标轴分别表示细胞1，细胞2，细胞3，我们通过旋转坐标轴就可以发现每两个细胞之间的关系。</p>
+<p>现在把问题再进一步，如果我们有4个细胞，比较直观的手段就是分别画出这4个细胞两两的平面坐标系，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p10.jpg' width = '80%' heigh = '80%'>
+
+<p>或者是画出一个四维的坐标系，像下面的这个样子：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p11.jpg' width = '80%' heigh = '80%'>
+
+<p>但是随着细胞数目越来越多，上述的方法已经不太能够适用于计算和展示，此时我们就需要使用主成分分析（PCA）对细胞进行分类</p>
+<p>PCA可以将不同细胞之间的关系转换到一个平面坐标系中，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p12.jpg' width = '80%' heigh = '80%'>
+
+<p>此时我们可以发现，通过PCA这种方法，可以把一群细胞中高度相关的细胞聚集起来，像下面的这个样子：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p13.jpg' width = '80%' heigh = '80%'>
+
+<p>为了能够更直观地说明这种分析方法，我们可以把不同的细胞换成不同的颜色，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p14.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，我们再回到最初的问题上来，通过PCA方法可以把一群细胞中高度相关的细胞给区分开来，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p15.jpg' width = '80%' heigh = '80%'>
+
+<h2 id="PCA的展示形式"><a href="#PCA的展示形式" class="headerlink" title="PCA的展示形式"></a>PCA的展示形式</h2><p>一般我们使用散点图的形式来展示PCA的结果，在PCA图中，它的坐标轴是按重要性进行排序的。其中PC1是第一主成分轴，它的重要性要强于PC2，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p16.jpg' width = '80%' heigh = '80%'>
+
+<p>假如一个PCA长得是下面的这个样子，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p17.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，如果左上角的绿点与左下角的红点的距离是d1，右下角的黄点与左下角红点的距离是d2，如果d1&#x3D;d2的话，那么我们就可以认为，黄色点与红色点的差异要大于绿色点与红色点的差异（因为PC1的坐标是第一主成分），如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p18.jpg' width = '80%' heigh = '80%'>
+
+<p>在我们了解了PCA之后，我们应该知道，PCA仅仅是一种划分不同数据类型的方法之一，此外，还有其他基于降维的统计学方法（dimension reduction），例如热图，t-SNE图，多维缩放（multi-dimensional scaling，MDS）等，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p19.jpg' width = '80%' heigh = '80%'>
+
+<h2 id="PCA的计算原理"><a href="#PCA的计算原理" class="headerlink" title="PCA的计算原理"></a>PCA的计算原理</h2><h3 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h3><p>在进行主成分分析(PCA)时，我们一般采用奇异值分解（singular value decomposition，SVD）的方法进行计算。我们先看一个简单的案例，在这个案例中，我们检测了6只不同小鼠的2个基因，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p20.jpg' width = '80%' heigh = '80%'>
+
+<p>如果我们只检测1个基因的话（Gene 1），那么我们根据基因1表达的情况，把小鼠的绘制到数轴上，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p22.jpg' width = '80%' heigh = '80%'>
+
+<p>其中小鼠1，小鼠2，小鼠3的Gene 1表达水平比较高，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p23.jpg' width = '80%' heigh = '80%'>
+
+<p>而小鼠4，小鼠5，小鼠6的Gene 1水平则较低，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p24.jpg' width = '80%' heigh = '80%'>
+
+<p>虽然这个图形比较简单，但是，我们从中还是能得到一些信息的，例如小鼠1，小鼠2和小鼠3比较接近，小鼠4，小鼠5和小鼠6比较接近，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p25.jpg' width = '80%' heigh = '80%'>
+
+<p>如果我们检测了2个基因，那么我们可以绘制一个二维坐标系，横轴是Gene 1，纵轴是Gene 2，那么小鼠1，小鼠2和小鼠3会聚在一起，小鼠4，小鼠5和小鼠6会聚在一起，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p26.jpg' width = '80%' heigh = '80%'>
+
+<p>如果我们检测了3个基因，那么我们可以绘制三维的坐标系，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p27.jpg' width = '80%' heigh = '80%'>
+
+<p>再进一步，如果我们检测了4个基因，此时我们很难绘制出四维的坐标系，那么我们就需要进行PCA分析了，PCA可以把超过4个的基因降维成二维的坐标系，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p28.jpg' width = '80%' heigh = '80%'>
+
+<p>在这个PCA的二维坐标系中，我们可以发现，小鼠4、小鼠5和小鼠6是一类，小鼠1，小鼠2和小鼠3是一类，它们的各自的基因表达模式也类似，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p29.jpg' width = '80%' heigh = '80%'>
+
+<p>PCA在对数据进行聚类（clustering）时有很大的价值，例如，经过PCA分析，在它的二维坐标轴上我们可以发现，Gene 3在x轴上对样本的区分有贡献最大，如图所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p30.jpg' width = '80%' heigh = '80%'>
+
+<h3 id="PCA计算"><a href="#PCA计算" class="headerlink" title="PCA计算"></a>PCA计算</h3><p>为了理解PCA是如何进行计算的，我们还回最初2个基因的案例上来，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p31.jpg' width = '80%' heigh = '80%'>
+
+<p>首先，我们根据所有的样本的这两个基因的表达情况绘制出它们的平面坐标系。然后，计算Gene 1表达水平的均值，如下图x轴上红叉的所在位置如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p32.jpg' width = '80%' heigh = '80%'>
+
+<p>同样的，计算Gene 2表达水平的均值，如下图中y轴上红叉的所在位置，如下所示：</p>
+<p><img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p33.jpg' width = '80%' heigh = '80%'>·</p>
+<p>有了Gene 1和Gene 2的这两个数值，我们就得到了整体数值的中心。我们有了这个点（蓝叉所在位置）后，我们此时就不需要再看原始数据了如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p34.jpg' width = '80%' heigh = '80%'>
+
+<p>我们把所有的数据点各左下角移动，将数据的中心与原点(0,0)重合，就像下面的这个样子，从左图移成右图的样子：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p35.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，虽然所有的数据点都移动了，但是每个点之间的相对距离是不变的，整体数据的中心就变成了原点(0,0)，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p36.jpg' width = '80%' heigh = '80%'>
+
+<p>我们可以找一条通过原点的直线，然后旋转这条直线（红色虚线），使这条直线尽量匹配这些数据，最匹配数据的直线就是下面的这个样子：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p37.jpg' width = '80%' heigh = '80%'>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p38.jpg' width = '80%' heigh = '80%'>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p39.jpg' width = '80%' heigh = '80%'>
+
+<h4 id="PC1-计算思路"><a href="#PC1-计算思路" class="headerlink" title="PC1 计算思路"></a>PC1 计算思路</h4><p>那么我们如何得到这条最优的曲线呢？我们可以先回到直线原始的位置<br><img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p40.jpg' width = '80%' heigh = '80%'></p>
+<p>为了准确地找出最佳匹配所有数据的直线，PCA会将所有数据点都役射到这条直线上来，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p41.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，可以计算这些数据点到投射到这条直线上的距离，并且使这些距离最小，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p42.jpg' width = '80%' heigh = '80%'>
+
+<p>除了要保持数据点到直线的距离最小外，还要计算所有数据点投射到这条直线上的点（图中绿叉位置所在点）到原点的距离，使这个距离最大，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p43.jpg' width = '80%' heigh = '80%'>
+
+<p>当直线进行旋转，这些数据点到这条直线的距离是在缩小的，同时这些数据点投射到直线上的点到原点的距离是加大的：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p44.jpg' width = '80%' heigh = '80%'>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p45.jpg' width = '80%' heigh = '80%'>
+
+<p>为了更好地以数学思维来理解这个过程，此时我们先看一个点的情况，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p46.jpg' width = '80%' heigh = '80%'>
+
+<p>这个点是固定的，它到原点的距离也是固定的：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p47.jpg' width = '80%' heigh = '80%'>
+
+<p>当直线（红色虚线）在旋转的过程中，这个点到原点的距离是不变的：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p48.jpg' width = '80%' heigh = '80%'>
+
+<p>当直线旋转到某一位置时，我们将这个点投射到直线上，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p49.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，我们会得到一个直角，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p50.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，我们把这个直角三角形的三条边命名为 <code>a</code>，<code>b</code>，<code>c</code>，那么根据勾股定理，我们就会得到这个公式，即$a^2 &#x3D; b^2 + c^2$</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p52.jpg' width = '80%' heigh = '80%'>
+
+<p>三角形的斜边 <code>a</code> 是不会变的，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p53.jpg' width = '80%' heigh = '80%'>
+
+<p>如果直角边 <code>b</code> 变大的话, 那么直角边 <code>c</code>就会变小:</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p54.jpg' width = '80%' heigh = '80%'>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p55.jpg' width = '80%' heigh = '80%'>
+
+<p>反之，也成立。而PCA计算的则是降低直角边 <code>b</code>，也就是降低数据点投射到直线上的距离，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p56.jpg' width = '80%' heigh = '80%'>
+
+<p>同时，PCA还要保证投到到直线上的点到原点的距离最大，也就是说要求c边最大，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p57.jpg' width = '80%' heigh = '80%'>
+
+<p>通过上面利用直角三角形的解释，就比较容易理解PCA计算最佳匹配直线的思路了。此时，再回到起点，将所有的数据点投射到直线上，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p58.jpg' width = '80%' heigh = '80%'>
+
+<p>然后计算某个点到原点为的距离，我们把它命名为 <code>d1</code>，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p59.jpg' width = '80%' heigh = '80%'>
+
+<p>同理，计算第2点投射到直线上的点到原点的距离，命名为 <code>d2</code>，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p60.jpg' width = '80%' heigh = '80%'>
+
+<p>依此类推，计算剩余的投射点到原点的距离</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p61.jpg' width = '80%' heigh = '80%'>
+
+<p>然后把这些值的平方加起来，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p62.jpg' width = '80%' heigh = '80%'>
+
+<p>我们旋转直线，直到最终这个 <code>SS</code> 的距离最大（这个距离最大，也就是说数据点到直线的距离最小）为止</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p63.jpg' width = '80%' heigh = '80%'>
+
+<p>最终，得到了我们想要的直线，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p64.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，我们称这条直线为第一主成分（Principal Component 1，简称PC1）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p65.jpg' width = '80%' heigh = '80%'>
+
+<p>有了这个直线，它的斜率就很容易计算出来了，经计算，PC1的斜率为0.25</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p66.jpg' width = '80%' heigh = '80%'>
+
+<p>它表示每当我们在Gene 1（x轴坐标）前进4个单位时，在这个直线上的数据点在Gene 2上就增加1个单位</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p67.jpg' width = '80%' heigh = '80%'>
+
+<p>如果按照生物学意义来理解就是，这几个样本在Gene 1坐标轴上更加分散，而在Gene 2上的分散程度则较小</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p68.jpg' width = '80%' heigh = '80%'>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p69.jpg' width = '80%' heigh = '80%'>
+
+<p>我们可以根据鸡尾酒配方（cocktail recipe）来思考这个PC1，为了生成PC1，我们可以加入4份的Gene 1，再加入1份的Gene 2，另外，我们可以发现，Gene 1与Gene 2的比值是4，它就说明在描述数据的分散程度方面，Gene 1这个基因更加重要</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p70.jpg' width = '80%' heigh = '80%'>
+
+<p>但在数学上，把这种鸡尾酒配方（cocktail recipe）称为是Gene 1和Gene 2的线性组合（linear combination），在统计学上，描述PC1也可以这样，即“PC1是几个变量的一个线性组合”，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p71.jpg' width = '80%' heigh = '80%'>
+
+<h4 id="PC1-计算"><a href="#PC1-计算" class="headerlink" title="PC1 计算"></a>PC1 计算</h4><p>接下来我们需要计算PC1的特征值。对于PC1来说，它的斜率是0.25，那么我们在Gene 1增加4个单位，在Gene 2上就会增加1个单位</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p72.jpg' width = '80%' heigh = '80%'>
+
+<p>根据勾股定理，我们就可以计算出红色箭头的长度，长度为4.12</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p73.jpg' width = '80%' heigh = '80%'>
+
+<p>我们使用奇异值分解（Singular-value decomposition，SVD）进行PCA计算时，需要把这个红色箭头定义为1个单位</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p74.jpg' width = '80%' heigh = '80%'>
+
+<p>为了将这个红色箭头定义为1个单位，那么我们就要把这个三角形的各个边长都除以4.12</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p75.jpg' width = '80%' heigh = '80%'>
+
+<p>除以4.12后，各个三角形的连长就成了这个样子</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p76.jpg' width = '80%' heigh = '80%'>
+
+<p>也就是说三角形的三个边长分别变成了1，0.242，0.97，不过构成PC1的线性组合，即Gene 1和Gene 2的比值还是不变的，仍旧为4，那么此时我们就可以说取0.97份的Gene 1和0.242份的Gene 2，就构成了PC1，如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p77.jpg' width = '80%' heigh = '80%'>
+
+<p>回想一下我们计算PC1的整个过程：</p>
+<ol>
+<li>原始数据；</li>
+<li>最佳匹配直线；</li>
+<li>单位向量计算</li>
+</ol>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p78.jpg' width = '80%' heigh = '80%'>
+
+<p>图中的红色箭头是1个长度单位，它由0.97个Gene 1和0.242个Gene 2构成，称为PC1的奇异向量（Singular vector），或者是特征向量（Eigenvector），而每个基因的比例则被称为载荷得分（Loading Scores）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p79.jpg' width = '80%' heigh = '80%'>
+
+<p>此外，在PCA中，将SS（也就是各个点投射到最佳匹配的直线上的点到原点的距离的平方和）称为PC1的特征值（Eigenvalue）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p80.jpg' width = '80%' heigh = '80%'>
+
+<p>PC1特征向量的值（Eigenvalue for PC1）的平方根被称为PC1的奇异值（Singular Value for PC1）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p81.jpg' width = '80%' heigh = '80%'>
+
+<h4 id="PC2-计算"><a href="#PC2-计算" class="headerlink" title="PC2 计算"></a>PC2 计算</h4><p>接下来我们计算第二主成分（PC2），由于我们使用的二维坐标，PC2仅仅是一条通过了原点，并且与PC1垂直的直线，PC2并没有像PC1那样复杂的优化</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p82.jpg' width = '80%' heigh = '80%'>
+
+<p>由于PC2与PC1垂直，那么很容易地就能计算出PC2的斜率为-4，这也就是说，PC2是由-1个Gene 1和4个Gene 2构成的</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p83.jpg' width = '80%' heigh = '80%'>
+
+<p>当我们在PC2所在直线上定义一个单位长度的向量时，那么PC2就是由-0.242个Gene 1和0.97个Gene 2构成了，此时这个单位向量（蓝色箭头）就被称为PC2的奇异向量（Singular Vector）或特征向量（Eigenvector）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p84.jpg' width = '80%' heigh = '80%'>
+
+<p>而-0.242和0.97就是PC2的载荷分数，它表示的就是，基因2相当于4位的基因1</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p85.jpg' width = '80%' heigh = '80%'>
+
+<p>PC2的特征值则是数据点投到到PC2上的点到原点的距离平方和</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p86.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，PC1和PC2的计算结束，绘制最终的PCA图</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p87.jpg' width = '80%' heigh = '80%'>
+
+<p>然后旋转这个坐标，让PC1水平，PC2垂直</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p88.jpg' width = '80%' heigh = '80%'>
+
+<p>在这个新的坐标系中，图中黑色的叉就表示原始的样本6（Sample 6）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p89.jpg' width = '80%' heigh = '80%'>
+
+<p>而Sample 6位于这个点上</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p90.jpg' width = '80%' heigh = '80%'>
+
+<p>同理，我们可以计算其他的点</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p91.jpg' width = '80%' heigh = '80%'>
+
+<h3 id="各主成分的变异"><a href="#各主成分的变异" class="headerlink" title="各主成分的变异"></a>各主成分的变异</h3><p>此时，再讲一些术语，先回忆一下前面的PC1的特征值和PC2的特征值</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p92.jpg' width = '80%' heigh = '80%'>
+
+<p>我们把原始的数据点投射到主成分上</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p93.jpg' width = '80%' heigh = '80%'>
+
+<p>计算投射到PC1上的点到原点的距离</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p94.jpg' width = '80%' heigh = '80%'>
+
+<p>所有的这些数值的平方和就是PC1的特征值</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p95.jpg' width = '80%' heigh = '80%'>
+
+<p>我们也可以将特征值转为PC1到原点的变异，方法就是SS除以样本数减1</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p96.jpg' width = '80%' heigh = '80%'>
+
+<p>以这个案例为例说明，假如PC1的变异（Variation）为15，PC2的变异为3，这就表明主成分的总变异为18，那么也就是说PC1在总变异中所占的比值为83%（15&#x2F;18&#x3D;0.83）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p97.jpg' width = '80%' heigh = '80%'>
+
+<p>而PC2占的总变异为17%（3&#x2F;18&#x3D;0.17）</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p98.jpg' width = '80%' heigh = '80%'>
+
+<p>此时，我们把这两个主成分所占的比例画出来，这种图与条形图很像，不过在PCA中，这叫碎石图（scree plot），每个矩形表示每个PC所占总变异的比值</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p99.jpg' width = '80%' heigh = '80%'>
+
+<h2 id="复杂案例"><a href="#复杂案例" class="headerlink" title="复杂案例"></a>复杂案例</h2><p>我们看一个比较复杂的案例，在这个案例中，6只小鼠，检测了3个基因</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p100.jpg' width = '80%' heigh = '80%'>
+
+<p>按照前面的思路，找到数据的中心，并将其移到原点</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p101.jpg' width = '80%' heigh = '80%'>
+
+<p>找到最佳的匹配数据的直线，也就是PC1</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p102.jpg' width = '80%' heigh = '80%'>
+
+<p>不过这个PC1有3个成分，分别是0.62个Gene 1，0.15个Gene 2和0.77个Gene 3</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p103.jpg' width = '80%' heigh = '80%'>
+
+<p>其中，Gene3 是最主要的组成部分</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p104.jpg' width = '80%' heigh = '80%'>
+
+<p>然后寻找PC2，PC2通过原点，并与PC1垂直，</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p105.jpg' width = '80%' heigh = '80%'>
+
+<p>最终，PC2的成分为0.77个Gene 1，0.62个Gene 2和0.15个Gene 3</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p106.jpg' width = '80%' heigh = '80%'>
+
+<p>在PC2中，Gene 1是最主要的组成部分</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p107.jpg' width = '80%' heigh = '80%'>
+
+<p>最后，我们寻找PC3，PC3通过原点，同时与PC1和PC2垂直</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p108.jpg' width = '80%' heigh = '80%'>
+
+<p>如果我们有更多的基因，那么我们就会不断地寻找更多的主成分，也就是说不断地往这个坐标中加入与前一个主成分垂直的直线，从理论上讲，一个基因就有一个主成分（例如这个案例中，3个基因，最终找到了3个主成分），因此，主成分的数目要么跟变量相等，要么跟样本的数目相等</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p109.png' width = '80%' heigh = '80%'>
+
+<p>一旦计算出来了所有的主成分，那么我们就可以使用特征值来计算每个主成分的变异占总变异的比例</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p110.jpg' width = '80%' heigh = '80%'>
+
+<p>在这个案例中，PC1的变异占总变异的79%，PC2占15%，PC3占6%，把这些主成分绘制成碎石图，就是下图左图的样子</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p111.jpg' width = '80%' heigh = '80%'>
+
+<p>从碎石图中我们可以看到，PC1和PC2占了变异的绝大比例</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p112.jpg' width = '80%' heigh = '80%'>
+
+<p>这就表明了，在二维图中，我们基本上只使用PC1和PC2就能解释三维图中的数据，因为二维图中的PC1和PC2占据了整体的变异的94%</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p113.jpg' width = '80%' heigh = '80%'>
+
+<p>我们将三维图转换为二维图，画出PC1和PC2，以及原始数据点</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p114.jpg' width = '80%' heigh = '80%'>
+
+<p>将数据投射到这个新坐标的PC1上</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p115.jpg' width = '80%' heigh = '80%'>
+
+<p>再投射到PC2上</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p116.jpg' width = '80%' heigh = '80%'>
+
+<p>然后，我们把这个坐标旋转一下，方便查看</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p117.jpg' width = '80%' heigh = '80%'>
+
+<p>下面的这个点就是Sample 4对应的点</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p118.jpg' width = '80%' heigh = '80%'>
+
+<p>我们再来回顾一下这个案例，首先我们把所有的数据点绘制到三维坐标中</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p119.jpg' width = '80%' heigh = '80%'>
+
+<p>再计算主成分</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p120.jpg' width = '80%' heigh = '80%'>
+
+<p>再计算主成分的特征值与变异比例</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p121.jpg' width = '80%' heigh = '80%'>
+
+<p>最后，我们使用PC1和PC2这个二维坐标来描述原始数据</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p122.jpg' width = '80%' heigh = '80%'>
+
+<p>如果我们检测了6个样本的4个基因，那么我们并不需要绘制出4维坐标图</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p123.jpg' width = '80%' heigh = '80%'>
+
+<p>我们可以计算出它们的主成分，画出碎石图，其中我们可以发现，PC1和PC2占据了变异的90%，那么我们仅使用PC1和PC2构成的二维PCA图就可以表示原始数据</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p124.jpg' width = '80%' heigh = '80%'>
+
+<p>将原始数据分别投射到PC1和PC2上</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p125.jpg' width = '80%' heigh = '80%'>
+
+<p>下面的这两个点就对应了Sample 2</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p126.jpg' width = '80%' heigh = '80%'>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p129.jpg' width = '80%' heigh = '80%'>
+
+<p>那么绘制出所有的点，如下：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p130.jpg' width = '80%' heigh = '80%'>
+
+<p>如果我们遇到下面的这种碎石图，在这种碎石图中，PC3和PC4也占据了相当比例的总变异，那么我们仅使用2个主成分（也就是PC1和PC2）就无法精确地代表原始数据</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p131.jpg' width = '80%' heigh = '80%'>
+
+<p>不过，即使是有瑕玼的PCA二维图，也可以用于数据的分类</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p132.jpg' width = '80%' heigh = '80%'>
+
+<p>在这个图中，黑色的点仍然可以被视为比较接近的类似</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p133.jpg' width = '80%' heigh = '80%'>
+
+<h2 id="R语言计算PCA"><a href="#R语言计算PCA" class="headerlink" title="R语言计算PCA"></a>R语言计算PCA</h2><p>计算PCA的工具很多，这里我们介绍一下用R来计算PCA，在R中，计算PCA的函数是 <code>prcomp()</code>，绘图包是 <code>ggplot2</code>，使用R，我们可以知道每个主成分的变异占总变异的比值，以及计算载荷得分（loading scores），发现哪个变量对图形的影响最大</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p134.jpg' width = '80%' heigh = '80%'>
+
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">data.matrix <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span>nrow<span class="operator">=</span><span class="number">100</span><span class="punctuation">,</span> ncol<span class="operator">=</span><span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">colnames<span class="punctuation">(</span>data.matrix<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span></span><br><span class="line">  paste<span class="punctuation">(</span><span class="string">&quot;wt&quot;</span><span class="punctuation">,</span><span class="number">1</span><span class="operator">:</span><span class="number">5</span><span class="punctuation">,</span>sep<span class="operator">=</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  paste<span class="punctuation">(</span><span class="string">&quot;ko&quot;</span><span class="punctuation">,</span><span class="number">1</span><span class="operator">:</span><span class="number">5</span><span class="punctuation">,</span>sep<span class="operator">=</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">rownames<span class="punctuation">(</span>data.matrix<span class="punctuation">)</span> <span class="operator">&lt;-</span> paste<span class="punctuation">(</span><span class="string">&quot;gene&quot;</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">,</span> sep<span class="operator">=</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  wt.values <span class="operator">&lt;-</span> rpois<span class="punctuation">(</span><span class="number">5</span><span class="punctuation">,</span> lambda <span class="operator">=</span> sample<span class="punctuation">(</span>x<span class="operator">=</span><span class="number">10</span><span class="operator">:</span><span class="number">1000</span><span class="punctuation">,</span> size<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  ko.values <span class="operator">&lt;-</span> rpois<span class="punctuation">(</span><span class="number">5</span><span class="punctuation">,</span> lambda <span class="operator">=</span> sample<span class="punctuation">(</span>x<span class="operator">=</span><span class="number">10</span><span class="operator">:</span><span class="number">1000</span><span class="punctuation">,</span> size<span class="operator">=</span><span class="number">1</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  data.matrix<span class="punctuation">[</span>i<span class="punctuation">,</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span>wt.values<span class="punctuation">,</span> ko.values<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">head<span class="punctuation">(</span>data.matrix<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>查看生成的实例数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> head<span class="punctuation">(</span>data.matrix<span class="punctuation">)</span></span><br><span class="line">      wt1 wt2 wt3  wt4 wt5 ko1 ko2 ko3 ko4 ko5</span><br><span class="line">gene1 <span class="number">423</span> <span class="number">423</span> <span class="number">419</span>  <span class="number">423</span> <span class="number">372</span> <span class="number">582</span> <span class="number">589</span> <span class="number">563</span> <span class="number">534</span> <span class="number">566</span></span><br><span class="line">gene2 <span class="number">905</span> <span class="number">971</span> <span class="number">967</span> <span class="number">1031</span> <span class="number">910</span>  <span class="number">95</span>  <span class="number">96</span>  <span class="number">96</span>  <span class="number">89</span>  <span class="number">96</span></span><br><span class="line">gene3 <span class="number">139</span> <span class="number">177</span> <span class="number">147</span>  <span class="number">176</span> <span class="number">152</span> <span class="number">408</span> <span class="number">422</span> <span class="number">419</span> <span class="number">426</span> <span class="number">456</span></span><br><span class="line">gene4 <span class="number">702</span> <span class="number">712</span> <span class="number">717</span>  <span class="number">691</span> <span class="number">678</span> <span class="number">534</span> <span class="number">546</span> <span class="number">594</span> <span class="number">562</span> <span class="number">515</span></span><br><span class="line">gene5 <span class="number">582</span> <span class="number">572</span> <span class="number">616</span>  <span class="number">569</span> <span class="number">631</span> <span class="number">315</span> <span class="number">321</span> <span class="number">314</span> <span class="number">345</span> <span class="number">330</span></span><br><span class="line">gene6 <span class="number">765</span> <span class="number">853</span> <span class="number">781</span>  <span class="number">792</span> <span class="number">768</span> <span class="number">316</span> <span class="number">339</span> <span class="number">317</span> <span class="number">317</span> <span class="number">294</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="计算PCA"><a href="#计算PCA" class="headerlink" title="计算PCA"></a>计算PCA</h3><p>使用 <code>prcomp</code>函数来对数据集进行PCA运算，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca &lt;- prcomp(t(data.matrix),scale=TRUE)</span><br></pre></td></tr></table></figure>
+
+<p>代码解释：由于 <code>prcomp</code>函数在默认情况下，会把行识别为样本，列识别为基因，而我们生成的数据集 <code>data.matrix</code>正好相反，因此用到了 <code>t</code>函数，它表示把原来的数据集转置一下，将其行与列交换。</p>
+<p><code>prcomp</code>计算的结果含有主成分分析的各种信息，通过 <code>str()</code>函数我们可以看一下有哪些东西，如下所示：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> str<span class="punctuation">(</span>pca<span class="punctuation">)</span></span><br><span class="line">List of <span class="number">5</span></span><br><span class="line"> <span class="operator">$</span> sdev    <span class="operator">:</span> num <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span> <span class="number">9.34</span> <span class="number">1.85</span> <span class="number">1.6</span> <span class="number">1.45</span> <span class="number">1.24</span> ...</span><br><span class="line"> <span class="operator">$</span> rotation<span class="operator">:</span> num <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span> <span class="number">0.104</span> <span class="operator">-</span><span class="number">0.107</span> <span class="number">0.106</span> <span class="operator">-</span><span class="number">0.103</span> <span class="operator">-</span><span class="number">0.106</span> ...</span><br><span class="line">  ..<span class="operator">-</span> <span class="built_in">attr</span><span class="punctuation">(</span><span class="operator">*</span><span class="punctuation">,</span> <span class="string">&quot;dimnames&quot;</span><span class="punctuation">)</span><span class="operator">=</span>List of <span class="number">2</span></span><br><span class="line">  .. ..<span class="operator">$</span> <span class="operator">:</span> chr <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">]</span> <span class="string">&quot;gene1&quot;</span> <span class="string">&quot;gene2&quot;</span> <span class="string">&quot;gene3&quot;</span> <span class="string">&quot;gene4&quot;</span> ...</span><br><span class="line">  .. ..<span class="operator">$</span> <span class="operator">:</span> chr <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span> <span class="string">&quot;PC1&quot;</span> <span class="string">&quot;PC2&quot;</span> <span class="string">&quot;PC3&quot;</span> <span class="string">&quot;PC4&quot;</span> ...</span><br><span class="line"> <span class="operator">$</span> center  <span class="operator">:</span> Named num <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">]</span> <span class="number">489</span> <span class="number">526</span> <span class="number">292</span> <span class="number">625</span> <span class="number">460</span> ...</span><br><span class="line">  ..<span class="operator">-</span> <span class="built_in">attr</span><span class="punctuation">(</span><span class="operator">*</span><span class="punctuation">,</span> <span class="string">&quot;names&quot;</span><span class="punctuation">)</span><span class="operator">=</span> chr <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">]</span> <span class="string">&quot;gene1&quot;</span> <span class="string">&quot;gene2&quot;</span> <span class="string">&quot;gene3&quot;</span> <span class="string">&quot;gene4&quot;</span> ...</span><br><span class="line"> <span class="operator">$</span> scale   <span class="operator">:</span> Named num <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">]</span> <span class="number">84.2</span> <span class="number">455.8</span> <span class="number">142.2</span> <span class="number">82.1</span> <span class="number">143.2</span> ...</span><br><span class="line">  ..<span class="operator">-</span> <span class="built_in">attr</span><span class="punctuation">(</span><span class="operator">*</span><span class="punctuation">,</span> <span class="string">&quot;names&quot;</span><span class="punctuation">)</span><span class="operator">=</span> chr <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">]</span> <span class="string">&quot;gene1&quot;</span> <span class="string">&quot;gene2&quot;</span> <span class="string">&quot;gene3&quot;</span> <span class="string">&quot;gene4&quot;</span> ...</span><br><span class="line"> <span class="operator">$</span> x       <span class="operator">:</span> num <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span> <span class="operator">-</span><span class="number">8.92</span> <span class="operator">-</span><span class="number">9.15</span> <span class="operator">-</span><span class="number">8.71</span> <span class="operator">-</span><span class="number">8.75</span> <span class="operator">-</span><span class="number">8.77</span> ...</span><br><span class="line">  ..<span class="operator">-</span> <span class="built_in">attr</span><span class="punctuation">(</span><span class="operator">*</span><span class="punctuation">,</span> <span class="string">&quot;dimnames&quot;</span><span class="punctuation">)</span><span class="operator">=</span>List of <span class="number">2</span></span><br><span class="line">  .. ..<span class="operator">$</span> <span class="operator">:</span> chr <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span> <span class="string">&quot;wt1&quot;</span> <span class="string">&quot;wt2&quot;</span> <span class="string">&quot;wt3&quot;</span> <span class="string">&quot;wt4&quot;</span> ...</span><br><span class="line">  .. ..<span class="operator">$</span> <span class="operator">:</span> chr <span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span> <span class="string">&quot;PC1&quot;</span> <span class="string">&quot;PC2&quot;</span> <span class="string">&quot;PC3&quot;</span> <span class="string">&quot;PC4&quot;</span> ...</span><br><span class="line"> <span class="operator">-</span> <span class="built_in">attr</span><span class="punctuation">(</span><span class="operator">*</span><span class="punctuation">,</span> <span class="string">&quot;class&quot;</span><span class="punctuation">)</span><span class="operator">=</span> chr <span class="string">&quot;prcomp&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>从这个结果中我们可以发现，有 <code>sdev</code>，<code>rotation</code>，<code>center</code>，<code>scale</code>，<code>x</code>。其中 <code>x</code>含有主成分的信息</p>
+<p>我们可以发现，<code>x</code>中有10个主成分（这是因为有10个样本），第1主成分占据了原始数据总变异的大部分，第2主成分占据了总变异的次大部分等。为了绘制二维图，我们通常使用PC1和PC2（个别情况下也会使用PC2和PC3），如下所示：</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p155.jpg' width = '80%' heigh = '80%'>
+
+<p>我们此时，使用 <code>x</code>的前2列（即PC1和PC2）绘制一个二维图，如下所示：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot<span class="punctuation">(</span>pca<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p135.png' width = '80%' heigh = '80%'>
+
+<p>其中，<code>pca$x[,1]</code>是PC1，<code>pca$x[,2]</code>是PC2</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p137.jpg' width = '80%' heigh = '80%'>
+
+<p>10个样本，分别位于图形的左右两侧，此时我们再看一下PC1占的总变异的比例，如下所示：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pca.var <span class="operator">&lt;-</span> pca<span class="operator">$</span>sdev<span class="operator">^</span><span class="number">2</span></span><br><span class="line">pca.var.per <span class="operator">&lt;-</span> <span class="built_in">round</span><span class="punctuation">(</span>pca.var<span class="operator">/</span><span class="built_in">sum</span><span class="punctuation">(</span>pca.var<span class="punctuation">)</span><span class="operator">*</span><span class="number">100</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> pca.var</span><br><span class="line"> <span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">8.727308e+01</span> <span class="number">3.432450e+00</span> <span class="number">2.546956e+00</span> <span class="number">2.094293e+00</span> <span class="number">1.534746e+00</span> <span class="number">1.230408e+00</span></span><br><span class="line"> <span class="punctuation">[</span><span class="number">7</span><span class="punctuation">]</span> <span class="number">8.259253e-01</span> <span class="number">6.435822e-01</span> <span class="number">4.185583e-01</span> <span class="number">1.134741e-29</span></span><br><span class="line"><span class="operator">&gt;</span> pca.var.per</span><br><span class="line"> <span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">87.3</span>  <span class="number">3.4</span>  <span class="number">2.5</span>  <span class="number">2.1</span>  <span class="number">1.5</span>  <span class="number">1.2</span>  <span class="number">0.8</span>  <span class="number">0.6</span>  <span class="number">0.4</span>  <span class="number">0.0</span></span><br></pre></td></tr></table></figure>
+
+<p>绘制出各个主成分对应的碎石图</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">barplot<span class="punctuation">(</span>pca.var.per<span class="punctuation">,</span> </span><br><span class="line">        main<span class="operator">=</span><span class="string">&quot;Scree Plot&quot;</span><span class="punctuation">,</span> </span><br><span class="line">        xlab<span class="operator">=</span><span class="string">&quot;Principal Component&quot;</span><span class="punctuation">,</span> </span><br><span class="line">        ylab<span class="operator">=</span><span class="string">&quot;Percent Variation&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p138.png' width = '80%' heigh = '80%'>
+
+<p>上图中最长的那个就是PC1所占的总变异的比例，也就是说PC1就能在很大程度上解释两组数据的区分，我们在PC1和PC2的二维图上也能看出来，这两组数据之间主要是由PC1分开的</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p139.jpg' width = '80%' heigh = '80%'>
+
+<h3 id="ggplot2绘图"><a href="#ggplot2绘图" class="headerlink" title="ggplot2绘图"></a>ggplot2绘图</h3><p>ggplot2也能绘制类似的图形</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pca.data <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>Sample<span class="operator">=</span>rownames<span class="punctuation">(</span>pca<span class="operator">$</span>x<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">                       X<span class="operator">=</span>pca<span class="operator">$</span>x<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">                       Y<span class="operator">=</span>pca<span class="operator">$</span>x<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># one column with the sample ids</span></span><br><span class="line"><span class="comment"># Tow columns for the X and Y coordinates for each sample</span></span><br><span class="line">pca.data</span><br><span class="line">ggplot<span class="punctuation">(</span>data<span class="operator">=</span>pca.data<span class="punctuation">,</span> aes<span class="punctuation">(</span>x<span class="operator">=</span>X<span class="punctuation">,</span> y<span class="operator">=</span>Y<span class="punctuation">,</span> label<span class="operator">=</span>Sample<span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  geom_text<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  xlab<span class="punctuation">(</span>paste<span class="punctuation">(</span><span class="string">&quot;PC1 - &quot;</span><span class="punctuation">,</span> pca.var.per<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="string">&quot;%&quot;</span><span class="punctuation">,</span> sep<span class="operator">=</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span>paste<span class="punctuation">(</span><span class="string">&quot;PC2 - &quot;</span><span class="punctuation">,</span> pca.var.per<span class="punctuation">[</span><span class="number">2</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="string">&quot;%&quot;</span><span class="punctuation">,</span> sep<span class="operator">=</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  theme_bw<span class="punctuation">(</span><span class="punctuation">)</span><span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;My PCA Graph&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p140.png' width = '80%' heigh = '80%'>
+
+<p>从这个图形中，我们可以发现，X轴上标记了PC1所占总变异的比例为87.3%。Y轴上标记了PC2所占总变异的比例为3.4%。</p>
+<h3 id="loading-scores计算"><a href="#loading-scores计算" class="headerlink" title="loading scores计算"></a>loading scores计算</h3><p><code>prcomp()</code>函数计算的结果中含有loading score，即 <code>rotation</code>这一部分的内容</p>
+<p>由于PC1占所了总变异的大部分，因此我们只需要看PC1中的loading score</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p141.jpg' width = '80%' heigh = '80%'>
+
+<p>由于loading_score有负数，因此我们需要用 <code>abs()</code>函数取它们的绝对值</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p142.jpg' width = '80%' heigh = '80%'>
+
+<p>取完绝对值，对所有的loading score进行排序，从高到低；这样我们就能筛选出排名前十的基因了</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">loading_score <span class="operator">&lt;-</span> pca<span class="operator">$</span>rotation<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line">gene_scores <span class="operator">&lt;-</span> <span class="built_in">abs</span><span class="punctuation">(</span>loading_score<span class="punctuation">)</span></span><br><span class="line">gene_score_ranked <span class="operator">&lt;-</span> sort<span class="punctuation">(</span>gene_scores<span class="punctuation">,</span> decreasing <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">top_10_genes <span class="operator">&lt;-</span> <span class="built_in">names</span><span class="punctuation">(</span>gene_score_ranked<span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">top_10_genes</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="string">&quot;gene10&quot;</span> <span class="string">&quot;gene98&quot;</span> <span class="string">&quot;gene34&quot;</span> <span class="string">&quot;gene94&quot;</span> <span class="string">&quot;gene95&quot;</span> <span class="string">&quot;gene99&quot;</span> <span class="string">&quot;gene76&quot;</span> <span class="string">&quot;gene47&quot;</span> <span class="string">&quot;gene49&quot;</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">10</span><span class="punctuation">]</span> <span class="string">&quot;gene72&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> pca<span class="operator">$</span>rotation<span class="punctuation">[</span>top_10_genes<span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line">    gene10     gene98     gene34     gene94     gene95     gene99     gene76     gene47 </span><br><span class="line"> <span class="number">0.1069736</span>  <span class="number">0.1069637</span>  <span class="number">0.1069535</span>  <span class="number">0.1069478</span> <span class="operator">-</span><span class="number">0.1069281</span>  <span class="number">0.1069267</span>  <span class="number">0.1069243</span> <span class="operator">-</span><span class="number">0.1069209</span> </span><br><span class="line">    gene49     gene72 </span><br><span class="line"> <span class="number">0.1069161</span>  <span class="number">0.1069037</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="python计算PCA"><a href="#python计算PCA" class="headerlink" title="python计算PCA"></a>python计算PCA</h2><p>利用Python也可以进行PCA分析，在这一部分中，我们会介绍如何这些内容：</p>
+<ol>
+<li>利用Python生成一些我们要分析的数据；</li>
+<li>利用 <code>sklearn</code>模块中的 <code>PCA()</code>来进行分析，其中 <code>sklearn</code>是 <code>scikit-learn</code>的简称，它是一个机器学习的模块，支持包括分类、回归、降维和聚类四大机器学习算法。还包含了特征提取、数据处理和模型评估三大模块；</li>
+<li>计算每个主成分占总变异的比例；</li>
+<li>利用 <code>matplotlib</code>来绘制PCA图；</li>
+<li>计算变量的loading scores。<br>如下所示：</li>
+</ol>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p143.jpg' width = '80%' heigh = '80%'>
+
+<h3 id="导入python模块"><a href="#导入python模块" class="headerlink" title="导入python模块"></a>导入python模块</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="comment"># import pandas package,</span></span><br><span class="line"><span class="comment"># pandas is short for &quot;panel data&quot;</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># numpy package will generate random numbers </span></span><br><span class="line"><span class="keyword">import</span> random <span class="keyword">as</span> rd</span><br><span class="line"><span class="comment"># random package will generate an example dataset</span></span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"><span class="comment"># usr a function PCA() from sklearn.decomposition </span></span><br><span class="line"><span class="comment"># PCA() use to perform PCA</span></span><br><span class="line"><span class="comment"># preprocessing uses to scaling the data before perform PCA</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># draw PCA graphd</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成模拟数据"><a href="#生成模拟数据" class="headerlink" title="生成模拟数据"></a>生成模拟数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">genes = [<span class="string">&#x27;gene&#x27;</span> + <span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">101</span>)]</span><br><span class="line">wt = [<span class="string">&#x27;wt&#x27;</span> + <span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">6</span>)]</span><br><span class="line">ko = [<span class="string">&#x27;ko&#x27;</span> + <span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">6</span>)]</span><br><span class="line">data = pd.DataFrame(columns=[*wt, *ko], index=genes)</span><br><span class="line"><span class="keyword">for</span> gene <span class="keyword">in</span> data.index:</span><br><span class="line">    data.loc[gene, <span class="string">&#x27;wt1&#x27;</span>:<span class="string">&#x27;wt5&#x27;</span>] = np.random.poisson(lam=rd.randrange(<span class="number">10</span>,<span class="number">1000</span>),size=<span class="number">5</span>)</span><br><span class="line">    data.loc[gene, <span class="string">&#x27;ko1&#x27;</span>:<span class="string">&#x27;ko5&#x27;</span>] = np.random.poisson(lam=rd.randrange(<span class="number">10</span>,<span class="number">1000</span>),size=<span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(data.head())</span><br><span class="line"><span class="built_in">print</span>(data.shape)</span><br><span class="line"><span class="comment"># generate simulation dataset</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="PCA分析"><a href="#PCA分析" class="headerlink" title="PCA分析"></a>PCA分析</h3><p>在进行PCA分析之前，先对数据进行中心化（我的理解是Z转换，转换后的数据均值是0，标准差是1）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scaled_data = preprocessing.scale(data.T)</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，上述代码中使用了 <code>data.T</code>，这是对表达的数据集进行转换，将其行与列交换，跟R中类似。此处我们使用的 <code>sklearn</code>包中的 <code>preprocessing</code>函数，我们还可以使用另外的函数进行转换，就是 <code>StandardScaler().fit_transform(data.T)</code>。第二个函数在机器学习使用更加广泛</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p144.jpg' width = '80%' heigh = '80%'>
+
+<p>需要注意的是，<code>sklearn</code>中利用 <code>preprocessing.scale</code>计算变异与R中利用 <code>scale()</code>和 <code>prcomp()</code>计算变异的公式略有不同，区别就在于前者的分子是测量值的数目，后者是这个数目减1</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p145.jpg' width = '80%' heigh = '80%'>
+
+<p>后者的分子是测量值的数目减1，这会导致最终的结果变大，这是一种无偏估计</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p146.jpg' width = '80%' heigh = '80%'>
+
+<p>不过这两种方法都不影响PCA的分析</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p147.jpg' width = '80%' heigh = '80%'>
+
+<p>它的局限就在于，它们会对最终的绘图造成一定的影响，因为最终绘图中的坐标来源于scaled后的数值乘以loading scores</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p148.jpg' width = '80%' heigh = '80%'>
+
+<p>继续Python计算PCA，此时我们要创建一个 <code>PCA</code>对象, 这里要提一下，<code>PCA</code>不仅是一个函数，能够返回计算结果，在 <code>sklearn</code>中，它还用于创建一个对象，使用一个数据集进行训练，进行对另外一个数据集进行计算。不过在这里，我们只用 <code>PCA</code>计算这个数据集（我们不涉及机器学习的环境设置），其他的步骤非常繁琐，但也由此，我们也能了解一下机器学习的内容</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p149.jpg' width = '80%' heigh = '80%'>
+
+<p>计算PCA的所有结果，例如loading scores和每个主成分的变量占总变异的比例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>pca = PCA()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>pca.fit(scaled_data)</span><br><span class="line">PCA(copy=<span class="literal">True</span>, iterated_power=<span class="string">&#x27;auto&#x27;</span>, n_components=<span class="literal">None</span>, random_state=<span class="literal">None</span>,</span><br><span class="line">  svd_solver=<span class="string">&#x27;auto&#x27;</span>, tol=<span class="number">0.0</span>, whiten=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p150.jpg' width = '80%' heigh = '80%'>
+
+<p>接着，基于loading scores和scaled data来生成PCA图形中的坐标系</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p151.jpg' width = '80%' heigh = '80%'>
+
+<h3 id="绘制图像"><a href="#绘制图像" class="headerlink" title="绘制图像"></a>绘制图像</h3><p>绘制碎石图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">per_var = np.<span class="built_in">round</span>(pca.explained_variance_ratio_*<span class="number">100</span>,decimals=<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 计算每个主成分所占总变量的比例</span></span><br><span class="line">labels = [<span class="string">&#x27;PC&#x27;</span> + <span class="built_in">str</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(per_var)+<span class="number">1</span>)]</span><br><span class="line"><span class="comment"># 使用matplotlib来绘制相应的图形</span></span><br><span class="line">plt.bar(x=<span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(per_var)+<span class="number">1</span>), height=per_var, tick_label=labels)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Percentage of Explained Variance&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Principal Component&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Scree Plot&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p152.png' width = '80%' heigh = '80%'>
+
+<p>绘制PCA图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pca_df = pd.DataFrame(pca_data, index=[*wt, *ko], columns=labels)</span><br><span class="line"></span><br><span class="line">plt.scatter(pca_df.PC1,pca_df.PC2)</span><br><span class="line">plt.title(<span class="string">&#x27;My PCA Graph&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;PC1 - &#123;0&#125;%&#x27;</span>.<span class="built_in">format</span>(per_var[<span class="number">0</span>]))</span><br><span class="line">plt.ylabel(<span class="string">&#x27;PC2 - &#123;0&#125;%&#x27;</span>.<span class="built_in">format</span>(per_var[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> sample <span class="keyword">in</span> pca_df.index:</span><br><span class="line">    plt.annotate(sample, (pca_df.PC1.loc[sample],pca_df.PC2.loc[sample]))</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p153.jpg' width = '80%' heigh = '80%'>
+
+<p>从这张图中我们可以看到，wt组的数据集中在右侧，ko组都集中在了左侧</p>
+<h3 id="计算loading-score"><a href="#计算loading-score" class="headerlink" title="计算loading score"></a>计算loading score</h3><p>我们还可以计算一下PC1的loading scores，从而找出哪些基因在不同的分类方面发挥了主要作用</p>
+<img src = 'https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pca/p154.jpg' width = '80%' heigh = '80%'>
+
+<p>我们要创建一个 <code>pandas</code>的 <code>series</code>对象，这个对象用于计算loading scores</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">loading_scores = pd.Series(pca.components_[<span class="number">0</span>], index=genes)</span><br><span class="line"><span class="comment"># in python, first  number in index is 0, not 1</span></span><br><span class="line">sorted_loading_scores = loading_scores.<span class="built_in">abs</span>().sort_values(ascending=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># achieve absolute value using abs() function and sort them</span></span><br><span class="line">top_10_genes = sorted_loading_scores[<span class="number">0</span>:<span class="number">10</span>].index.values</span><br><span class="line"><span class="built_in">print</span>(loading_scores[top_10_genes])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gene31   -<span class="number">0.107133</span></span><br><span class="line">gene32    <span class="number">0.107131</span></span><br><span class="line">gene34    <span class="number">0.107070</span></span><br><span class="line">gene10   -<span class="number">0.107065</span></span><br><span class="line">gene45    <span class="number">0.107065</span></span><br><span class="line">gene28   -<span class="number">0.107064</span></span><br><span class="line">gene30   -<span class="number">0.107062</span></span><br><span class="line">gene39    <span class="number">0.107053</span></span><br><span class="line">gene93   -<span class="number">0.107041</span></span><br><span class="line">gene79    <span class="number">0.107036</span></span><br><span class="line">dtype: float64s</span><br></pre></td></tr></table></figure>
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://mooner.netlify.app">Mooner</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://mooner.netlify.app/2021/11/27/pca/">https://mooner.netlify.app/2021/11/27/pca/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mooner.netlify.app" target="_blank">Mooner</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/StatQuest/">StatQuest</a></div><div class="post_share"><div class="social-share" data-image="/img/cover_10.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/23/docker-i-1/" title="Docker 基本概念"><img class="cover" src="/img/cover_9.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Docker 基本概念</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/12/Mathjax/" title="Latex 公式语法参考"><img class="cover" src="/img/cover_2.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Latex 公式语法参考</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mooner</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PCA%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.</span> <span class="toc-text">PCA的基本思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PCA%E7%9A%84%E5%B1%95%E7%A4%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">PCA的展示形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PCA%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">PCA的计算原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="toc-number">3.1.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PCA%E8%AE%A1%E7%AE%97"><span class="toc-number">3.2.</span> <span class="toc-text">PCA计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PC1-%E8%AE%A1%E7%AE%97%E6%80%9D%E8%B7%AF"><span class="toc-number">3.2.1.</span> <span class="toc-text">PC1 计算思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PC1-%E8%AE%A1%E7%AE%97"><span class="toc-number">3.2.2.</span> <span class="toc-text">PC1 计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PC2-%E8%AE%A1%E7%AE%97"><span class="toc-number">3.2.3.</span> <span class="toc-text">PC2 计算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E4%B8%BB%E6%88%90%E5%88%86%E7%9A%84%E5%8F%98%E5%BC%82"><span class="toc-number">3.3.</span> <span class="toc-text">各主成分的变异</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E6%A1%88%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">复杂案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#R%E8%AF%AD%E8%A8%80%E8%AE%A1%E7%AE%97PCA"><span class="toc-number">5.</span> <span class="toc-text">R语言计算PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">5.1.</span> <span class="toc-text">数据集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97PCA"><span class="toc-number">5.2.</span> <span class="toc-text">计算PCA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ggplot2%E7%BB%98%E5%9B%BE"><span class="toc-number">5.3.</span> <span class="toc-text">ggplot2绘图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loading-scores%E8%AE%A1%E7%AE%97"><span class="toc-number">5.4.</span> <span class="toc-text">loading scores计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python%E8%AE%A1%E7%AE%97PCA"><span class="toc-number">6.</span> <span class="toc-text">python计算PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5python%E6%A8%A1%E5%9D%97"><span class="toc-number">6.1.</span> <span class="toc-text">导入python模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E6%8B%9F%E6%95%B0%E6%8D%AE"><span class="toc-number">6.2.</span> <span class="toc-text">生成模拟数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PCA%E5%88%86%E6%9E%90"><span class="toc-number">6.3.</span> <span class="toc-text">PCA分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%98%E5%88%B6%E5%9B%BE%E5%83%8F"><span class="toc-number">6.4.</span> <span class="toc-text">绘制图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97loading-score"><span class="toc-number">6.5.</span> <span class="toc-text">计算loading score</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/sra-fastq/" title="从sra提取fastq文件"><img src="/img/cover_7.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从sra提取fastq文件"/></a><div class="content"><a class="title" href="/2023/04/05/sra-fastq/" title="从sra提取fastq文件">从sra提取fastq文件</a><time datetime="2023-04-05T08:56:48.000Z" title="发表于 2023-04-05 16:56:48">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/HISAT2/" title="RNA-seq序列比对工具-HISAT2"><img src="/img/cover_4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RNA-seq序列比对工具-HISAT2"/></a><div class="content"><a class="title" href="/2023/04/05/HISAT2/" title="RNA-seq序列比对工具-HISAT2">RNA-seq序列比对工具-HISAT2</a><time datetime="2023-04-05T08:30:26.000Z" title="发表于 2023-04-05 16:30:26">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/star/" title="STAR比对"><img src="/img/cover_9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STAR比对"/></a><div class="content"><a class="title" href="/2023/04/05/star/" title="STAR比对">STAR比对</a><time datetime="2023-04-05T08:23:07.000Z" title="发表于 2023-04-05 16:23:07">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/protein-normalize/" title="蛋白组数据标化和预处理"><img src="/img/cover_4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="蛋白组数据标化和预处理"/></a><div class="content"><a class="title" href="/2023/04/05/protein-normalize/" title="蛋白组数据标化和预处理">蛋白组数据标化和预处理</a><time datetime="2023-04-05T07:47:01.000Z" title="发表于 2023-04-05 15:47:01">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/Maxquant/" title="Maxquant软件"><img src="/img/cover_3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Maxquant软件"/></a><div class="content"><a class="title" href="/2023/04/05/Maxquant/" title="Maxquant软件">Maxquant软件</a><time datetime="2023-04-05T07:32:53.000Z" title="发表于 2023-04-05 15:32:53">2023-04-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Mooner</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

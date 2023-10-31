@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>R语言代码规范 | Mooner</title><meta name="author" content="Mooner"><meta name="copyright" content="Mooner"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="R语言是一门主要用于统计计算和绘图的高级编程语言. 在使用R时，好的代码编写和注释规范，可以提高代码的可读性和工作效率. 然而，什么样的规范更有利于我们自己使用和第三方解读？在此，建议使用《来自Google的R语言编码风格指南》一文中推荐的代码写作风格，这个规则是由Google的R用户群体协同设计而成. 概要: R编码风格约定 文件命名: 以 .R (大写) 结尾 标识符命名: varia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R语言代码规范">
+<meta property="og:url" content="https://mooner.netlify.app/2018/11/05/r-format/index.html">
+<meta property="og:site_name" content="Mooner">
+<meta property="og:description" content="R语言是一门主要用于统计计算和绘图的高级编程语言. 在使用R时，好的代码编写和注释规范，可以提高代码的可读性和工作效率. 然而，什么样的规范更有利于我们自己使用和第三方解读？在此，建议使用《来自Google的R语言编码风格指南》一文中推荐的代码写作风格，这个规则是由Google的R用户群体协同设计而成. 概要: R编码风格约定 文件命名: 以 .R (大写) 结尾 标识符命名: varia">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mooner.netlify.app/img/cover_2.png">
+<meta property="article:published_time" content="2018-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-03T12:42:27.573Z">
+<meta property="article:author" content="Mooner">
+<meta property="article:tag" content="R">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mooner.netlify.app/img/cover_2.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mooner.netlify.app/2018/11/05/r-format/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"本文上次更新于","messageNext":"天前，文章内容可能已经过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'R语言代码规范',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-03 20:42:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover_2.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Mooner"><span class="site-name">Mooner</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">R语言代码规范</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-11-04T16:00:00.000Z" title="发表于 2018-11-05 00:00:00">2018-11-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-03T12:42:27.573Z" title="更新于 2023-04-03 20:42:27">2023-04-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/R/">R</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="R语言代码规范"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><span id="more"></span>  
+
+<p>R语言是一门主要用于统计计算和绘图的高级编程语言. 在使用R时，好的代码编写和注释规范，可以提高代码的可读性和工作效率. 然而，什么样的规范更有利于我们自己使用和第三方解读？在此，建议使用《来自Google的R语言编码风格指南》一文中推荐的代码写作风格，这个规则是由Google的R用户群体协同设计而成.</p>
+<h2 id="概要-R编码风格约定"><a href="#概要-R编码风格约定" class="headerlink" title="概要: R编码风格约定"></a>概要: R编码风格约定</h2><ol>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D">文件命名</a>: 以 .R (大写) 结尾</li>
+<li><a href="#%E6%A0%87%E8%AF%86%E7%AC%A6%E5%91%BD%E5%90%8D">标识符命名</a>: variable.name, FunctionName, kConstantName</li>
+<li><a href="#%E5%8D%95%E8%A1%8C%E9%95%BF%E5%BA%A6">单行长度</a>: 不超过80个字符</li>
+<li><a href="#%E7%BC%A9%E8%BF%9B">缩进</a>: 两个空格, 不使用制表符</li>
+<li><a href="#%E7%A9%BA%E7%99%BD">空白</a></li>
+<li><a href="#%E8%8A%B1%E6%8B%AC%E5%8F%B7">花括号</a>: 前括号不折行写, 后括号独占一行</li>
+<li><a href="#%E8%B5%8B%E5%80%BC">赋值符号</a>: 使用 &lt;-, 而非 &#x3D;</li>
+<li><a href="#%E5%88%86%E5%8F%B7">分号</a>: 不要用</li>
+<li><a href="#%E6%80%BB%E4%BD%93%E5%B8%83%E5%B1%80%E5%92%8C%E9%A1%BA%E5%BA%8F">总体布局和顺序</a></li>
+<li><a href="#%E6%B3%A8%E9%87%8A%E5%87%86%E5%88%99">注释准则</a>: 所有注释以 # 开始, 后接一个空格; 行内注释需要在 # 前加两个空格</li>
+<li><a href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">函数的定义和调用</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E6%96%87%E6%A1%A3">函数文档</a></li>
+<li><a href="#%E7%A4%BA%E4%BE%8B%E5%87%BD%E6%95%B0">示例函数</a></li>
+<li><a href="#TODO%E4%B9%A6%E5%86%99%E9%A3%8E%E6%A0%BC">TODO书写风格</a>: TODO(您的用户名)</li>
+</ol>
+<h3 id="1-表示和命名"><a href="#1-表示和命名" class="headerlink" title="1. 表示和命名"></a>1. 表示和命名</h3><h4 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h4><p>文件名应以 .R (大写) 结尾, 文件名本身要有意义.<br>如: <font color = "green">predict_ad_revenue.R</font></p>
+<h4 id="标识符命名"><a href="#标识符命名" class="headerlink" title="标识符命名"></a>标识符命名</h4><p>在标识符中不要使用下划线 ( _ ) 或连字符 ( - ). 标识符应根据如下惯例命名. 变量名应使用点 (.) 分隔所有的小写字母或单词; 函数名首字母大写, 不用点分隔 (所含单词首字母大写); 常数命名规则同函数, 但需使用一个 k 开头.</p>
+<ul>
+<li>变量命名<br>正例: <font color = "green">avg.clicks</font><br>反例: <font color = "red">avg_Clicks , avgClicks</font></li>
+<li>FunctionName<br>正例: <font color = "green">CalculateAvgClicks</font><br>反例: <font color = "red">calculate_avg_clicks , calculateAvgClicks</font><br>函数命名应为动词或动词性短语.</li>
+</ul>
+<p><em>例外: 当创建一个含类 (class) 属性的对象时, 函数名 (也是constructor) 和类名 (class) 应当匹配 (例如, lm).</em></p>
+<ul>
+<li><font color = "green">kConstantName</font></li>
+</ul>
+<h3 id="2-语法"><a href="#2-语法" class="headerlink" title="2. 语法"></a>2. 语法</h3><h4 id="单行长度"><a href="#单行长度" class="headerlink" title="单行长度"></a>单行长度</h4><p>最大单行长度为 80 个字符.</p>
+<h4 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h4><p>使用两个空格来缩进代码. 永远不要使用制表符或混合使用二者.<br><em>例外: 当括号内发生折行时, 所折行与括号内的第一个字符对齐.</em></p>
+<h4 id="空白"><a href="#空白" class="headerlink" title="空白"></a>空白</h4><p>在所有二元操作符 (&#x3D;, +, -, &lt;-, 等等) 的两侧加上空格.<br><em>例外: 在函数调用中传递参数时 &#x3D; 两边的空格可加可不加</em>.</p>
+<p>不可在逗号前加空格, 逗号后总须加空格.</p>
+<p>例如:  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tabPrior <span class="operator">&lt;-</span> table<span class="punctuation">(</span>df<span class="punctuation">[</span>df<span class="operator">$</span>daysFromOpt <span class="operator">&lt;</span> <span class="number">0</span><span class="punctuation">,</span> <span class="string">&quot;campaignid&quot;</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">        total <span class="operator">&lt;-</span> <span class="built_in">sum</span><span class="punctuation">(</span>x<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">        total <span class="operator">&lt;-</span> <span class="built_in">sum</span><span class="punctuation">(</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span> <span class="punctuation">]</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>在前括号前加一个空格, 函数调用时除外.<br>例如：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="punctuation">(</span>debug<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>多加空格 (即, 在行内使用多于一个空格) 也是可以的, 如果这样做能够改善等号或箭头 (&lt;-) 的对齐效果.  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plot<span class="punctuation">(</span>x    <span class="operator">=</span> xCoord<span class="punctuation">,</span></span><br><span class="line">     y    <span class="operator">=</span> dataMat<span class="punctuation">[</span><span class="punctuation">,</span> makeColName<span class="punctuation">(</span>metric<span class="punctuation">,</span> ptiles<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="string">&quot;roiOpt&quot;</span><span class="punctuation">)</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">     ylim <span class="operator">=</span> ylim<span class="punctuation">,</span></span><br><span class="line">     xlab <span class="operator">=</span> <span class="string">&quot;dates&quot;</span><span class="punctuation">,</span></span><br><span class="line">     ylab <span class="operator">=</span> metric<span class="punctuation">,</span></span><br><span class="line">     main <span class="operator">=</span> <span class="punctuation">(</span>paste<span class="punctuation">(</span>metric<span class="punctuation">,</span> <span class="string">&quot; for 3 samples &quot;</span><span class="punctuation">,</span> sep<span class="operator">=</span><span class="string">&quot;&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>不要向圆括号或方括号中的代码两侧加入空格.<br><em>例外: 逗号后总须加空格.</em></p>
+<p>以下写法就是错误的：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="punctuation">(</span> debug <span class="punctuation">)</span>  <span class="comment"># debug 的两边不要加空格</span></span><br><span class="line">x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="comment"># 需要在逗号后加一个空格</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="花括号"><a href="#花括号" class="headerlink" title="花括号"></a>花括号</h4><p><strong>前括号永远不应该独占一行; 后括号应当总是独占一行</strong>. 您可以在代码块只含单个语句时省略花括号; 但在处理这类单个语句时, 您必须 前后一致地 要么全部使用花括号, 或者全部不用花括号.</p>
+<p>例如：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="punctuation">(</span><span class="built_in">is.null</span><span class="punctuation">(</span>ylim<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  ylim <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0.06</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="punctuation">(</span><span class="built_in">is.null</span><span class="punctuation">(</span>ylim<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  ylim <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0.06</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>总在新起的一行开始书写代码块的主体。  </p>
+<h4 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h4><p>使用 <code>&lt;-</code> 进行赋值, 不用<code> =</code> 赋值  </p>
+<h4 id="分号"><a href="#分号" class="headerlink" title="分号"></a>分号</h4><p>不要以分号结束一行, 也不要利用分号在同一行放多于一个命令. (分号是毫无必要的, 并且为了与其他Google编码风格指南保持一致, 此处同样略去.)  </p>
+<h3 id="3-代码组织"><a href="#3-代码组织" class="headerlink" title="3. 代码组织"></a>3. 代码组织</h3><h4 id="总体布局和顺序"><a href="#总体布局和顺序" class="headerlink" title="总体布局和顺序"></a>总体布局和顺序</h4><p>如果所有人都以相同顺序安排代码内容, 我们就可以更加轻松快速地阅读并理解他人的脚本了.  </p>
+<ol>
+<li>版权声明注释</li>
+<li>作者信息注释</li>
+<li>文件描述注释, 包括程序的用途, 输入和输出</li>
+<li><font color = "green">source()</font> 和 <font color = "green">library()</font> 语句</li>
+<li>函数定义</li>
+<li>要执行的语句, 如果有的话 (例如, <font color = "green">print, plot</font>)<br>单元测试应在另一个名为 <font color = "green">原始的文件名_unittest.R</font> 的独立文件中进行</li>
+</ol>
+<h4 id="注释准则"><a href="#注释准则" class="headerlink" title="注释准则"></a>注释准则</h4><p>注释您的代码. 整行注释应以 <code># </code>后接一个空格开始.  </p>
+<p>行内短注释应在代码后接两个空格, <code>#</code>, 再接一个空格.  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create histogram of frequency of campaigns by pct budget spent.</span></span><br><span class="line">    hist<span class="punctuation">(</span>df<span class="operator">$</span>pctSpent<span class="punctuation">,</span></span><br><span class="line">    breaks <span class="operator">=</span> <span class="string">&quot;scott&quot;</span><span class="punctuation">,</span>  <span class="comment"># method for choosing number of buckets</span></span><br><span class="line">    main   <span class="operator">=</span> <span class="string">&quot;Histogram: fraction budget spent by campaignid&quot;</span><span class="punctuation">,</span></span><br><span class="line">    xlab   <span class="operator">=</span> <span class="string">&quot;Fraction of budget spent&quot;</span><span class="punctuation">,</span></span><br><span class="line">    ylab   <span class="operator">=</span> <span class="string">&quot;Frequency (count of campaignids)&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="函数的定义和调用"><a href="#函数的定义和调用" class="headerlink" title="函数的定义和调用"></a>函数的定义和调用</h4><p><strong>函数定义应首先列出无默认值的参数, 然后再列出有默认值的参数.</strong>  </p>
+<p>函数定义和函数调用中, 允许每行写多个参数; 折行只允许在赋值语句外进行.  </p>
+<p>例如：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PredictCTR <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>query<span class="punctuation">,</span> property<span class="punctuation">,</span> numDays<span class="punctuation">,</span></span><br><span class="line">    showPlot <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>理想情况下, 单元测试应该充当函数调用的样例 (对于包中的程序来说).  </p>
+<h4 id="函数文档"><a href="#函数文档" class="headerlink" title="函数文档"></a>函数文档</h4><p>函数在定义行下方都应当紧接一个注释区. 这些注释应当由如下内容组成: 此函数的一句话描述; 此函数的参数列表, 用 Args: 表示, 对每个参数的描述 (包括数据类型); 以及对于返回值的描述, 以 Returns: 表示. 这些注释应当描述得足够充分, 这样调用者无须阅读函数中的任何代码即可使用此函数.  </p>
+<h4 id="示例函数"><a href="#示例函数" class="headerlink" title="示例函数"></a>示例函数</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">CalculateSampleCovariance <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">,</span> y<span class="punctuation">,</span> verbose <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="comment"># Computes the sample covariance between two vectors.</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># Args:</span></span><br><span class="line">        <span class="comment">#   x: One of two vectors whose sample covariance is to be calculated.</span></span><br><span class="line">        <span class="comment">#   y: The other vector. x and y must have the same length, greater than one,</span></span><br><span class="line">        <span class="comment">#      with no missing values.</span></span><br><span class="line">        <span class="comment">#   verbose: If TRUE, prints sample covariance; if not, not. Default is TRUE.</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># Returns:</span></span><br><span class="line">        <span class="comment">#   The sample covariance between x and y.</span></span><br><span class="line">        n <span class="operator">&lt;-</span> <span class="built_in">length</span><span class="punctuation">(</span>x<span class="punctuation">)</span></span><br><span class="line">        <span class="comment"># Error handling</span></span><br><span class="line">        <span class="keyword">if</span> <span class="punctuation">(</span>n <span class="operator">&lt;=</span> <span class="number">1</span> <span class="operator">||</span> n <span class="operator">!=</span> <span class="built_in">length</span><span class="punctuation">(</span>y<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">        stop<span class="punctuation">(</span><span class="string">&quot;Arguments x and y have invalid lengths: &quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="built_in">length</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot; and &quot;</span><span class="punctuation">,</span> <span class="built_in">length</span><span class="punctuation">(</span>y<span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;.&quot;</span><span class="punctuation">)</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="punctuation">(</span><span class="literal">TRUE</span> <span class="operator">%in%</span> <span class="built_in">is.na</span><span class="punctuation">(</span>x<span class="punctuation">)</span> <span class="operator">||</span> <span class="literal">TRUE</span> <span class="operator">%in%</span> <span class="built_in">is.na</span><span class="punctuation">(</span>y<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">        stop<span class="punctuation">(</span><span class="string">&quot; Arguments x and y must not have missing values.&quot;</span><span class="punctuation">)</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">        covariance <span class="operator">&lt;-</span> var<span class="punctuation">(</span>x<span class="punctuation">,</span> y<span class="punctuation">)</span></span><br><span class="line">        <span class="keyword">if</span> <span class="punctuation">(</span>verbose<span class="punctuation">)</span></span><br><span class="line">        cat<span class="punctuation">(</span><span class="string">&quot;Covariance = &quot;</span><span class="punctuation">,</span> <span class="built_in">round</span><span class="punctuation">(</span>covariance<span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;.\n&quot;</span><span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&quot;&quot;</span><span class="punctuation">)</span></span><br><span class="line">        <span class="built_in">return</span><span class="punctuation">(</span>covariance<span class="punctuation">)</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="TODO书写风格"><a href="#TODO书写风格" class="headerlink" title="TODO书写风格"></a>TODO书写风格</h4><p>编码时通篇使用一种一致的风格来书写TODO.<br><font color = "green">TODO(您的用户名): 所要采取行动的明确描述</font>  </p>
+<hr>
+<p><strong>Reference：</strong>  </p>
+<p><a target="_blank" rel="noopener" href="https://nanx.me/rstyle/">来自Google的R语言编码风格指南</a>  </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://mooner.netlify.app">Mooner</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://mooner.netlify.app/2018/11/05/r-format/">https://mooner.netlify.app/2018/11/05/r-format/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mooner.netlify.app" target="_blank">Mooner</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/R/">R</a></div><div class="post_share"><div class="social-share" data-image="/img/cover_2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/11/12/chisq/" title="卡方检验"><img class="cover" src="/img/cover_7.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">卡方检验</div></div></a></div><div class="next-post pull-right"><a href="/2018/11/01/cut/" title="cut()函数的使用"><img class="cover" src="/img/cover_4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">cut()函数的使用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/03/27/R-object/" title="R面向对象编程"><img class="cover" src="/img/cover_7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-27</div><div class="title">R面向对象编程</div></div></a></div><div><a href="/2023/04/03/R-pkgs/" title="R包构建问题汇总"><img class="cover" src="/img/cover_2.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-03</div><div class="title">R包构建问题汇总</div></div></a></div><div><a href="/2023/03/29/R-parallel/" title="R并行运算"><img class="cover" src="/img/cover_5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-29</div><div class="title">R并行运算</div></div></a></div><div><a href="/2023/04/03/R-purrr/" title="purrr函数式编程"><img class="cover" src="/img/cover_9.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-03</div><div class="title">purrr函数式编程</div></div></a></div><div><a href="/2019/05/27/advanceR/" title="R语言高级程序设计"><img class="cover" src="/img/cover_8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-27</div><div class="title">R语言高级程序设计</div></div></a></div><div><a href="/2019/03/11/apply/" title="浅识apply家族"><img class="cover" src="/img/cover_6.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-11</div><div class="title">浅识apply家族</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mooner</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A6%81-R%E7%BC%96%E7%A0%81%E9%A3%8E%E6%A0%BC%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">概要: R编码风格约定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%91%BD%E5%90%8D"><span class="toc-number">1.1.</span> <span class="toc-text">1. 表示和命名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D"><span class="toc-number">1.1.1.</span> <span class="toc-text">文件命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6%E5%91%BD%E5%90%8D"><span class="toc-number">1.1.2.</span> <span class="toc-text">标识符命名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AF%AD%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">2. 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%A1%8C%E9%95%BF%E5%BA%A6"><span class="toc-number">1.2.1.</span> <span class="toc-text">单行长度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%A9%E8%BF%9B"><span class="toc-number">1.2.2.</span> <span class="toc-text">缩进</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E7%99%BD"><span class="toc-number">1.2.3.</span> <span class="toc-text">空白</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8A%B1%E6%8B%AC%E5%8F%B7"><span class="toc-number">1.2.4.</span> <span class="toc-text">花括号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-number">1.2.5.</span> <span class="toc-text">赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E5%8F%B7"><span class="toc-number">1.2.6.</span> <span class="toc-text">分号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BB%A3%E7%A0%81%E7%BB%84%E7%BB%87"><span class="toc-number">1.3.</span> <span class="toc-text">3. 代码组织</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E5%B8%83%E5%B1%80%E5%92%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.3.1.</span> <span class="toc-text">总体布局和顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%E5%87%86%E5%88%99"><span class="toc-number">1.3.2.</span> <span class="toc-text">注释准则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.3.</span> <span class="toc-text">函数的定义和调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%96%87%E6%A1%A3"><span class="toc-number">1.3.4.</span> <span class="toc-text">函数文档</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.5.</span> <span class="toc-text">示例函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TODO%E4%B9%A6%E5%86%99%E9%A3%8E%E6%A0%BC"><span class="toc-number">1.3.6.</span> <span class="toc-text">TODO书写风格</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/sra-fastq/" title="从sra提取fastq文件"><img src="/img/cover_7.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从sra提取fastq文件"/></a><div class="content"><a class="title" href="/2023/04/05/sra-fastq/" title="从sra提取fastq文件">从sra提取fastq文件</a><time datetime="2023-04-05T08:56:48.000Z" title="发表于 2023-04-05 16:56:48">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/HISAT2/" title="RNA-seq序列比对工具-HISAT2"><img src="/img/cover_4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RNA-seq序列比对工具-HISAT2"/></a><div class="content"><a class="title" href="/2023/04/05/HISAT2/" title="RNA-seq序列比对工具-HISAT2">RNA-seq序列比对工具-HISAT2</a><time datetime="2023-04-05T08:30:26.000Z" title="发表于 2023-04-05 16:30:26">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/star/" title="STAR比对"><img src="/img/cover_9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STAR比对"/></a><div class="content"><a class="title" href="/2023/04/05/star/" title="STAR比对">STAR比对</a><time datetime="2023-04-05T08:23:07.000Z" title="发表于 2023-04-05 16:23:07">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/protein-normalize/" title="蛋白组数据标化和预处理"><img src="/img/cover_4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="蛋白组数据标化和预处理"/></a><div class="content"><a class="title" href="/2023/04/05/protein-normalize/" title="蛋白组数据标化和预处理">蛋白组数据标化和预处理</a><time datetime="2023-04-05T07:47:01.000Z" title="发表于 2023-04-05 15:47:01">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/Maxquant/" title="Maxquant软件"><img src="/img/cover_3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Maxquant软件"/></a><div class="content"><a class="title" href="/2023/04/05/Maxquant/" title="Maxquant软件">Maxquant软件</a><time datetime="2023-04-05T07:32:53.000Z" title="发表于 2023-04-05 15:32:53">2023-04-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Mooner</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

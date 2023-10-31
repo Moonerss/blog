@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Orchestrating Single-Cell Analysis (一) | Mooner</title><meta name="author" content="Mooner"><meta name="copyright" content="Mooner"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="单细胞数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Orchestrating Single-Cell Analysis (一)">
+<meta property="og:url" content="https://mooner.netlify.app/2020/08/10/single-cell-ii/index.html">
+<meta property="og:site_name" content="Mooner">
+<meta property="og:description" content="单细胞数据结构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mooner.netlify.app/img/cover_2.png">
+<meta property="article:published_time" content="2020-08-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-31T14:35:02.500Z">
+<meta property="article:author" content="Mooner">
+<meta property="article:tag" content="SingleCell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mooner.netlify.app/img/cover_2.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://mooner.netlify.app/2020/08/10/single-cell-ii/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":1,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"本文上次更新于","messageNext":"天前，文章内容可能已经过时。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Orchestrating Single-Cell Analysis (一)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-31 22:35:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/cover_2.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Mooner"><span class="site-name">Mooner</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Orchestrating Single-Cell Analysis (一)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-09T16:00:00.000Z" title="发表于 2020-08-10 00:00:00">2020-08-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-31T14:35:02.500Z" title="更新于 2023-10-31 22:35:02">2023-10-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NGS/">NGS</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NGS/SingleCell/">SingleCell</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Orchestrating Single-Cell Analysis (一)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>单细胞数据结构  </p>
+<span id="more"></span>  
+
+
+
+
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在单细胞分析当中，最为基础重要的是单细胞特有的数据结构，用户应该能够使用不同的封装R包来分析他们的数据，而不需要格式之间转换。<code>SingleCellExperiment</code>是最为重要的数据类型。  </p>
+<p><img src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/single-cell-ii/SingleCellExperiment.png">  </p>
+<p>图中最核心的部分，是蓝色的data部分；另外还有绿色的基因注释信息<code>feature metadata</code>、橙色的细胞注释信息<code>cell metadata</code>。除了这三大件，还会包含一些下游分析结果，比如PCA、tSNE降维结果就会保存在紫色的<code>Dimension Reductions</code>  </p>
+<p>这个<code>SingleCellExperiment</code>对象来自<code>SingleCellExperiment</code>R包，现在Bioconductor上的70多个单细胞相关的R包都使用了这个对象，<strong>可以说是单细胞领域的通用货币</strong>。  </p>
+<h2 id="原始实验数据存储"><a href="#原始实验数据存储" class="headerlink" title="原始实验数据存储"></a>原始实验数据存储</h2><h3 id="Filling-the-assays-slot"><a href="#Filling-the-assays-slot" class="headerlink" title="Filling the assays slot"></a>Filling the <code>assays</code> slot</h3><p><strong>创建一个<code>SingleCellExperiment</code>对象很容易，只需要一个<code>assays</code>就可以了</strong>。这是一个列表，其中包含了许多表达数据，例如原始数据count或者其他标准化处理过的数据，行是基因，列是样本  </p>
+<p>可以构建一个10个基因，3个细胞的矩阵  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">counts_matrix <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>cell_1 <span class="operator">=</span> rpois<span class="punctuation">(</span><span class="number">10</span><span class="punctuation">,</span> <span class="number">10</span><span class="punctuation">)</span><span class="punctuation">,</span> </span><br><span class="line">                    cell_2 <span class="operator">=</span> rpois<span class="punctuation">(</span><span class="number">10</span><span class="punctuation">,</span> <span class="number">10</span><span class="punctuation">)</span><span class="punctuation">,</span> </span><br><span class="line">                    cell_3 <span class="operator">=</span> rpois<span class="punctuation">(</span><span class="number">10</span><span class="punctuation">,</span> <span class="number">30</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">rownames<span class="punctuation">(</span>counts_matrix<span class="punctuation">)</span> <span class="operator">&lt;-</span> paste0<span class="punctuation">(</span><span class="string">&quot;gene_&quot;</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">counts_matrix <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>counts_matrix<span class="punctuation">)</span> <span class="comment"># must be a matrix object!</span></span><br></pre></td></tr></table></figure>
+
+<p>有了这个，就可以用一个list构建出SingleCellExperiment对象。当然，这个<strong>list中可以包括任意个矩阵</strong>  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> SingleCellExperiment<span class="punctuation">(</span>assays <span class="operator">=</span> <span class="built_in">list</span><span class="punctuation">(</span>counts <span class="operator">=</span> counts_matrix<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">sce</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## class: SingleCellExperiment </span><br><span class="line">## dim: 10 3 </span><br><span class="line">## metadata(0):</span><br><span class="line">## assays(1): counts</span><br><span class="line">## rownames(10): gene_1 gene_2 ... gene_9 gene_10</span><br><span class="line">## rowData names(0):</span><br><span class="line">## colnames(3): cell_1 cell_2 cell_3</span><br><span class="line">## colData names(0):</span><br><span class="line">## reducedDimNames(0):</span><br><span class="line">## altExpNames(0):</span><br></pre></td></tr></table></figure>
+
+<p>为了得到这个对象中的矩阵，可以用两种方式获得：  </p>
+<ul>
+<li><code>assay(sce, &quot;counts&quot;)</code>：这个方法是最通用的办法，而且其中的counts可以换成其他的名称，只要是出现在之前的list中都可以</li>
+<li><code>counts(sce)</code>：它实现的东西和上面一样，只不过这个方法只适合提取<code>counts</code>这个名称的矩阵</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">counts<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">##         cell_1 cell_2 cell_3</span><br><span class="line">## gene_1      10     10     27</span><br><span class="line">## gene_2       6      9     41</span><br><span class="line">## gene_3       9      9     22</span><br><span class="line">## gene_4       5     14     31</span><br><span class="line">## gene_5      13      9     32</span><br><span class="line">## gene_6       7     14     30</span><br><span class="line">## gene_7       8      5     35</span><br><span class="line">## gene_8       8      6     41</span><br><span class="line">## gene_9      12     10     27</span><br><span class="line">## gene_10      9     11     25</span><br></pre></td></tr></table></figure>
+
+<h3 id="Adding-more-assays"><a href="#Adding-more-assays" class="headerlink" title="Adding more assays"></a>Adding more <code>assays</code></h3><blockquote>
+<p>使用<code>assays</code>非常强大的是我们可以对他进行各种扩展，这对于存储原始的计数矩阵以及数据的标准化版本特别有用。  </p>
+</blockquote>
+<p>之前<code>assays</code>中只有原始表达矩阵，其实还能根据它扩展到归一化矩阵，例如使用<code>scater</code>R包的函数对包装的矩阵进行操作：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> scran<span class="operator">::</span>computeSumFactors<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">sce <span class="operator">&lt;-</span> scater<span class="operator">::</span>logNormCounts<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">sce</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## class: SingleCellExperiment </span><br><span class="line">## dim: 10 3 </span><br><span class="line">## metadata(0):</span><br><span class="line">## assays(2): counts logcounts</span><br><span class="line">## rownames(10): gene_1 gene_2 ... gene_9 gene_10</span><br><span class="line">## rowData names(0):</span><br><span class="line">## colnames(3): cell_1 cell_2 cell_3</span><br><span class="line">## colData names(1): sizeFactor</span><br><span class="line">## reducedDimNames(0):</span><br><span class="line">## altExpNames(0):</span><br></pre></td></tr></table></figure>
+
+<p>这样，<code>assays</code> 就从一个存储原始矩阵的<code>counts</code> ，又扩增了归一化矩阵的<code>logcounts</code>。同理，这个<code>logcounts</code>也是能有两种提取方法：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logcounts<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">##           cell_1   cell_2   cell_3</span><br><span class="line">## gene_1  4.319439 4.170751 3.937792</span><br><span class="line">## gene_2  3.629859 4.027621 4.507948</span><br><span class="line">## gene_3  4.175442 4.027621 3.663575</span><br><span class="line">## gene_4  3.389947 4.633108 4.124903</span><br><span class="line">## gene_5  4.681178 4.027621 4.168120</span><br><span class="line">## gene_6  3.835506 4.633108 4.080351</span><br><span class="line">## gene_7  4.015463 3.248710 4.290508</span><br><span class="line">## gene_8  4.015463 3.486223 4.507948</span><br><span class="line">## gene_9  4.570379 4.170751 3.937792</span><br><span class="line">## gene_10 4.175442 4.300954 3.834273</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># assay(sce, &quot;logcounts&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p>除了使用R包进行扩展之外，同样可以根据自己的想法，去根据原始矩阵得到一个新的对象，并储存在<code>assay</code>里边  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">counts_100 <span class="operator">&lt;-</span> counts<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="operator">+</span> <span class="number">100</span></span><br><span class="line">assay<span class="punctuation">(</span>sce<span class="punctuation">,</span> <span class="string">&quot;counts_100&quot;</span><span class="punctuation">)</span> <span class="operator">&lt;-</span> counts_100 <span class="comment"># assign a new entry to assays slot</span></span><br><span class="line">assays<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="comment"># new assay has now been added.</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## List of length 3</span><br><span class="line">## names(3): counts logcounts counts_100</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>新增用的是<code>assay</code>单数，查看结果用的是<code>assays</code>复数  </p>
+</blockquote>
+<p><strong><code>assays</code>可以包含多个矩阵；构建sce对象可以一次一次加入新的矩阵，也可以用列表的形式，一次加入多个矩阵。</strong>这与最开始的图形表示内容是相同的  </p>
+<h2 id="Handling-metadata"><a href="#Handling-metadata" class="headerlink" title="Handling metadata"></a>Handling metadata</h2><h3 id="On-the-columns"><a href="#On-the-columns" class="headerlink" title="On the columns"></a>On the columns</h3><p>为了进一步注释我们的<code>SingleCellExperiment</code>对象，那么我们需要添加注释信息来描述我们的数据，这部分来介绍列的注释，针对的就是实验样本、细胞。这部分信息将会保存在<code>colData</code>中，它的主体是样本，于是将行名设定为样本，列名设为注释信息（如：批次、作者等等），对应上面图中的橙色部分。  </p>
+<p>先添加一个细胞的注释信息：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cell_metadata <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>batch <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">rownames<span class="punctuation">(</span>cell_metadata<span class="punctuation">)</span> <span class="operator">&lt;-</span> paste0<span class="punctuation">(</span><span class="string">&quot;cell_&quot;</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>有两种方法可以添加到<code>SingleCellExperiment</code>对象中：一种是<strong>直接构建</strong>，一种是<strong>后续添加</strong>   </p>
+<ul>
+<li><p>直接构建：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> SingleCellExperiment<span class="punctuation">(</span>assays <span class="operator">=</span> <span class="built_in">list</span><span class="punctuation">(</span>counts <span class="operator">=</span> counts_matrix<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    colData <span class="operator">=</span> cell_metadata<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>后续添加：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colData<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="operator">&lt;-</span> DataFrame<span class="punctuation">(</span>cell_metadata<span class="punctuation">)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sce</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## class: SingleCellExperiment </span><br><span class="line">## dim: 10 3 </span><br><span class="line">## metadata(0):</span><br><span class="line">## assays(1): counts</span><br><span class="line">## rownames(10): gene_1 gene_2 ... gene_9 gene_10</span><br><span class="line">## rowData names(0):</span><br><span class="line">## colnames(3): cell_1 cell_2 cell_3</span><br><span class="line">## colData names(1): batch</span><br><span class="line">## reducedDimNames(0):</span><br><span class="line">## altExpNames(0):</span><br></pre></td></tr></table></figure>
+
+<p>可以看到<code>colData</code>增加了之前设置的<code>batch</code>信息  </p>
+<p>同样有两种方式获取这个注释信息  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colData<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## DataFrame with 3 rows and 1 column</span><br><span class="line">##            batch</span><br><span class="line">##        &lt;numeric&gt;</span><br><span class="line">## cell_1         1</span><br><span class="line">## cell_2         1</span><br><span class="line">## cell_3         2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sce<span class="operator">$</span>batch</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 1 1 2</span><br></pre></td></tr></table></figure>
+
+<p>有一些函数可以帮助我们自动计算这些注释信息并添加到元数据当中，例如<code>scater</code>包的<code>calculateQCMetrics()</code>就会帮你计算几十项细胞的质量信息，结果依然是使用<code>colData</code>调用注释结果信息  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> scater<span class="operator">::</span>addPerCellQC<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">colData<span class="punctuation">(</span>sce<span class="punctuation">)</span><span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">5</span><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## DataFrame with 3 rows and 5 columns</span><br><span class="line">##            batch       sum  detected percent_top_50 percent_top_100</span><br><span class="line">##        &lt;numeric&gt; &lt;integer&gt; &lt;integer&gt;      &lt;numeric&gt;       &lt;numeric&gt;</span><br><span class="line">## cell_1         1        87        10            100             100</span><br><span class="line">## cell_2         1        97        10            100             100</span><br><span class="line">## cell_3         2       311        10            100             100</span><br></pre></td></tr></table></figure>
+
+<p>或者，我们可能想要手动添加更多的字段到元数据当中:  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce<span class="operator">$</span>more_stuff <span class="operator">&lt;-</span> runif<span class="punctuation">(</span>ncol<span class="punctuation">(</span>sce<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">colnames<span class="punctuation">(</span>colData<span class="punctuation">(</span>sce<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## [1] &quot;batch&quot;           &quot;sum&quot;             &quot;detected&quot;        &quot;percent_top_50&quot;  &quot;percent_top_100&quot;</span><br><span class="line">## [6] &quot;percent_top_200&quot; &quot;percent_top_500&quot; &quot;total&quot;           &quot;more_stuff&quot;</span><br></pre></td></tr></table></figure>
+
+<p>既然<code>colData</code>可以包含这么多的注释信息，那么怎么从中选取一部分呢？  </p>
+<p>colData的一个常用操作就是取子集，看下面操作：  </p>
+<p>例如想从colData中选择批次信息，和数据框取子集是类似的  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce<span class="operator">$</span>batch</span><br><span class="line"><span class="comment"># 或者colData(sce)$batch</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 1 1 2</span><br></pre></td></tr></table></figure>
+
+<p>然后如果再想取批次中属于第一个批次的信息，就可以继续按照数据框的思路取子集  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sce<span class="punctuation">[</span><span class="punctuation">,</span> sce<span class="operator">$</span>batch <span class="operator">==</span> <span class="number">1</span><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## class: SingleCellExperiment </span><br><span class="line">## dim: 10 2 </span><br><span class="line">## metadata(0):</span><br><span class="line">## assays(1): counts</span><br><span class="line">## rownames(10): gene_1 gene_2 ... gene_9 gene_10</span><br><span class="line">## rowData names(0):</span><br><span class="line">## colnames(2): cell_1 cell_2</span><br><span class="line">## colData names(9): batch sum ... total more_stuff</span><br><span class="line">## reducedDimNames(0):</span><br><span class="line">## altExpNames(0):</span><br></pre></td></tr></table></figure>
+
+<h3 id="On-the-rows"><a href="#On-the-rows" class="headerlink" title="On the rows"></a>On the rows</h3><p>既然样本有注释信息，那么同样的，基因也有自己的注释，它就存放在<code>rowData</code>或者<code>rowRanges</code>中，这两个的区别就是：  </p>
+<ul>
+<li><p><code>rowData</code>：是一个数据框的结构，它就存储了核心<code>assays</code>矩阵的基因相关信息  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> scater<span class="operator">::</span>addPerFeatureQC<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">rowData<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">## DataFrame with 10 rows and 2 columns</span><br><span class="line">##              mean  detected</span><br><span class="line">##         &lt;numeric&gt; &lt;numeric&gt;</span><br><span class="line">## gene_1    15.6667       100</span><br><span class="line">## gene_2    18.6667       100</span><br><span class="line">## gene_3    13.3333       100</span><br><span class="line">## gene_4    16.6667       100</span><br><span class="line">## gene_5    18.0000       100</span><br><span class="line">## gene_6    17.0000       100</span><br><span class="line">## gene_7    16.0000       100</span><br><span class="line">## gene_8    18.3333       100</span><br><span class="line">## gene_9    16.3333       100</span><br><span class="line">## gene_10   15.0000       100</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><code>rowRanges</code>：也是基因相关，但是它是GRange对象，存储了基因坐标信息，例如染色体信息、起始终点坐标  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rowRanges<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="comment"># empty</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">## GRangesList object of length 10:</span><br><span class="line">## $gene_1</span><br><span class="line">## GRanges object with 0 ranges and 0 metadata columns:</span><br><span class="line">##    seqnames    ranges strand</span><br><span class="line">##       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span><br><span class="line">##   -------</span><br><span class="line">##   seqinfo: no sequences</span><br><span class="line">## </span><br><span class="line">## $gene_2</span><br><span class="line">## GRanges object with 0 ranges and 0 metadata columns:</span><br><span class="line">##    seqnames    ranges strand</span><br><span class="line">##       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span><br><span class="line">##   -------</span><br><span class="line">##   seqinfo: no sequences</span><br><span class="line">## </span><br><span class="line">## $gene_3</span><br><span class="line">## GRanges object with 0 ranges and 0 metadata columns:</span><br><span class="line">##    seqnames    ranges strand</span><br><span class="line">##       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span><br><span class="line">##   -------</span><br><span class="line">##   seqinfo: no sequences</span><br><span class="line">## </span><br><span class="line">## ...</span><br><span class="line">## &lt;7 more elements&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>同样类似于数据框，可以按位置、名称取子集：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sce<span class="punctuation">[</span><span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;gene_1&quot;</span><span class="punctuation">,</span> <span class="string">&quot;gene_4&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">## class: SingleCellExperiment </span><br><span class="line">## dim: 2 3 </span><br><span class="line">## metadata(0):</span><br><span class="line">## assays(1): counts</span><br><span class="line">## rownames(2): gene_1 gene_4</span><br><span class="line">## rowData names(2): mean detected</span><br><span class="line">## colnames(3): cell_1 cell_2 cell_3</span><br><span class="line">## colData names(9): batch sum ... total more_stuff</span><br><span class="line">## reducedDimNames(0):</span><br><span class="line">## altExpNames(0):</span><br></pre></td></tr></table></figure>
+
+<h3 id="Other-metadata"><a href="#Other-metadata" class="headerlink" title="Other metadata"></a>Other metadata</h3><h4 id="metadata-信息"><a href="#metadata-信息" class="headerlink" title="metadata 信息"></a><code>metadata</code> 信息</h4><p>除了以上介绍的，还有一些重要的元数据信息需要储存，这些可以用<code>metadata</code>来表示  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">my_genes <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;gene_1&quot;</span><span class="punctuation">,</span> <span class="string">&quot;gene_5&quot;</span><span class="punctuation">)</span></span><br><span class="line">metadata<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span>favorite_genes <span class="operator">=</span> my_genes<span class="punctuation">)</span></span><br><span class="line">metadata<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## $favorite_genes</span><br><span class="line">## [1] &quot;gene_1&quot; &quot;gene_5&quot;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以用<code>$</code>对其进行扩展  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">your_genes <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;gene_4&quot;</span><span class="punctuation">,</span> <span class="string">&quot;gene_8&quot;</span><span class="punctuation">)</span></span><br><span class="line">metadata<span class="punctuation">(</span>sce<span class="punctuation">)</span><span class="operator">$</span>your_genes <span class="operator">&lt;-</span> your_genes</span><br><span class="line">metadata<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## $favorite_genes</span><br><span class="line">## [1] &quot;gene_1&quot; &quot;gene_5&quot;</span><br><span class="line">## </span><br><span class="line">## $your_genes</span><br><span class="line">## [1] &quot;gene_4&quot; &quot;gene_8&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="对样本进行归一化：sizeFactors"><a href="#对样本进行归一化：sizeFactors" class="headerlink" title="对样本进行归一化：sizeFactors"></a>对样本进行归一化：<code>sizeFactors</code></h4><p>这里面装了根据样本文库计算的文库大小因子，是一个数值型向量，用于后面的归一化  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> scran<span class="operator">::</span>computeSumFactors<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">sizeFactors<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] 0.5272727 0.5878788 1.8848485</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手动添加</span></span><br><span class="line">sizeFactors<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="operator">&lt;-</span> scater<span class="operator">::</span>librarySizeFactors<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">sizeFactors<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##    cell_1    cell_2    cell_3 </span><br><span class="line">## 0.5272727 0.5878788 1.8848485</span><br></pre></td></tr></table></figure>
+
+<p>前面提到的：<code>assays</code> (primary data), <code>colData</code> (sample metadata),<code>rowData</code>&#x2F;<code>rowRanges</code> (feature metadata), and <code>sizeFactors</code> 。其实这其中前三个都来自于<code>SummarizedExperiment</code>这个对象。还有一些基于<code>SummarizedExperiment</code>计算得到的信息同样可以一起储存在<code>SummarizedExperiment</code>对象当中。  </p>
+<h4 id="降维结果：reducedDims"><a href="#降维结果：reducedDims" class="headerlink" title="降维结果：reducedDims"></a>降维结果：<code>reducedDims</code></h4><p>存储了原始矩阵的降维结果，可以通过PCA、tSNE、UMAP等得到，它是一个数值型矩阵的list，行名是原来矩阵的列名（就是细胞、样本），它的列就是各种维度信息  </p>
+<p>它和<code>assays</code>一样，也可以包含许多降维的结果，例如用<code>scater</code>包计算PCA：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> scater<span class="operator">::</span>logNormCounts<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br><span class="line">sce <span class="operator">&lt;-</span> scater<span class="operator">::</span>runPCA<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## Warning in check_numbers(k = k, nu = nu, nv = nv, limit = min(dim(x)) - : more singular</span><br><span class="line">## values/vectors requested than available</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE, : You&#x27;re</span><br><span class="line">## computing too large a percentage of total singular values, use a standard svd instead.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reducedDim<span class="punctuation">(</span>sce<span class="punctuation">,</span> <span class="string">&quot;PCA&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">##              PC1        PC2</span><br><span class="line">## cell_1 -0.792842 -0.6994112</span><br><span class="line">## cell_2  1.113535 -0.2302468</span><br><span class="line">## cell_3 -0.320693  0.9296580</span><br><span class="line">## attr(,&quot;percentVar&quot;)</span><br><span class="line">## [1] 58.36254 41.63746</span><br><span class="line">## attr(,&quot;rotation&quot;)</span><br><span class="line">##                   PC1         PC2</span><br><span class="line">## gene_4   0.5826349629  0.28228727</span><br><span class="line">## gene_7  -0.4778380724  0.30732611</span><br><span class="line">## gene_8  -0.3790515744  0.41216988</span><br><span class="line">## gene_2   0.0818326382  0.51529505</span><br><span class="line">## gene_6   0.4106910258  0.03126769</span><br><span class="line">## gene_5  -0.2856972185 -0.23213641</span><br><span class="line">## gene_9  -0.1228230993 -0.35271423</span><br><span class="line">## gene_3  -0.0002291474 -0.31414168</span><br><span class="line">## gene_10  0.1263935133 -0.24605811</span><br><span class="line">## gene_1  -0.0219019212 -0.22792469</span><br></pre></td></tr></table></figure>
+
+<p>除了PCA，tSNE的结果也是存储在这里：  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sce <span class="operator">&lt;-</span> scater<span class="operator">::</span>runTSNE<span class="punctuation">(</span>sce<span class="punctuation">,</span> perplexity <span class="operator">=</span> <span class="number">0.1</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## Perplexity should be lower than K!</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reducedDim<span class="punctuation">(</span>sce<span class="punctuation">,</span> <span class="string">&quot;TSNE&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">##             [,1]       [,2]</span><br><span class="line">## cell_1  2121.516 -5285.0599</span><br><span class="line">## cell_2  3516.243  4479.8174</span><br><span class="line">## cell_3 -5637.759   805.2426</span><br></pre></td></tr></table></figure>
+
+<p>查看下全部的结果都包含什么：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reducedDims<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## List of length 2</span><br><span class="line">## names(2): PCA TSNE</span><br></pre></td></tr></table></figure>
+
+<p><strong>调取方法也十分类似</strong>：<code>assay</code>，数据矩阵存储在<code>assays</code>，而调用是<code>assay</code>；这里的降维结果存储在<code>reducedDims</code>，调用是<code>reducedDim</code>  </p>
+<p>同样的这些信息可以通过其他包计算后直接添加到对象中  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">u <span class="operator">&lt;-</span> uwot<span class="operator">::</span>umap<span class="punctuation">(</span>t<span class="punctuation">(</span>logcounts<span class="punctuation">(</span>sce<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">,</span> n_neighbors <span class="operator">=</span> <span class="number">2</span><span class="punctuation">)</span></span><br><span class="line">reducedDim<span class="punctuation">(</span>sce<span class="punctuation">,</span> <span class="string">&quot;UMAP_uwot&quot;</span><span class="punctuation">)</span> <span class="operator">&lt;-</span> u</span><br><span class="line">reducedDims<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## List of length 3</span><br><span class="line">## names(3): PCA TSNE UMAP_uwot</span><br></pre></td></tr></table></figure>
+
+<h4 id="对列添加label"><a href="#对列添加label" class="headerlink" title="对列添加label"></a>对列添加label</h4><p>使用<code>colLabels()</code> ，尤其在非监督聚类过程中对细胞添加label，进行分组  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">colLabels<span class="punctuation">(</span>sce<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="built_in">LETTERS</span><span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">]</span></span><br><span class="line">colLabels<span class="punctuation">(</span>sce<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot;</span><br></pre></td></tr></table></figure>
+
+<p>例如<code>scran::findMarkers</code>就是通过<code>colLabels()</code>来提取细胞信息的</p>
+<hr>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p><a target="_blank" rel="noopener" href="https://osca.bioconductor.org/">Orchestrating Single-Cell Analysis with Bioconductor</a>  </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://mooner.netlify.app">Mooner</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://mooner.netlify.app/2020/08/10/single-cell-ii/">https://mooner.netlify.app/2020/08/10/single-cell-ii/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://mooner.netlify.app" target="_blank">Mooner</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SingleCell/">SingleCell</a></div><div class="post_share"><div class="social-share" data-image="/img/cover_2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/10/one-tail/" title="单尾还是双尾检验"><img class="cover" src="/img/cover_3.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">单尾还是双尾检验</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/10/tpm-fpkm-rpkm/" title="TPM、RPKM与FPKM相互转换"><img class="cover" src="/img/cover_7.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TPM、RPKM与FPKM相互转换</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/10/09/Hemberg-lab1/" title="Hemberg-lab单细胞转录组数据分析（一）"><img class="cover" src="/img/cover_8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-10-09</div><div class="title">Hemberg-lab单细胞转录组数据分析（一）</div></div></a></div><div><a href="/2020/11/20/SCENT/" title="SCENT包Debug"><img class="cover" src="/img/cover_5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-20</div><div class="title">SCENT包Debug</div></div></a></div><div><a href="/2020/09/23/hemberg-lab2/" title="Hemberg-lab单细胞转录组数据分析（二）"><img class="cover" src="/img/cover_1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-23</div><div class="title">Hemberg-lab单细胞转录组数据分析（二）</div></div></a></div><div><a href="/2020/09/28/hemberg-lab3/" title="Hemberg-lab单细胞转录组数据分析（三）"><img class="cover" src="/img/cover_1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-28</div><div class="title">Hemberg-lab单细胞转录组数据分析（三）</div></div></a></div><div><a href="/2020/09/28/hemberg-lab4/" title="Hemberg-lab单细胞转录组数据分析（四）"><img class="cover" src="/img/cover_8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-28</div><div class="title">Hemberg-lab单细胞转录组数据分析（四）</div></div></a></div><div><a href="/2020/09/28/hemberg-lab5/" title="Hemberg-lab单细胞转录组数据分析（五）"><img class="cover" src="/img/cover_1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-28</div><div class="title">Hemberg-lab单细胞转录组数据分析（五）</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Mooner</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">114</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E5%AE%9E%E9%AA%8C%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="toc-number">2.</span> <span class="toc-text">原始实验数据存储</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Filling-the-assays-slot"><span class="toc-number">2.1.</span> <span class="toc-text">Filling the assays slot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adding-more-assays"><span class="toc-number">2.2.</span> <span class="toc-text">Adding more assays</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Handling-metadata"><span class="toc-number">3.</span> <span class="toc-text">Handling metadata</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#On-the-columns"><span class="toc-number">3.1.</span> <span class="toc-text">On the columns</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#On-the-rows"><span class="toc-number">3.2.</span> <span class="toc-text">On the rows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Other-metadata"><span class="toc-number">3.3.</span> <span class="toc-text">Other metadata</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#metadata-%E4%BF%A1%E6%81%AF"><span class="toc-number">3.3.1.</span> <span class="toc-text">metadata 信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%A0%B7%E6%9C%AC%E8%BF%9B%E8%A1%8C%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%9AsizeFactors"><span class="toc-number">3.3.2.</span> <span class="toc-text">对样本进行归一化：sizeFactors</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4%E7%BB%93%E6%9E%9C%EF%BC%9AreducedDims"><span class="toc-number">3.3.3.</span> <span class="toc-text">降维结果：reducedDims</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E5%88%97%E6%B7%BB%E5%8A%A0label"><span class="toc-number">3.3.4.</span> <span class="toc-text">对列添加label</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">3.3.5.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/sra-fastq/" title="从sra提取fastq文件"><img src="/img/cover_7.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从sra提取fastq文件"/></a><div class="content"><a class="title" href="/2023/04/05/sra-fastq/" title="从sra提取fastq文件">从sra提取fastq文件</a><time datetime="2023-04-05T08:56:48.000Z" title="发表于 2023-04-05 16:56:48">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/HISAT2/" title="RNA-seq序列比对工具-HISAT2"><img src="/img/cover_4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RNA-seq序列比对工具-HISAT2"/></a><div class="content"><a class="title" href="/2023/04/05/HISAT2/" title="RNA-seq序列比对工具-HISAT2">RNA-seq序列比对工具-HISAT2</a><time datetime="2023-04-05T08:30:26.000Z" title="发表于 2023-04-05 16:30:26">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/star/" title="STAR比对"><img src="/img/cover_9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="STAR比对"/></a><div class="content"><a class="title" href="/2023/04/05/star/" title="STAR比对">STAR比对</a><time datetime="2023-04-05T08:23:07.000Z" title="发表于 2023-04-05 16:23:07">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/protein-normalize/" title="蛋白组数据标化和预处理"><img src="/img/cover_4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="蛋白组数据标化和预处理"/></a><div class="content"><a class="title" href="/2023/04/05/protein-normalize/" title="蛋白组数据标化和预处理">蛋白组数据标化和预处理</a><time datetime="2023-04-05T07:47:01.000Z" title="发表于 2023-04-05 15:47:01">2023-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/05/Maxquant/" title="Maxquant软件"><img src="/img/cover_3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Maxquant软件"/></a><div class="content"><a class="title" href="/2023/04/05/Maxquant/" title="Maxquant软件">Maxquant软件</a><time datetime="2023-04-05T07:32:53.000Z" title="发表于 2023-04-05 15:32:53">2023-04-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Mooner</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>

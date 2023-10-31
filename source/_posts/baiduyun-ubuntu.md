@@ -2,9 +2,8 @@
 title: Linux下百度云快速下载
 date: 2019-09-19 20:51:33
 categories: 
-  - linux
-tags: 
-  - linux 
+  - Linux
+tags:  
   - software
 ---
 
