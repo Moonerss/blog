@@ -11,6 +11,12 @@ export const zhNavbar = [
     activeMatch: '^/NGS/',
   },
   {
+    text: 'workflow',
+    icon: 'carbon:workflow-automation',
+    link: '/notes/workflow/RNA.md',
+    activeMatch: '^/workflow/'
+  },
+  {
     text: '资源',
     icon: 'material-symbols:book-5-outline',
     activeMatch: '^/resource/',

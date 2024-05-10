@@ -17,6 +17,18 @@ export const zhNotes = definePlumeNotesConfig({
       ]
     },
     {
+      dir: 'workflow',
+      link: '/workflow/',
+      sidebar: [
+        {
+          text: '测序原始数据处理流程',
+          collapsed: false,
+          icon: 'carbon:idea',
+          items: ['RNA', 'ATAC', 'CHIP'],
+        }
+      ]
+    },
+    {
       dir: 'resource',
       link: '/resource/'
     }
