@@ -15,6 +15,10 @@ export const zhNotes = definePlumeNotesConfig({
           items: ['filetype'],
         }
       ]
+    },
+    {
+      dir: 'resource',
+      link: '/resource/'
     }
   ]
 })

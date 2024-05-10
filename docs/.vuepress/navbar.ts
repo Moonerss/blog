@@ -9,7 +9,25 @@ export const zhNavbar = [
     // link: '/guide/intro/',
     link: '/notes/NGS/filetype.md',
     activeMatch: '^/NGS/',
-  }
+  },
+  {
+    text: '资源',
+    icon: 'material-symbols:book-5-outline',
+    activeMatch: '^/resource/',
+    items: [
+      {
+        text: '学习',
+        link: '/bioinfo/',
+        icon: 'carbon:watson-machine-learning'
+      },
+    ]
+  },
+  {
+    text: '博客',
+    link: '/blog/',
+    icon: 'material-symbols:article-outline',
+    activeMatch: '^/(blog|article)/',
+  },
 ] as NavItem[]
 
 export const enNavbar = [
