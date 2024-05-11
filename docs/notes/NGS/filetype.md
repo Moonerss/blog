@@ -1,6 +1,6 @@
 ---
 title: 测序常见文件格式
-author: pengzhanbo
+author: Jeason
 icon: mdi:tooltip-text-outline
 createTime: 2024/05/10 20:54:24
 permalink: /NGS/filetype/
@@ -317,7 +317,7 @@ TAG	OQ:Z:CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBCCCCCCBBCC@CCCCCCCCCCACCCCC;CCCBBC?CCCAC
 
 BAM本质上就是二进制压缩的SAM文件，大部分生物信息学流程都需要这个格式，为了节省存储空间以及方便索引。
 
-```R
+```r
 # BiocInstaller::biocLite('Rsamtools')
 library(Rsamtools) 
 test_bam_file <- 'data/CHIP-seq.bam' 
