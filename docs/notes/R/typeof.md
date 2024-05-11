@@ -2,7 +2,7 @@
 title: 数据类型
 author: Jeason
 icon: mdi:tooltip-text-outline
-createTime: 2019-05-31 20:36:47
+createTime: 2019/05/31 20:36:47
 permalink: /R/typeof/
 ---
 

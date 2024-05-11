@@ -2,7 +2,7 @@
 title: 字符标准化方法
 author: Jeason
 icon: mdi:tooltip-text-outline
-createTime: 2019-06-09 20:39:34
+createTime: 2019/06/09 20:39:34
 permalink: /py/chara_py/
 ---
 
