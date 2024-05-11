@@ -37,6 +37,12 @@ export const zhNotes = definePlumeNotesConfig({
           collapsed: false,
           icon: 'carbon:idea',
           items: ['typeof'],
+        },
+        {
+          text: '使用案例',
+          collapsed: false,
+          icon: 'carbon:idea',
+          items: ['trycatch'],
         }
       ]
     },
