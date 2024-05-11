@@ -53,7 +53,7 @@ $class
 
 对于 `mode`、 `storage.mode`、 `typeof` 三个函数来说，mode 是比较旧的版本，typeof 是更新的、也是更细的一种形式；三个函数检测的精细程度为：`mode` > `storage.mode` > `typeof`  
 
-```R
+```r
 mode(1:5) # numeric
 storage.mode(1:5) # integer
 typeof(1:5) # integer

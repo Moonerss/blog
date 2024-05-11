@@ -41,6 +41,18 @@ export const zhNotes = definePlumeNotesConfig({
       ]
     },
     {
+      dir: 'py',
+      link: '/py/',
+      sidebar: [
+        {
+          text: 'Python',
+          collapsed: false,
+          icon: 'carbon:idea',
+          items: ['chara_py'],
+        }
+      ]
+    },
+    {
       dir: 'resource',
       link: '/resource/'
     }

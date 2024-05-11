@@ -23,6 +23,12 @@ export const zhNavbar = [
     activeMatch: '^/R/'
   },
   {
+    text: 'Python',
+    icon: 'gravity-ui:logo-python',
+    link: '/notes/py/chara_py.md',
+    activeMatch: '^/py/'
+  },
+  {
     text: '资源',
     icon: 'material-symbols:book-5-outline',
     activeMatch: '^/resource/',
