@@ -9,10 +9,10 @@ export const zhNotes = definePlumeNotesConfig({
       link: '/NGS/',
       sidebar: [
         {
-          text: '文件格式',
+          text: '基础内容',
           collapsed: false,
           icon: 'carbon:idea',
-          items: ['filetype'],
+          items: ['filetype', 'concept', 'genome'],
         }
       ]
     },
