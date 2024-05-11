@@ -17,6 +17,12 @@ export const zhNavbar = [
     activeMatch: '^/workflow/'
   },
   {
+    text: 'R',
+    icon: 'mdi:language-r',
+    link: '/notes/R/typeof.md',
+    activeMatch: '^/R/'
+  },
+  {
     text: '资源',
     icon: 'material-symbols:book-5-outline',
     activeMatch: '^/resource/',

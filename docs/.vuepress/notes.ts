@@ -29,6 +29,18 @@ export const zhNotes = definePlumeNotesConfig({
       ]
     },
     {
+      dir: 'R',
+      link: '/R/',
+      sidebar: [
+        {
+          text: '零星概念',
+          collapsed: false,
+          icon: 'carbon:idea',
+          items: ['typeof'],
+        }
+      ]
+    },
+    {
       dir: 'resource',
       link: '/resource/'
     }
