@@ -10,12 +10,14 @@ export const zhNavbar = [
     link: '/notes/NGS/filetype.md',
     activeMatch: '^/NGS/',
   },
+  /***
   {
     text: 'workflow',
     icon: 'carbon:workflow-automation',
     link: '/notes/workflow/RNA.md',
     activeMatch: '^/workflow/'
   },
+  ***/
   {
     text: 'R',
     icon: 'mdi:language-r',
