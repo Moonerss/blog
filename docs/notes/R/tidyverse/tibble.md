@@ -2,18 +2,17 @@
 title: tibble
 author: Jeason
 icon: mdi:tooltip-text-outline
-date: 2019-03-14 20:15:07
+createTime: 2019/03/14 20:15:07
 permalink: /R/tidyverse/tibble/
 ---
+`tibble`是升级版的 `data.frame`，它保留了 `data.famre`的优势，并且以更友好的方式展示出来
 
-`tibble`是升级版的`data.frame`，它保留了`data.famre`的优势，并且以更友好的方式展示出来  
+### 构建tibble
 
-### 构建tibble  
-
-+ `readr`已知读入数据形成tibble  
-+ `tibble()`直接构建  
-+ `tribble()`直观构建  
-+ `as_tibble()`转换格式  
++ `readr`已知读入数据形成tibble
++ `tibble()`直接构建
++ `tribble()`直观构建
++ `as_tibble()`转换格式
 
 ```r
 df2 <- read_csv(readr_example("challenge.csv"), guess_max = 1001)
@@ -24,8 +23,8 @@ df2 <- read_csv(readr_example("challenge.csv"), guess_max = 1001)
 #>  )
 tibble(x = 1:3, y = list(1:5, 1:10, 1:20))
 #>  # A tibble: 3 x 2
-#>        x y         
-#>    <int> <list>    
+#>        x y       
+#>    <int> <list>  
 #>  1     1 <int [5]> 
 #>  2     2 <int [10]>
 #>  3     3 <int [20]>
@@ -35,7 +34,7 @@ tribble(
 "b", 4:6
 )
 #> A tibble: 2 x 2
-#>   x     y        
+#>   x     y      
 #>   <chr> <list>   
 #> 1 a     <int [3]>
 #> 2 b     <int [3]>
@@ -57,10 +56,11 @@ df <- as_tibble(l)
 #> # ... with 490 more rows
 ```
 
-### tibble和data.frame的区别  
+### tibble和data.frame的区别
 
-#### print结果  
-`tibble`默认只展示前10行的信息  
+#### print结果
+
+`tibble`默认只展示前10行的信息
 
 ```r
 tibble(x = -5:1000)
@@ -80,11 +80,11 @@ tibble(x = -5:1000)
 #> # … with 996 more rows
 ```
 
-> 可以使用`options(tibble.print_max = n, tibble.print_min = m)`参数设置展示的信息  
+> 可以使用 `options(tibble.print_max = n, tibble.print_min = m)`参数设置展示的信息
 
-#### 子集提取  
+#### 子集提取
 
-`tibble`通过`[`提取子集返回的是一个`tibble`，如果提取某一列需要使用`[[`或者`$`  
+`tibble`通过 `[`提取子集返回的是一个 `tibble`，如果提取某一列需要使用 `[[`或者 `$`
 
 ```r
 df2 <- tibble(x = 1:3, y = 3:1)
@@ -98,9 +98,9 @@ class(df2$x)
 #> [1] "integer"
 ```
 
-#### 自动填充  
+#### 自动填充
 
-在构建`tibble`时，只有长度为1的值才会被循环填充  
+在构建 `tibble`时，只有长度为1的值才会被循环填充
 
 ```r
 tibble(a = 1:3, b = 1)
@@ -116,20 +116,19 @@ tibble(a = 1:3, c = 1:2)
 #> * Length 3: Column `a`
 ```
 
-#### 没有行名  
+#### 没有行名
 
-`tibble`对象中是没有行名的，因此需要一些函数进行辅助操作  
+`tibble`对象中是没有行名的，因此需要一些函数进行辅助操作
 
-+ `has_rownames(.data)`：判断数据是否有行名  
-+ `remove_rownames(.data)`：去掉数据行名  
-+ `rownames_to_column(.data, var = "rowname")`：行名转为数据的第一列，`var`是行名所在列的名字  
-+ `rowid_to_column(.data, var = "rowid")`：行ID号转为数据的第一列，`var`是行名所在列的名字  
-+ `column_to_rownames(.data, var = "rowname")`：列转行名  
++ `has_rownames(.data)`：判断数据是否有行名
++ `remove_rownames(.data)`：去掉数据行名
++ `rownames_to_column(.data, var = "rowname")`：行名转为数据的第一列，`var`是行名所在列的名字
++ `rowid_to_column(.data, var = "rowid")`：行ID号转为数据的第一列，`var`是行名所在列的名字
++ `column_to_rownames(.data, var = "rowname")`：列转行名
 
-### 常用操作  
+### 常用操作
 
-+ `add_column`和`add_row`  
-  添加行和列  
++ `add_column`和 `add_row`添加行和列
   ```r
    add_column(df, z = -1:1, w = 0)
    #>      # A tibble: 3 x 4
@@ -139,8 +138,7 @@ tibble(a = 1:3, c = 1:2)
    #> 2     2     2     0     0
    #> 3     3     1     1     0
   ```
-+ `enframe`和`deframe`  
-  把向量变成`tibble`和把`tibble`变成向量  
++ `enframe`和 `deframe`把向量变成 `tibble`和把 `tibble`变成向量
   ```r
   enframe(c(a = 5, b = 7), name = "name", value = "value")
   #>   # A tibble: 2 x 2
@@ -151,8 +149,7 @@ tibble(a = 1:3, c = 1:2)
   deframe(tibble(a = 1:3))
   #> [1] 1 2 3
   ```
-+ `glimpse()`  
-  相当于`tibble`的`str()`  
++ `glimpse()`相当于 `tibble`的 `str()`
   ```r
   glimpse(df)
   #>  Observations: 3
@@ -160,7 +157,7 @@ tibble(a = 1:3, c = 1:2)
   #>  $ x <int> 1, 2, 3
   #>  $ y <int> 3, 2, 1
   ```
-+ `tbl_sum`  
++ `tbl_sum`
   提供简要数据信息
   ```r
   tbl_sum(df)
