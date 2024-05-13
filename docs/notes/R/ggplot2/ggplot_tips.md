@@ -1,13 +1,11 @@
 ---
 title: 小部件参考
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2020/09/22 11:13:16
 permalink: /R/ggplot2/ggplot_tips/
 ---
-
 ::: center
-![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/ggplottheme/20200627183728.png)  
+![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/ggplottheme/20200627183728.png)
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/ggplottheme/20200627183936.png)
 :::
 

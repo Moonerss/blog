@@ -1,7 +1,6 @@
 ---
 title: VAF、MAF、MCF、CCF
 author: Jeason
-icon: ic:baseline-anchor
 createTime: 2023/04/04 20:54:24
 permalink: /NGS/vcf/
 ---

@@ -1,7 +1,6 @@
 ---
 title: 面向对象编程
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2023/03/27 11:13:16
 permalink: /R/r_object/
 ---
@@ -75,7 +74,7 @@ Slot "end":
 Class "TimeSeries" [in ".GlobalEnv"]
 
 Slots:
-                            
+                          
 Name:     data   start     end
 Class: numeric POSIXct POSIXct
 ```
@@ -219,7 +218,7 @@ Slot "end":
 Class "TimeSeries" [in ".GlobalEnv"]
 
 Slots:
-                            
+                          
 Name:     data   start     end
 Class: numeric POSIXct POSIXct
 ```

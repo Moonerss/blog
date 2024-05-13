@@ -1,25 +1,23 @@
 ---
 title: 绘图示例
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2020/01/07 11:13:16
 permalink: /R/ggplot2/ggplot_gallery/
 ---
+## 复合饼图
 
-## 复合饼图  
+复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种：
 
-复合图形可以给出更多的信息，并且更能够观察数据之间的联系。一般所说的复合饼图包括以下两种：  
+**散点复合饼图**（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在直角坐标系中的位置，P表示饼图的数据信息，决定饼图中各个类别的占比情况，如图1(a)所示。
 
-**散点复合饼图**（compound scatter and pie chart）可以展示三个数据变量的信息：(x, y, P)，其中x和y决定气泡在直角坐标系中的位置，P表示饼图的数据信息，决定饼图中各个类别的占比情况，如图1(a)所示。  
-
-**气泡复合饼图**（compound bubble and pie chart）可以展示四个数据变量的信息：(x, y, z, P)，其中x和y决定气泡在直角坐标系中的位置，z决定气泡的大小，P表示饼图的数据信息，决定饼图中各个类别的占比情况，如图1(b)所示。  
+**气泡复合饼图**（compound bubble and pie chart）可以展示四个数据变量的信息：(x, y, z, P)，其中x和y决定气泡在直角坐标系中的位置，z决定气泡的大小，P表示饼图的数据信息，决定饼图中各个类别的占比情况，如图1(b)所示。
 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pie/P1.png" height="500" width = "600">
   <img src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pie/P2.png" height="500" width = "600" >
 </div>
 
-具体操作如下：  
+具体操作如下：
 
 ```r
 library(ggforce)
@@ -75,7 +73,7 @@ ggplot(data_graph) +
   theme(panel.grid.minor = element_blank())
 ```
 
-最终得到的图形如下所示：  
+最终得到的图形如下所示：
 
 <div align="center">
   <img src="https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/pie/P3.png" height="500" width = "700">

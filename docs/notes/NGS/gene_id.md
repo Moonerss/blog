@@ -1,11 +1,9 @@
 ---
 title: 基因ID转换
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2020/05/29 19:42:05
 permalink: /NGS/gene_id/
 ---
-
 <!--more-->
 
 ## Ensembl ID 辨识

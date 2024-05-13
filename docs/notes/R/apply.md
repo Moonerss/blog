@@ -1,46 +1,40 @@
 ---
 title: apply家族
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2019/03/11 11:13:16
 permalink: /R/apply/
 ---
+## apply函数
 
-## apply函数  
+apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。
 
-apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。  
-
-### 函数定义  
-
+### 函数定义
 
 ```r
 apply(X, MARGIN, FUN, ...)
 ```
 
-### 参数列表  
+### 参数列表
 
-`X`：矩阵、数据框、数组  
+`X`：矩阵、数据框、数组
 
-`MARGIN`：按行计算或按按列计算，1表示按行，2表示按列  
+`MARGIN`：按行计算或按按列计算，1表示按行，2表示按列
 
-`FUN`: 自定义函数  
+`FUN`: 自定义函数
 
-`…`: 自定义参数  
+`…`: 自定义参数
 
-### 应用  
+### 应用
 
-1. 对于矩阵行求和    
+1. 对于矩阵行求和
 
-   
    ```r
    x<-matrix(1:12,ncol=3)
    apply(x,1,sum)
    ## [1] 15 18 21 24
    ```
+2. 自定义函数的使用
 
-2. 自定义函数的使用  
-
-   
    ```r
    #  生成data.frame  
    x <- cbind(x1 = 3, x2 = c(4:1, 2:5)); x
@@ -54,7 +48,7 @@ apply(X, MARGIN, FUN, ...)
    ## [7,]  3  4
    ## [8,]  3  5
    ```
-   
+
    ```r
    # 自定义函数myFUN，第一个参数x为数据
    # 第二、三个参数为自定义参数，可以通过apply的'...'进行传入。
@@ -68,12 +62,11 @@ apply(X, MARGIN, FUN, ...)
    ## [2,]  3.5    3  2.5    2  2.5    3  3.5    4
    ```
 
-## lapply函数  
+## lapply函数
 
-lapply函数是一个最基础循环操作函数之一。主要操作对象是list、data.frame，并返回和X长度同样的list结构作为结果集。  
+lapply函数是一个最基础循环操作函数之一。主要操作对象是list、data.frame，并返回和X长度同样的list结构作为结果集。
 
-### 函数定义  
-
+### 函数定义
 
 ```r
 lapply(X, FUN, ...)
@@ -83,13 +76,12 @@ lapply(X, FUN, ...)
 
 `X`：矩阵、数据框、数组
 `FUN`: 自定义函数
-`…`: 自定义参数  
+`…`: 自定义参数
 
-### 应用  
+### 应用
 
-1. 对list进行操作  
+1. 对list进行操作
 
-   
    ```r
    x <- list(a = c(1:3), b = c(4:6), d = c(10:20))
    lapply(x, sum)
@@ -102,10 +94,8 @@ lapply(X, FUN, ...)
    ## $d
    ## [1] 165
    ```
+2. 对data.frame进行操作
 
-2. 对data.frame进行操作  
-
-   
    ```r
    x <- data.frame(x1=3, x2=c(2:1,4:5))
    lapply(x, sum)
@@ -116,29 +106,27 @@ lapply(X, FUN, ...)
    ## [1] 12
    ```
 
-## sapply函数  
+## sapply函数
 
-sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。  
+sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。
 
-### 函数定义  
-
+### 函数定义
 
 ```r
 sapply(X, FUN, ..., simplify=TRUE, USE.NAMES = TRUE)
 ```
 
-### 参数列表  
+### 参数列表
 
 `X`：矩阵、数据框、数组
 `FUN`: 自定义函数
 `…`: 自定义参数
 `simplify`：是否数组化，当值是array时，输出结果按数组进行分组
-`USE.NAMES`：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置  
+`USE.NAMES`：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置
 
-### 应用  
+### 应用
 
-对上面的数据框`x`进行操作：  
-
+对上面的数据框 `x`进行操作：
 
 ```r
 sapply(x, sum)
@@ -156,27 +144,25 @@ class(sapply(x, sum))
 ## [1] "numeric"
 ```
 
-## vapply函数  
+## vapply函数
 
-vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名。  
+vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名。
 
-### 函数定义  
-
+### 函数定义
 
 ```r
 vapply(X, FUN, FUN.VALUE, ..., USE.NAMES = TRUE)
 ```
 
-### 参数列表  
+### 参数列表
 
 `X`：矩阵、数据框、数组
 `FUN`: 自定义函数
 `FUN.VALUE`：定义返回值的行名
 `…`: 自定义参数
-`USE.NAMES`：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置  
+`USE.NAMES`：如果X为字符串，TRUE设置字符串为数据名，FALSE不设置
 
-### 应用  
-
+### 应用
 
 ```r
 x <- data.frame(cbind(x1=3, x2=c(2:1,4:5)))
@@ -188,26 +174,24 @@ vapply(x,cumsum,FUN.VALUE = c('a'=0,'b'=0,'c'=0,'d'=0)) #注意FUN.VALUE的用�
 ## d 12 12
 ```
 
-## mapply函数  
+## mapply函数
 
-相当于多参数版本的 sapply。第一次计算传入各组向量的第一个元素到FUN，进行结算得到结果；第二次传入各组向量的第二个元素，得到结果；第三次传入各组向量的第三个元素…以此类推。  
+相当于多参数版本的 sapply。第一次计算传入各组向量的第一个元素到FUN，进行结算得到结果；第二次传入各组向量的第二个元素，得到结果；第三次传入各组向量的第三个元素…以此类推。
 
-### 函数定义  
-
+### 函数定义
 
 ```r
 mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,USE.NAMES = TRUE)
 ```
 
-### 参数列表  
+### 参数列表
 
 主要使用的参数有三个
 `FUN`: 自定义函数
 `FUN.VALUE`：定义返回值的行名
-`…`: 自定义参数  
+`…`: 自定义参数
 
-### 应用  
-
+### 应用
 
 ```r
 mapply(rep, 1:4, 4:1) #每一组参数都是对应的
@@ -224,27 +208,25 @@ mapply(rep, 1:4, 4:1) #每一组参数都是对应的
 ## [1] 4
 ```
 
-## tapply函数  
+## tapply函数
 
-tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。  
+tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。
 
-### 函数定义  
-
+### 函数定义
 
 ```r
 tapply(X, INDEX, FUN = NULL, ..., simplify = TRUE)
 ```
 
-### 参数列表  
+### 参数列表
 
 `X`：向量
 `INDEX`: 分组索引
 `FUN`: 自定义函数
 `…`: 接收多个数据
-`simplify`：是否数组化，当值array时，输出结果按数组进行分组  
+`simplify`：是否数组化，当值array时，输出结果按数组进行分组
 
-### 应用  
-
+### 应用
 
 ```r
 # 对样本分组计数

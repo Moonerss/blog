@@ -1,18 +1,16 @@
 ---
 title: R 语言统计检验函数汇总
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2020/07/21 08:08:28
 permalink: /R/r_stats/
 ---
 <!--more-->
 
-# 连续型数据  
+# 连续型数据
 
-## 基于分布的检验  
+## 基于分布的检验
 
-### T检验  
-
+### T检验
 
 ```r
 t.test(1:10, 10:20)
@@ -32,8 +30,7 @@ t.test(1:10, 10:20)
 ##       5.5      15.0
 ```
 
-配对 t 检验：  
-
+配对 t 检验：
 
 ```r
 t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE)
@@ -53,8 +50,7 @@ t.test(rnorm(10), rnorm(10, mean = 1), paired = TRUE)
 ##                   -1.04
 ```
 
-使用公式表示：  
-
+使用公式表示：
 
 ```r
 df <- data.frame(
@@ -79,8 +75,7 @@ t.test(value ~ group, data = df)
 ##                 0.539                 0.782
 ```
 
-假设方差同质化：  
-
+假设方差同质化：
 
 ```r
 t.test(value ~ group, data = df, var.equal = TRUE)
@@ -100,8 +95,7 @@ t.test(value ~ group, data = df, var.equal = TRUE)
 ##                 0.539                 0.782
 ```
 
-### 总体方差比较  
-
+### 总体方差比较
 
 ```r
 var.test(value ~ group, data = df)
@@ -133,10 +127,9 @@ bartlett.test(value ~ group, data = df)
 ## Bartlett's K-squared = 0.09, df = 1, p-value = 0.8
 ```
 
-### 多个组间均值的比较  
+### 多个组间均值的比较
 
-两组以上的比较要使用ANOVA  
-
+两组以上的比较要使用ANOVA
 
 ```r
 aov(wt ~ factor(cyl), data = mtcars)
@@ -169,8 +162,7 @@ model.tables(aov(wt ~ factor(cyl), data = mtcars))
 ## rep 11.0000  7.0000 14.000
 ```
 
-ANOVA 分析假设各组样本数据的方差是相等的，如果知道（或怀疑）不相等，可以使用 `oneway.test()` 函数。  
-
+ANOVA 分析假设各组样本数据的方差是相等的，如果知道（或怀疑）不相等，可以使用 `oneway.test()` 函数。
 
 ```r
 oneway.test(wt ~ cyl, data = mtcars)
@@ -184,8 +176,7 @@ oneway.test(wt ~ cyl, data = mtcars)
 ## F = 20, num df = 2, denom df = 19, p-value = 2e-05
 ```
 
-### 多组样本的配对 t 检验  
-
+### 多组样本的配对 t 检验
 
 ```r
 pairwise.t.test(mtcars$wt, mtcars$cyl)
@@ -204,8 +195,7 @@ pairwise.t.test(mtcars$wt, mtcars$cyl)
 ## P value adjustment method: holm
 ```
 
-### 正态性检验  
-
+### 正态性检验
 
 ```r
 shapiro.test(rnorm(30))
@@ -225,10 +215,9 @@ qqnorm(rnorm(30))
 
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/r-stats/Rplot.png)
 
-### 分布的对称性检验  
+### 分布的对称性检验
 
-用 Kolmogorov-Smirnov 检验查看一个向量是否来自一个对称的分布（不限于正态分布）。  
-
+用 Kolmogorov-Smirnov 检验查看一个向量是否来自一个对称的分布（不限于正态分布）。
 
 ```r
 ks.test(rnorm(10), pnorm)
@@ -243,8 +232,7 @@ ks.test(rnorm(10), pnorm)
 ## alternative hypothesis: two-sided
 ```
 
-> 函数第 1 个参数指定待检验的数据，第 2个参数指定对称分布的类型，可以是数值型向量、指定概率分布函数的字符串或一个分布函数。  
-
+> 函数第 1 个参数指定待检验的数据，第 2个参数指定对称分布的类型，可以是数值型向量、指定概率分布函数的字符串或一个分布函数。
 
 ```r
 ks.test(rnorm(10), "pnorm")
@@ -277,8 +265,7 @@ ks.test(rpois(10, lambda = 1), "pnorm")
 ## alternative hypothesis: two-sided
 ```
 
-### 检验两个向量是否服从同一分布  
-
+### 检验两个向量是否服从同一分布
 
 ```r
 ks.test(rnorm(20), rnorm(30))
@@ -293,8 +280,7 @@ ks.test(rnorm(20), rnorm(30))
 ## alternative hypothesis: two-sided
 ```
 
-### 相关性分析  
-
+### 相关性分析
 
 ```r
 cor.test(mtcars$mpg, mtcars$wt)
@@ -314,13 +300,11 @@ cor.test(mtcars$mpg, mtcars$wt)
 ## -0.868
 ```
 
+## 不依赖分布的检验
 
-## 不依赖分布的检验  
+### 均值检验
 
-### 均值检验  
-
-Wilcoxon 检验是 t 检验的非参数版本  
-
+Wilcoxon 检验是 t 检验的非参数版本
 
 ```r
 ## 秩和检验
@@ -359,8 +343,7 @@ wilcox.test(1:10, 10:19, paired = TRUE)
 ## alternative hypothesis: true location shift is not equal to 0
 ```
 
-### 多均值比较  
-
+### 多均值比较
 
 ```r
 ## Kruskal-Wallis 秩和检验
@@ -375,10 +358,9 @@ kruskal.test(wt ~ factor(cyl), data = mtcars)
 ## Kruskal-Wallis chi-squared = 23, df = 2, p-value = 1e-05
 ```
 
-### 方差检验  
+### 方差检验
 
-使用Fligner-Killeen（中位数）检验完成不同组别的方差比较  
-
+使用Fligner-Killeen（中位数）检验完成不同组别的方差比较
 
 ```r
 fligner.test(wt ~ cyl, data = mtcars)
@@ -392,12 +374,11 @@ fligner.test(wt ~ cyl, data = mtcars)
 ## Fligner-Killeen:med chi-squared = 0.5, df = 2, p-value = 0.8
 ```
 
-# 离散数据  
+# 离散数据
 
-## 比例检验  
+## 比例检验
 
-使用 `prop.test()` 比较两组观测值发生的概率是否有差异。  
-
+使用 `prop.test()` 比较两组观测值发生的概率是否有差异。
 
 ```r
 heads <- rbinom(1, size = 100, prob = .5)
@@ -436,8 +417,7 @@ prop.test(heads, 100, p = 0.3, correct = FALSE)
 ## 0.58
 ```
 
-## 二项式检验  
-
+## 二项式检验
 
 ```r
 binom.test(c(682, 243), p = 3/4)
@@ -457,13 +437,11 @@ binom.test(c(682, 243), p = 3/4)
 ##                  0.737
 ```
 
+## 列联表
 
-## 列联表  
+确定两个分类变量是否相关
 
-确定两个分类变量是否相关  
-
-### Fisher精确检验  
-
+### Fisher精确检验
 
 ```r
 TeaTasting <-
@@ -488,9 +466,7 @@ fisher.test(TeaTasting, alternative = "greater")
 ##       6.41
 ```
 
-
-当样本数比较多时，使用卡方检验代替  
-
+当样本数比较多时，使用卡方检验代替
 
 ```r
 chisq.test(TeaTasting)
@@ -508,8 +484,7 @@ chisq.test(TeaTasting)
 ## X-squared = 0.5, df = 1, p-value = 0.5
 ```
 
-对于三变量的混合影响，使用 Cochran-Mantel-Haenszel 检验。  
-
+对于三变量的混合影响，使用 Cochran-Mantel-Haenszel 检验。
 
 ```r
 Rabbits <-
@@ -581,10 +556,9 @@ mantelhaen.test(Rabbits)
 ##                 7
 ```
 
-### 列联表非参数检验  
+### 列联表非参数检验
 
-Friedman 秩和检验是一个非参数版本的双边 ANOVA 检验。  
-
+Friedman 秩和检验是一个非参数版本的双边 ANOVA 检验。
 
 ```r
 ## Hollander & Wolfe (1973), p. 140ff.
@@ -630,4 +604,3 @@ friedman.test(RoundingTimes)
 ## data:  RoundingTimes
 ## Friedman chi-squared = 11, df = 2, p-value = 0.004
 ```
-

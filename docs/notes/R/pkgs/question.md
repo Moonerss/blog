@@ -1,11 +1,9 @@
 ---
 title: R包构建问题汇总
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2023/04/03 11:13:16
 permalink: /R/pkgs/question/
 ---
-
 # global variable
 
 在开发R包的过程中，使用R CMD check进行检测时，出现许多的NOTE:
@@ -19,7 +17,7 @@ permalink: /R/pkgs/question/
 
 ## resolution 1
 
-使用`globalVariables()`函数包裹所有的变量进行全局声明，如：
+使用 `globalVariables()`函数包裹所有的变量进行全局声明，如：
 
 ```r
 globalVariables(c("mpg", "hp", "mpg_div_hp"))
@@ -33,7 +31,7 @@ globalVariables(c(":=", "!!"))
 
 ## resolution 2
 
-在函数的开始部分对非全局变量进行声明，定义为`NULL`值
+在函数的开始部分对非全局变量进行声明，定义为 `NULL`值
 
 ```r
 my_fn <- function() {
@@ -46,7 +44,7 @@ my_fn <- function() {
 
 ## resolution 3
 
-该方法主要适用于`tidyverse`编程的函数，在函数中引入`.data`进行声明：
+该方法主要适用于 `tidyverse`编程的函数，在函数中引入 `.data`进行声明：
 
 ```r
 # 原函数

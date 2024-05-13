@@ -1,11 +1,9 @@
 ---
 title: cut函数使用
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2024/05/11 22:49:45
 permalink: /R/cut/
 ---
-
 <!--more-->
 
 ## 函数名

@@ -1,11 +1,9 @@
 ---
 title: 文件操作
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2019/04/01 19:37:47
 permalink: /R/file_r/
 ---
-
 <!--more-->
 
 ## 目录操作

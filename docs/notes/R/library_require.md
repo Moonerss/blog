@@ -1,7 +1,6 @@
 ---
 title: library和require的差别
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2018/02/08 20:04:19
 permalink: /R/library_require/
 ---

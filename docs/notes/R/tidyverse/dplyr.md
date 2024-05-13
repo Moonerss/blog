@@ -1,27 +1,25 @@
 ---
 title: dplyr
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2020/05/07 11:13:16
 permalink: /R/tidyverse/dplyr/
 ---
+# dplyr
 
-# dplyr  
+`dplyr`是 `tidyverse`数据科学包中的重要成员，提供了许多数据操控(data manipulation)的语法，用于快速处理数据。
 
-`dplyr`是`tidyverse`数据科学包中的重要成员，提供了许多数据操控(data manipulation)的语法，用于快速处理数据。  
+## Verbs 语法
 
-## Verbs 语法  
+在 `dplyr`包中，提供了一致的动词语法，帮助解决最常见的数据操作:
 
-在`dplyr`包中，提供了一致的动词语法，帮助解决最常见的数据操作:  
++ `filter()`: 根据值筛选数据
++ `arrange()`: 数据排序
++ `select()` 和 `rename()`: 根据名字选择变量
++ `mutate()` 和 `transmute()`: 修改数据
++ `summarise()`: 数据摘要
++ `sample_n()`和 `sample_frac()`: 随机选择样本
 
-+ `filter()`: 根据值筛选数据  
-+ `arrange()`: 数据排序  
-+ `select()` 和 `rename()`: 根据名字选择变量  
-+ `mutate()` 和 `transmute()`: 修改数据  
-+ `summarise()`: 数据摘要  
-+ `sample_n()`和`sample_frac()`: 随机选择样本  
-
-### filter()  
+### filter()
 
 ```r
 library(nycflights13)
@@ -52,8 +50,7 @@ flights
 ## #   time_hour <dttm>
 ```
 
-根据条件筛选行：  
-
+根据条件筛选行：
 
 ```r
 filter(flights, month == 1, day == 1)
@@ -78,13 +75,11 @@ filter(flights, month == 1, day == 1)
 ## #   time_hour <dttm>
 ```
 
-这等价于`flights[flights$month == 1 & flights$day == 1, ]`  
+这等价于 `flights[flights$month == 1 & flights$day == 1, ]`
 
+### arrange()
 
-### arrange()  
-
-数据排序  
-
+数据排序
 
 ```r
 arrange(flights, year, month, day)
@@ -109,8 +104,7 @@ arrange(flights, year, month, day)
 ## #   time_hour <dttm>
 ```
 
-降序排列  
-
+降序排列
 
 ```r
 arrange(flights, desc(arr_delay))
@@ -135,10 +129,9 @@ arrange(flights, desc(arr_delay))
 ## #   time_hour <dttm>
 ```
 
-### select()  
+### select()
 
-变量筛选  
-
+变量筛选
 
 ```r
 # Select columns by name
@@ -201,8 +194,7 @@ select(flights, -(year:day))
 ## #   time_hour <dttm>
 ```
 
-利用`select`和其他辅助函数进行组合，进行更多类型的操作  
-
+利用 `select`和其他辅助函数进行组合，进行更多类型的操作
 
 ```r
 # 提取变量并重命名
@@ -223,10 +215,9 @@ select(flights, tail_num = tailnum)
 ## # ... with 336,766 more rows
 ```
 
-### mutate()  
+### mutate()
 
-基于已有变量，添加新变量  
-
+基于已有变量，添加新变量
 
 ```r
 mutate(flights,
@@ -254,8 +245,7 @@ mutate(flights,
 ## #   time_hour <dttm>, gain <dbl>, speed <dbl>
 ```
 
-并且，可以依据刚建立的新列进行操作  
-
+并且，可以依据刚建立的新列进行操作
 
 ```r
 mutate(flights,
@@ -283,8 +273,7 @@ mutate(flights,
 ## #   time_hour <dttm>, gain <dbl>, gain_per_hour <dbl>
 ```
 
-若只想保留新列，可以使用`transmute()`  
-
+若只想保留新列，可以使用 `transmute()`
 
 ```r
 transmute(flights,
@@ -307,10 +296,9 @@ transmute(flights,
 ## # ... with 336,766 more rows
 ```
 
-### summarise()  
+### summarise()
 
-根据要求提供数据概要  
-
+根据要求提供数据概要
 
 ```r
 summarise(flights,
@@ -322,10 +310,9 @@ summarise(flights,
 ## 1  12.6
 ```
 
-## sample_n() 和 sample_frac()  
+## sample_n() 和 sample_frac()
 
-随机选择变量  
-
+随机选择变量
 
 ```r
 # 提取变量并重命名
@@ -374,7 +361,7 @@ sample_frac(flights, 0.01)
 ## #   time_hour <dttm>
 ```
 
-## group  
+## group
 
 ```r
 # group操作
@@ -405,11 +392,11 @@ delay
 ## # ... with 4,034 more rows
 ```
 
-> 在`summarise()`函数中可以与基础的R函数(如：`min()`)进行联合操作，同时`dplyr`同样提供了一系列的快捷操作：  
-> + `n()`: 观测值的个数  
-> + `n_distinct(x)`: unique的观测值数目  
-> + `first(x)`,`last(x)`, `nth(x, n)`: 第一个、最后一个、第n个观测值  
-
+> 在 `summarise()`函数中可以与基础的R函数(如：`min()`)进行联合操作，同时 `dplyr`同样提供了一系列的快捷操作：
+>
+> + `n()`: 观测值的个数
+> + `n_distinct(x)`: unique的观测值数目
+> + `first(x)`,`last(x)`, `nth(x, n)`: 第一个、最后一个、第n个观测值
 
 ```r
 destinations <- group_by(flights, dest)
@@ -433,8 +420,7 @@ summarise(destinations,
 ## # ... with 95 more rows
 ```
 
-当依据多个变量进行分组时，可以根据`summarise()`层层递进，得出结果  
-
+当依据多个变量进行分组时，可以根据 `summarise()`层层递进，得出结果
 
 ```r
 daily <- group_by(flights, year, month, day)
@@ -450,7 +436,7 @@ per_month <- summarise(per_day, flights = sum(flights))
 per_year  <- summarise(per_month, flights = sum(flights))
 ```
 
-## join  
+## join
 
 ```r
 library("nycflights13")
@@ -477,11 +463,9 @@ flights2 %>%
 ## # ... with 336,766 more rows
 ```
 
+### join变量参照
 
-### join变量参照  
-
-在进行join操作时，选取变量作为参照，对数据进行合并，在默认情况下时`NULL`，意思为根据所有变量进行合并  
-
+在进行join操作时，选取变量作为参照，对数据进行合并，在默认情况下时 `NULL`，意思为根据所有变量进行合并
 
 ```r
 flights2 %>% left_join(weather)
@@ -508,32 +492,30 @@ flights2 %>% left_join(weather)
 ## #   pressure <dbl>, visib <dbl>, time_hour <dttm>
 ```
 
-同样，也可以设定特殊的列作为参考进行数据合并  
-
+同样，也可以设定特殊的列作为参考进行数据合并
 
 ```r
 flights2 %>% left_join(planes, by = "tailnum")
 ## # A tibble: 336,776 x 16
 ##    year.x month   day  hour origin dest  tailnum carrier
 ##     <int> <int> <int> <dbl> <chr>  <chr> <chr>   <chr>  
-##  1   2013     1     1     5 EWR    IAH   N14228  UA     
-##  2   2013     1     1     5 LGA    IAH   N24211  UA     
-##  3   2013     1     1     5 JFK    MIA   N619AA  AA     
-##  4   2013     1     1     5 JFK    BQN   N804JB  B6     
-##  5   2013     1     1     6 LGA    ATL   N668DN  DL     
-##  6   2013     1     1     5 EWR    ORD   N39463  UA     
-##  7   2013     1     1     6 EWR    FLL   N516JB  B6     
-##  8   2013     1     1     6 LGA    IAD   N829AS  EV     
-##  9   2013     1     1     6 JFK    MCO   N593JB  B6     
-## 10   2013     1     1     6 LGA    ORD   N3ALAA  AA     
+##  1   2013     1     1     5 EWR    IAH   N14228  UA   
+##  2   2013     1     1     5 LGA    IAH   N24211  UA   
+##  3   2013     1     1     5 JFK    MIA   N619AA  AA   
+##  4   2013     1     1     5 JFK    BQN   N804JB  B6   
+##  5   2013     1     1     6 LGA    ATL   N668DN  DL   
+##  6   2013     1     1     5 EWR    ORD   N39463  UA   
+##  7   2013     1     1     6 EWR    FLL   N516JB  B6   
+##  8   2013     1     1     6 LGA    IAD   N829AS  EV   
+##  9   2013     1     1     6 JFK    MCO   N593JB  B6   
+## 10   2013     1     1     6 LGA    ORD   N3ALAA  AA   
 ## # ... with 336,766 more rows, and 8 more variables:
 ## #   year.y <int>, type <chr>, manufacturer <chr>,
 ## #   model <chr>, engines <int>, seats <int>, speed <int>,
 ## #   engine <chr>
 ```
 
-当在两个数据中，需要参考的变量的名称不一样怎么办？使用`by = c("x" = "a")`进行操作  
-
+当在两个数据中，需要参考的变量的名称不一样怎么办？使用 `by = c("x" = "a")`进行操作
 
 ```r
 flights2 %>% left_join(airports, c("dest" = "faa"))
@@ -555,10 +537,9 @@ flights2 %>% left_join(airports, c("dest" = "faa"))
 ## #   tzone <chr>
 ```
 
-### inner_join  
+### inner_join
 
-合并后保留两个数据公有的观测值，保留所有unique的变量  
-
+合并后保留两个数据公有的观测值，保留所有unique的变量
 
 ```r
 df1 <- tibble(x = c(1, 2), y = 2:1)
@@ -566,39 +547,36 @@ df2 <- tibble(x = c(1, 3), a = 10, b = "a")
 df1 %>% inner_join(df2)
 ## Joining, by = "x"
 ## # A tibble: 1 x 4
-##       x     y     a b    
+##       x     y     a b  
 ##   <dbl> <int> <dbl> <chr>
 ## 1     1     2    10 a
 ```
 
-### left_join  
+### left_join
 
-合并后包含第一个数据所有的观测值，第二个数据中没有的值用`NA`表示  
-
+合并后包含第一个数据所有的观测值，第二个数据中没有的值用 `NA`表示
 
 ```r
 df1 %>% left_join(df2)
 ## Joining, by = "x"
 ## # A tibble: 2 x 4
-##       x     y     a b    
+##       x     y     a b  
 ##   <dbl> <int> <dbl> <chr>
-## 1     1     2    10 a    
+## 1     1     2    10 a  
 ## 2     2     1    NA <NA>
 ```
 
+### right_join
 
-### right_join  
-
-合并后保留第二个数据所有的观测值，等同于`left_join(y,x)`，不过变量顺序发生了改变  
-
+合并后保留第二个数据所有的观测值，等同于 `left_join(y,x)`，不过变量顺序发生了改变
 
 ```r
 df1 %>% right_join(df2)
 ## Joining, by = "x"
 ## # A tibble: 2 x 4
-##       x     y     a b    
+##       x     y     a b  
 ##   <dbl> <int> <dbl> <chr>
-## 1     1     2    10 a    
+## 1     1     2    10 a  
 ## 2     3    NA    10 a
 ```
 
@@ -612,27 +590,24 @@ df2 %>% left_join(df1)
 ## 2     3    10 a        NA
 ```
 
-### full_join  
+### full_join
 
-合并后包含两个数据所有的观测值，没有的值用`NA`补足  
-
+合并后包含两个数据所有的观测值，没有的值用 `NA`补足
 
 ```r
 df1 %>% full_join(df2)
 ## Joining, by = "x"
 ## # A tibble: 3 x 4
-##       x     y     a b    
+##       x     y     a b  
 ##   <dbl> <int> <dbl> <chr>
-## 1     1     2    10 a    
+## 1     1     2    10 a  
 ## 2     2     1    NA <NA> 
 ## 3     3    NA    10 a
 ```
 
+### semi_join
 
-### semi_join  
-
-合并后保留第一个数据中所有在第二个数据中匹配到的观测值  
-
+合并后保留第一个数据中所有在第二个数据中匹配到的观测值
 
 ```r
 df1 <- tibble(x = c(1, 1, 3, 4), y = 1:4)
@@ -645,10 +620,9 @@ df1 %>% semi_join(df2, by = "x")
 ## 2     1     2
 ```
 
-### anti_join  
+### anti_join
 
-合并后保留第一个数据中所有在第二个数据中未匹配到的观测值 
-
+合并后保留第一个数据中所有在第二个数据中未匹配到的观测值
 
 ```r
 df1 %>% anti_join(df2, by = "x")

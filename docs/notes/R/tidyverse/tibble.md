@@ -1,7 +1,6 @@
 ---
 title: tibble
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2019/03/14 20:15:07
 permalink: /R/tidyverse/tibble/
 ---
@@ -23,7 +22,7 @@ df2 <- read_csv(readr_example("challenge.csv"), guess_max = 1001)
 #>  )
 tibble(x = 1:3, y = list(1:5, 1:10, 1:20))
 #>  # A tibble: 3 x 2
-#>        x y       
+#>        x y     
 #>    <int> <list>  
 #>  1     1 <int [5]> 
 #>  2     2 <int [10]>
@@ -34,7 +33,7 @@ tribble(
 "b", 4:6
 )
 #> A tibble: 2 x 2
-#>   x     y      
+#>   x     y    
 #>   <chr> <list>   
 #> 1 a     <int [3]>
 #> 2 b     <int [3]>

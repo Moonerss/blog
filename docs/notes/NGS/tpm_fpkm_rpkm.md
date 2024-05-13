@@ -1,7 +1,6 @@
 ---
 title: TPM、RPKM与FPKM
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2020/08/10 19:42:05
 permalink: /NGS/tpm_fpkm_rpkm/
 ---
@@ -53,6 +52,7 @@ $$
 
 + 定义：TPM: Transcripts Per Kilobase of exon model per Million mapped reads (每千个碱基的转录每百万映射读取的Transcripts)
 + 计算方法：
+
   $$
   M=\frac{X_i}{L_i}*(\frac{1}{\sum_{j}{\frac{X_j}{L_j}}})*10^6=\frac{\frac{X_i}{L_i}}{\sum_{j}{\frac{X_j}{L_j}}}*10^6
   $$

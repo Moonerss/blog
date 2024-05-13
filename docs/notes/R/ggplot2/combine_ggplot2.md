@@ -1,7 +1,6 @@
 ---
 title: 组合多张ggplot2图片
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2018/05/23 22:47:45
 permalink: /R/ggplot2/combine_ggplot2/
 ---
@@ -247,7 +246,7 @@ library("gridExtra")
 ```r
 grid.arrange(sp,                             # First row with one plot spaning over 2 columns
              arrangeGrob(bxp, dp, ncol = 2), # Second row with 2 plots in 2 different columns
-             nrow = 2)     
+             nrow = 2)   
 ```
 
 ```
@@ -367,7 +366,7 @@ ggarrange(bxp, dp, labels = c("A", "B"),
 sp <- ggscatter(iris, x = "Sepal.Length", y = "Sepal.Width",
                 color = "Species", palette = "jco",
                 size = 3, alpha = 0.6)+
-  border()                                       
+  border()                                     
 # Marginal density plot of x (top panel) and y (right panel)
 xplot <- ggdensity(iris, "Sepal.Length", fill = "Species",
                    palette = "jco")

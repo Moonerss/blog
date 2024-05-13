@@ -1,25 +1,23 @@
 ---
 title: 测序常见文件格式
 author: Jeason
-icon: mdi:tooltip-text-outline
 createTime: 2024/05/10 20:54:24
 permalink: /NGS/filetype/
 ---
-
 # 生物信息学常见文件格式
 
-## FASTQ  
+## FASTQ
 
-FASTQ用于保存生物序列（通常是核酸序列）和其测序质量信息的标准格式。 其序列以及质量信息都是使用一个ASCII字符标示，最初由Sanger开发。 目的是将FASTA序列与质量数据放到一起，目前已经成为高通量测序结果的实施标准。  
+FASTQ用于保存生物序列（通常是核酸序列）和其测序质量信息的标准格式。 其序列以及质量信息都是使用一个ASCII字符标示，最初由Sanger开发。 目的是将FASTA序列与质量数据放到一起，目前已经成为高通量测序结果的实施标准。
 
 **FASTQ文件中每个序列通常有四行**：
 
-+ 第一行是序列标识以及相关的描述信息，以‘@’开头  
++ 第一行是序列标识以及相关的描述信息，以‘@’开头
 + 第二行是序列
 + 第三行以‘+’开头，后面是序列标示符、描述信息，或者什么也不加，但是“+”不能少。
 + 第四行，是质量信息，和第二行的序列相对应，每一个序列都有一个质量评分，根据评分体系的不同，每个字符的含义表示的数字也不相同。
 
-具体示例如下：  
+具体示例如下：
 
 ```
 @SEQ_ID
@@ -28,27 +26,27 @@ GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
 !''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF>>>>>>CCCCCCC65
 ```
 
-上面说到第一行是序列标识以及相关的描述信息，以‘@’开头。可以像上面的示例那么简单，但如果是正规测序仪下机的真实数据，通常会很复杂。比如：  
+上面说到第一行是序列标识以及相关的描述信息，以‘@’开头。可以像上面的示例那么简单，但如果是正规测序仪下机的真实数据，通常会很复杂。比如：
 
 ```
 @EAS139:136:FC706VJ:2:2104:15343:197393 1:Y:18:ATCACG
 ```
 
-这个序列标识以及相关描述信息以`:`分割，每一个字段信息如下：
+这个序列标识以及相关描述信息以 `:`分割，每一个字段信息如下：
 
-| 字段    | 解释                                                         |
-| ------- | ------------------------------------------------------------ |
-| EAS139  | the unique instrument name                                   |
-| 136     | the run id                                                   |
-| FC706VJ | the flowcell id                                              |
-| 2       | flowcell lane                                                |
-| 2104    | tile number within the flowcell lane                         |
-| 15343   | ‘x’-coordinate of the cluster within the tile                |
-| 197393  | ‘y’-coordinate of the cluster within the tile                |
-| 1       | the member of a pair, 1 or 2 (paired-end or mate-pair reads only) |
-| Y       | Y if the read fails filter (read is bad), N otherwise        |
+| 字段    | 解释                                                                   |
+| ------- | ---------------------------------------------------------------------- |
+| EAS139  | the unique instrument name                                             |
+| 136     | the run id                                                             |
+| FC706VJ | the flowcell id                                                        |
+| 2       | flowcell lane                                                          |
+| 2104    | tile number within the flowcell lane                                   |
+| 15343   | ‘x’-coordinate of the cluster within the tile                        |
+| 197393  | ‘y’-coordinate of the cluster within the tile                        |
+| 1       | the member of a pair, 1 or 2 (paired-end or mate-pair reads only)      |
+| Y       | Y if the read fails filter (read is bad), N otherwise                  |
 | 18      | 0 when none of the control bits are on, otherwise it is an even number |
-| ATCACG  | index sequence                                               |
+| ATCACG  | index sequence                                                         |
 
 当然，上面的表格介绍的只是其中一个测序仪下机数据，如果是其它机器，产商可以自由定义标识符格式，因为fastq格式的第一行只需要以@符号开头即可。
 
@@ -74,7 +72,7 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9IC
 | 50                  | 1 in 100000                        | 99.999%            |
 
 > Phred quality scores Q are defined as a property which is logarithmically related to the base-calling error probabilities P.
-> Q=-10lgP  
+> Q=-10lgP
 
 除了Phred质量得分换算标准，还有就是Solexa标准：是把P换成p/(1-p)
 
@@ -86,18 +84,18 @@ IIIIIIIIIIIIIIIIIIIIIIIIIIIIII9IG9IC
 4. Illumina 1.5+，Phred quality score，但是0到2作为另外的标示。
 5. Illumina 1.8+
 
-下面是更为直观的表示：  
+下面是更为直观的表示：
 
-![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/filtype/wiki-fastq-format.png)   
+![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/filtype/wiki-fastq-format.png)
 
-### 如何判断是Phred33还是Phred64  
+### 如何判断是Phred33还是Phred64
 
-默认读取1000条序列，在这1000条序列中：  
+默认读取1000条序列，在这1000条序列中：
 
-+ 如果有2个以上的质量字符ASCII值小于等于58（即有两个碱基的得分小于等于25），同时没有任何质量字符的ASCII值大于等于75，即判断是Phred+33。  
-+ 如果有2个以上的质量字符ASCII值大于等于75（即有两个碱基的得分大于等于10），同时没有任何质量字符的ASCII值小于等于58，即判断是Phred+64。  
-+ 如果所有质量字符的ASCII值介于59到74之间，即判断可能是Phred+33，但建议使用更多的序列做进一步测试。出现这种结果可能有两种情况：(1) Phred+33编码，所有碱基质量得分介于26到42之间；(2)Phred+64编码，所有碱基质量得分介于-5到10。是前者的可能性大。  
-+ 如果出现上述3种以外的情况，建议打印出质量字符的ASCII值人工判断，脚本如下：  
++ 如果有2个以上的质量字符ASCII值小于等于58（即有两个碱基的得分小于等于25），同时没有任何质量字符的ASCII值大于等于75，即判断是Phred+33。
++ 如果有2个以上的质量字符ASCII值大于等于75（即有两个碱基的得分大于等于10），同时没有任何质量字符的ASCII值小于等于58，即判断是Phred+64。
++ 如果所有质量字符的ASCII值介于59到74之间，即判断可能是Phred+33，但建议使用更多的序列做进一步测试。出现这种结果可能有两种情况：(1) Phred+33编码，所有碱基质量得分介于26到42之间；(2)Phred+64编码，所有碱基质量得分介于-5到10。是前者的可能性大。
++ 如果出现上述3种以外的情况，建议打印出质量字符的ASCII值人工判断，脚本如下：
 
 ```sh
 cat test.fq | head -n 1000 | awk '{if(NR%4==0) printf("%s",$0);}' \
@@ -110,13 +108,13 @@ else if(min>=59 && min<64 && max>73) print "Solexa64"; \
 else print "Unknown score encoding"; \
 ```
 
-## FASTA  
+## FASTA
 
 FASTA格式用于表示核苷酸序列或氨基酸序列的格式。 在这种格式中碱基对或氨基酸用单个字母来编码，且允许在序列前添加序列名及注释。 fasta序列格式是blast组织数据的基本格式，无论是数据库还是查询序列，大多数情况都使用fasta序列格式。
 
-**FASTA格式文件一般包含两行**:  
+**FASTA格式文件一般包含两行**:
 
-+ 第一行: 以`>`标识符开始，包含序列描述信息
++ 第一行: 以 `>`标识符开始，包含序列描述信息
 + 第二行: 基因或蛋白序列
 
 下面是一个来源于NCBI的fasta格式序列：
@@ -129,24 +127,24 @@ ATCAAGGCCATTAAGACTGTAGGAAAGGCAGTCGGTAAAGGTCTAAGAGCCAT
 ATCAAGGCCATTAA
 ```
 
-Fasta格式首先以大于号`>`开头，接着是序列的标识符“gi|187608668|ref|NM_001043364.2|”，然后是序列的描述信息。 换行后是序列信息，序列中允许空格，换行，空行，直到下一个大于号，表示该序列的结束。 下面简单给一个表格说明序列来源的数据库与对应的标识符
+Fasta格式首先以大于号 `>`开头，接着是序列的标识符“gi|187608668|ref|NM_001043364.2|”，然后是序列的描述信息。 换行后是序列信息，序列中允许空格，换行，空行，直到下一个大于号，表示该序列的结束。 下面简单给一个表格说明序列来源的数据库与对应的标识符
 
 | Database Name数据库名称      | Identifier Syntax 标识符 |
 | ---------------------------- | ------------------------ |
-| GenBank                      | gb                    |
-| EMBL Data Library            | emb                   |
-| DDBJ, DNA Database of Japan  | dbj                  |
-| NBRF PIR                     | pir                   |
-| Protein Research Foundation  | prf                  |
-| SWISS-PROT                   | sp                    |
-| Brookhaven Protein Data Bank | pdb                   |
-| Patents                      | pat                   |
-| GenInfo Backbone Id          | bbs                  |
-| General database identifier  | gnl                  |
-| NCBI Reference Sequence      | ref                  |
-| Local Sequence identifier    | lcl                   |
+| GenBank                      | gb                       |
+| EMBL Data Library            | emb                      |
+| DDBJ, DNA Database of Japan  | dbj                      |
+| NBRF PIR                     | pir                      |
+| Protein Research Foundation  | prf                      |
+| SWISS-PROT                   | sp                       |
+| Brookhaven Protein Data Bank | pdb                      |
+| Patents                      | pat                      |
+| GenInfo Backbone Id          | bbs                      |
+| General database identifier  | gnl                      |
+| NCBI Reference Sequence      | ref                      |
+| Local Sequence identifier    | lcl                      |
 
-通常情况下序列的标识符不会像上面的例子那样复杂，再复杂的标识符也是有规则的，上面的标识符是NCBI定义的，可以去其官网了解详情。  
+通常情况下序列的标识符不会像上面的例子那样复杂，再复杂的标识符也是有规则的，上面的标识符是NCBI定义的，可以去其官网了解详情。
 
 **序列中字母代表的含义**
 
@@ -209,14 +207,13 @@ FASTA格式支持的氨基酸代码如下：
 
 对于自己构建的序列数据库（序列不是来源与NCBI或其他数据），可以采用“gnl|database|identifier”或者“lcl|identifier”格式，以保证可以使用blast的所有功能。 database或者identifier是需要指定的数据库的标识和序列标识，指定的名称可以用大小写字母、数字、下划线“_”、破折号“-”或者点号“.”。 注意名称是区分大小写的，同时不能出现空格，空格表示序列标识符结束。
 
-数据库中的序列标识符必须保证唯一，许多时候格式数据库是formatdb报告错误，就是因为标示符重复，还有一点需要强调的是序列不能为空，否则也会报错。  
+数据库中的序列标识符必须保证唯一，许多时候格式数据库是formatdb报告错误，就是因为标示符重复，还有一点需要强调的是序列不能为空，否则也会报错。
 
-## SAM  
+## SAM
 
-SAM格式主要应用于测序序列mapping到基因组上的结果表示，当然也可以表示任意的多重比对结果。 SAM是一种序列比对格式标准，由sanger制定，是以TAB为分割符的文本格式。 SAM的全称是`sequence alignment/map format`。
+SAM格式主要应用于测序序列mapping到基因组上的结果表示，当然也可以表示任意的多重比对结果。 SAM是一种序列比对格式标准，由sanger制定，是以TAB为分割符的文本格式。 SAM的全称是 `sequence alignment/map format`。
 
-
-SAM分为两部分，注释信息`header section`和比对结果部分`alignment section`。 通常是把FASTQ文件格式的测序数据比对到对应的参考基因组版本得到的。 注释信息并不是SAM文件的重点，是该SAM文件产生以及被处理过程的一个记录，规定以`@`开头，用不同的tag表示不同的信息，主要有：
+SAM分为两部分，注释信息 `header section`和比对结果部分 `alignment section`。 通常是把FASTQ文件格式的测序数据比对到对应的参考基因组版本得到的。 注释信息并不是SAM文件的重点，是该SAM文件产生以及被处理过程的一个记录，规定以 `@`开头，用不同的tag表示不同的信息，主要有：
 
 - `@HD`，说明符合标准的版本、对比序列的排列顺序；
 - `@SQ`，参考序列说明；
@@ -235,7 +232,6 @@ SRR3101251.1 0 chr19 9486878 255 49M * 0 0 NTACTCCCACTACTCTCAGATTCAAGCAATCCTCCCA
 SRR3101251.5 16 chr2 240279787 255 49M * 0 0 CCTGAATCCATCAGAGCAGCCGGGCTGTGACACTCACTGTCATGATGTT JIJJIHIIIIJJJJJJJJJGHJJJJIIHJHICJIGCHHHHHFFFFFCCC XA:i:0 MD:Z:49 NM:i:0
 SRR3101251.6 4 * 0 0 * * 0 0 NATTCCCACCTATGAGTGAGAATATGCGGTGTTTGGTTTTTTGTTCTTG #1=DDDFFHHHHHJJJGHIJJJJJJJJJJCGGIIJJIIJJJIJHJIIJJ XM:i:1
 ```
-
 
 **比对结果详解**
 
@@ -272,7 +268,7 @@ TAG	OQ:Z:CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBCCCCCCBBCC@CCCCCCCCCCACCCCC;CCCBBC?CCCAC
 
 比对结果部分（alignment section），每一行表示一个片段（segment）的比对信息，包括11个必须的字段（mandatory fields）和一个可选的字段，字段之间用tag分割。
 
-必须的字段有11个，顺序固定，不可自行改动，根据字段定义，可以为`0`或者`*`，这是11个字段包括：
+必须的字段有11个，顺序固定，不可自行改动，根据字段定义，可以为 `0`或者 `*`，这是11个字段包括：
 
 1. `QNAME`，比对片段的（template）的编号；
 2. `FLAG`，位标识，template mapping情况的数字表示，每一个数字代表一种比对情况，这里的值是符合情况的数字相加总和； （picard专门有一个工具解读sam的flag:http://broadinstitute.github.io/picard/explain-flags.html）
@@ -312,8 +308,7 @@ TAG	OQ:Z:CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBCCCCCCBBCC@CCCCCCCCCCACCCCC;CCCBBC?CCCAC
 11. `QUAL`，序列的质量信息，格式同FASTQ一样。read质量的ASCII编码。
 12. 可选字段（optional fields)，格式如：TAG:TYPE:VALUE，其中TAG有两个大写字母组成，每个TAG代表一类信息，每一行一个TAG只能出现一次，TYPE表示TAG对应值的类型，可以是字符串、整数、字节、数组等。
 
-
-## BAM 
+## BAM
 
 BAM本质上就是二进制压缩的SAM文件，大部分生物信息学流程都需要这个格式，为了节省存储空间以及方便索引。
 
@@ -329,15 +324,13 @@ sapply(res, head)
 
 从上面的例子（需要在R里面运行）可以看到BAM文件需要用特殊的方法来读取，可以是R里面的Rsamtools包，也可以是linux环境下安装好的samtools软件，因为它是二进制文件，不能像普通的文本文件那样来打开。
 
-我们用R里面的head函数查看了该BAM文件的前6行，比对的flag分别是`16 0 16 16 0 0`,说明有3条序列没有成功比对到基因组。width信息说明该序列长度都是36bp。序列的碱基以及对应的碱基质量也如上所述。  
+我们用R里面的head函数查看了该BAM文件的前6行，比对的flag分别是 `16 0 16 16 0 0`,说明有3条序列没有成功比对到基因组。width信息说明该序列长度都是36bp。序列的碱基以及对应的碱基质量也如上所述。
 
+## VCF
 
+VCF全称Variant Call Format（VCF）是一个用于存储基因序列突变信息的文本格式。 可以表示单碱基突变, 插入/缺失, 拷贝数变异和结构变异等。 通常是对BAM文件格式的比对结果进行处理得到的。 BCF格式文件是VCF格式的二进制文件。
 
-## VCF  
-
-VCF全称Variant Call Format（VCF）是一个用于存储基因序列突变信息的文本格式。 可以表示单碱基突变, 插入/缺失, 拷贝数变异和结构变异等。 通常是对BAM文件格式的比对结果进行处理得到的。 BCF格式文件是VCF格式的二进制文件。  
-
-![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/filtype/vcf_variation_class.jpg)  
+![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/filtype/vcf_variation_class.jpg)
 
 如上图所示，vcf记录的即为各类型的变异。例如：点突变，拷贝数变异，插入，缺失等结构变异。
 
@@ -345,7 +338,7 @@ VCF分为两部分，注释信息和变异位点记录信息。
 
 注释信息通常以#开头，会描述该VCF版本，目前以4.2居多，然后会一行行记录变异位点信息里面会出现的所有TAG。
 
-下面这个是NCBI的dbSNP数据库里面的人类的vcf文件的部分截取：  
+下面这个是NCBI的dbSNP数据库里面的人类的vcf文件的部分截取：
 
 ```
 ##fileformat=VCFv4.0
@@ -354,7 +347,7 @@ VCF分为两部分，注释信息和变异位点记录信息。
 ##dbSNP_BUILD_ID=147
 ##reference=GRCh37.p13
 ##phasing=partial
-##variationPropertyDocumentationUrl=ftp://ftp.ncbi.nlm.nih.gov/snp/specs/dbSNP_BitField_latest.pdf      
+##variationPropertyDocumentationUrl=ftp://ftp.ncbi.nlm.nih.gov/snp/specs/dbSNP_BitField_latest.pdf    
 ##INFO=<ID=RS,Number=1,Type=Integer,Description="dbSNP ID (i.e. rs number)">
 ##INFO=<ID=RSPOS,Number=1,Type=Integer,Description="Chr position reported in dbSNP">
 ##INFO=<ID=RV,Number=0,Type=Flag,Description="RS orientation is reversed">
@@ -387,11 +380,11 @@ VCF分为两部分，注释信息和变异位点记录信息。
 
 每一行代表一个Variant的信息。
 
-+ `CHROM` 和 `POS`：代表参考序列名和variant的位置；如果是INDEL的话，位置是INDEL的第一个碱基位置。  
++ `CHROM` 和 `POS`：代表参考序列名和variant的位置；如果是INDEL的话，位置是INDEL的第一个碱基位置。
 + `ID`：variant的ID。比如在dbSNP中有该SNP的id，则会在此行给出(这个需要自己下载dbSNP数据库文件进行注释才有的)。 若没有或者注释不上，则用’.'表示其为一个novel variant。
 + `REF` 和 `ALT`：参考序列的碱基 和 Variant的碱基。
 + `QUAL`：Phred格式(Phred_scaled)的质量值，表示在该位点存在variant的可能性；该值越高，则variant的可能性越大； 计算方法：Phred值 = -10 * log (1-p) p为variant存在的概率; 通过计算公式可以看出值为10的表示错误概率为0.1，该位点为variant的概率为90%。
-+ `FILTER`：使用上一个QUAL值来进行过滤的话，是不够的。GATK能使用其它的方法来进行过滤，过滤结果中通过则该值为`PASS`;若variant不可靠，则该项不为`PASS`或`.`。
++ `FILTER`：使用上一个QUAL值来进行过滤的话，是不够的。GATK能使用其它的方法来进行过滤，过滤结果中通过则该值为 `PASS`;若variant不可靠，则该项不为 `PASS`或 `.`。
 + `INFO`： 这一行是variant的详细信息，内容很多，以下再具体详述。
 + `FORMAT` 和 `sample1` ：这两行合起来提供了 sample1 这个sample的基因型的信息。’sample1′代表这该名称的样品，是由SAM/BAM文件中的@RG下的 SM 标签决定的。 (当然并不是所有的VCF都是由一个BAM文件产生，比如数据库dbSNP提供的vcf文件，就没有样本信息啦)
 
@@ -448,11 +441,11 @@ DP（Depth）为sample中该位点的测序深度。
 
 GQ：基因型的质量值(Genotype Quality)。Phred格式(Phred_scaled)的质量值，表示在该位点该基因型存在的可能性；该值越高，则Genotype的可能性越大；计算方法：Phred值 = -10 * log (1-p) p为基因型存在的概率。
 
-PL：指定的三种基因型的质量值(provieds the likelihoods of the given genotypes)。这三种指定的基因型为(0/0,0/1,1/1)，这三种基因型的概率总和为1。和之前不一致，该值越大，表明为该种基因型的可能性越小。 Phred值 = -10 * log (p) p为基因型存在的概率。  
+PL：指定的三种基因型的质量值(provieds the likelihoods of the given genotypes)。这三种指定的基因型为(0/0,0/1,1/1)，这三种基因型的概率总和为1。和之前不一致，该值越大，表明为该种基因型的可能性越小。 Phred值 = -10 * log (p) p为基因型存在的概率。
 
-![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/filtype/vcf_file_format.jpg)  
+![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/filtype/vcf_file_format.jpg)
 
-## GTF和GFF  
+## GTF和GFF
 
 **简介**
 
@@ -538,7 +531,7 @@ GTF文件的第9列同GFF文件不同，虽然同样是标签与值配对的情�
 17	havana	five_prime_utr	7676595	7676622	.	-	.	gene_id "ENSG00000141510"; gene_version "16"; transcript_id "ENST00000503591"; transcript_version "1"; gene_name "TP53"; gene_source "ensembl_havana"; gene_biotype "protein_coding"; havana_gene "OTTHUMG00000162125"; havana_gene_version "10"; transcript_name "TP53-003"; transcript_source "havana"; transcript_biotype "protein_coding"; havana_transcript "OTTHUMT00000367399"; havana_transcript_version "2"; tag "cds_end_NF"; tag "mRNA_end_NF"; transcript_support_level "5";
 ```
 
-## GenePred  
+## GenePred
 
 **简介**
 
@@ -572,7 +565,7 @@ table genePred
 AT1G01010.1	Chr1	+	3630	5899	3759	5630	6	3630,3995,4485,4705,5173,5438,	3913,4276,4605,5095,5326,5899
 ```
 
-再来`grep`一下gtf文件中有**AT1G01010.1**信息的那些行是什么样
+再来 `grep`一下gtf文件中有**AT1G01010.1**信息的那些行是什么样
 
 ```
 #gtf
@@ -659,9 +652,7 @@ bed格式有相应的软件来处理这类格式的文件，如bedtools。
 - 注意：用于在GBrowse上展示相关注释的bed格式通常第一行有一个关于track的描述信息。
 
   **速记：**
-
 - bed不是床，缺了主要3列就得黄~
-
 - 9列可选列，看了不会胡略略~
 
 **二、BED 与GFF的差异**
@@ -670,9 +661,7 @@ BED文件中起始坐标为0，结束坐标至少是1,
 
 GFF中起始坐标是1而结束坐标至少是1。
 
-
-
-## MAF  
+## MAF
 
 **简介**
 
@@ -938,7 +927,7 @@ genome.wustl.edu_OV.IlluminaGA_DNASeq.Level_2.7.preliminary.somatic.maf
 genome.wustl.edu_OV.IlluminaGA_DNASeq.Level_2.7.protected.maf
 ```
 
-## Wiggle、BigWig和bedgraph  
+## Wiggle、BigWig和bedgraph
 
 **简介**
 
@@ -952,7 +941,7 @@ Wiggle、BigWig和bedgraph仅仅用于追踪参考基因组的各个区域的覆
 
 Wig是一种比较老的格式，展示连续值的数据，比如GC百分比，转录组数据等，Wig的数据被压缩的，储存在128个独特的仓中，当导出为其他格式时，会有很小的损失。
 
-在UCSC中具体使用哪种数据格式，细节见：http://genomewiki.ucsc.edu/index.php/Selecting_a_graphing_track_data_format。以UCSC给的Wig参考文件为例，Wig的数据是面向行的，第一行定义了track的属性，比如track type=wiggle_0，指定track为Wig track，为默认选项。其余为可选。一般不用管这些参数，除非你已经很熟悉UCSC的Genome Browser工具。下面是wiggle文件示例。  
+在UCSC中具体使用哪种数据格式，细节见：http://genomewiki.ucsc.edu/index.php/Selecting_a_graphing_track_data_format。以UCSC给的Wig参考文件为例，Wig的数据是面向行的，第一行定义了track的属性，比如track type=wiggle_0，指定track为Wig track，为默认选项。其余为可选。一般不用管这些参数，除非你已经很熟悉UCSC的Genome Browser工具。下面是wiggle文件示例。
 
 ```
 track type=wiggle_0 name="variableStep" description="variableStep format" visibility=full autoScale=off viewLimits=0.0:25.0 color=50,150,255 yLineMark=11.76 yLineOnOff=on priority=10
@@ -1082,5 +1071,3 @@ chr19 49304400 49304700 1.00
 Wig数据的元素大小必须是一样的。
 
 如果数据大小不一样，应该使用bedGraph格式，如果数据过大，就转换为bigWig。
-
-
