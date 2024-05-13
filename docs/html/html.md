@@ -2,7 +2,7 @@
 title: HTML基本语法
 author: Jeason
 createTime: 2019/06/10 19:42:02
-permalink: /blog/valine/
+permalink: /html/html/
 tags:
   - HTML
 ---
