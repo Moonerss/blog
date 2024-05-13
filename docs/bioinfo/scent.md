@@ -27,8 +27,8 @@ OpenBLAS blas_thread_init: RLIMIT_NPROC 1024 current, 2583728 max
 
   搜索到别人在运用其他程序时出现类似的问题：
 
-  + [https://github.com/davidemms/OrthoFinder/issues/68](https://github.com/davidemms/OrthoFinder/issues/68)
-  + [https://www.jianshu.com/p/981f67e5fb82](https://www.jianshu.com/p/981f67e5fb82)
+  + https://github.com/davidemms/OrthoFinder/issues/68
+  + https://www.jianshu.com/p/981f67e5fb82
 
 ## 解决方法
 

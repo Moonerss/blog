@@ -2,11 +2,10 @@
 title: ROC曲线和AUC
 author: Jeason
 createTime: 2018/10/10 08:08:28
-permalink: /stats/pca/
+permalink: /stats/roc_auc/
 tags:
   - stats
 ---
-
 <!--more-->
 
 ## ROC和AUC简介

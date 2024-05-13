@@ -7,11 +7,11 @@ tags:
   - stats
 ---
 
-# 背景
+## 背景
 
 在进行预后分析的过程中，往往会从大量的遗传特征中筛选有效的变量进行预后标志的构建。一般的构建过程会通过单因素cox和多因素cox等进行特征的过滤和变量筛选，然而这样的筛选过程有时候仍然会剩余较多的变量，这对后期预后标志的构建和使用会造成一定的困扰。因此需要一些更为有效的方法对得到的特征进行更加有效的过滤，其中lasso回归目前已经被广泛的运用到预后特征的筛选过程中。
 
-# lasso 回归
+## lasso 回归
 
 lasso(Least Absolute Shrinkage and Selection Operator)回归是一种正则化回归(regularized regression)，它是在在最小二乘的基础上增加了一个罚分项来对估计参数进行压缩，当参数缩小到小于一个阈值的时候，就令它变为0，从而选择出对因变量影响较大的自变量并计算出相应的回归系数，最终能得到一个比较精简的模型。LASSO方法在处理存在多重共线性的样本数据时有明显的优势。
 
@@ -23,7 +23,7 @@ LASSO回归的复杂度主要由参数λ(lambda)来控制.lambda越大,对变量
 
 另外还有一个参数α(alpha)用来控制高度相关性模型的性状。LASSO回归时,alpha设置为1。
 
-# lasso回归的R实现
+## lasso回归的R实现
 
 lasso回归在R语言中可以使用`glmnet`包中的`glmnet`函数进行实现，该包同时还包含了岭回归、弹性网络回归的计算。
 
@@ -37,7 +37,7 @@ lasso回归在R语言中可以使用`glmnet`包中的`glmnet`函数进行实现�
 + `lambda`: 提供lambda值,如果设置该值(一个或者多个),则会覆盖掉自动选择的lambda值。
 + `standardize`: 是否对数据进行标准化(scale),默认为TRUE.如果自己做过scale标化,这里需要设置为FALSE。
 
-# lasso cox进行变量筛选
+## lasso cox进行变量筛选
 
 使用R包自带的数据进行操作：
 
@@ -166,7 +166,7 @@ fit_out
 
 至此，筛选出最终需要保留的变量特征。
 
-# Reference
+## Reference
 
 [用R进行Lasso regr ess ion回归分析](http://www.360doc.com/content/19/1224/13/68068867_881784589.shtml)
 

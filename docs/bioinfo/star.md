@@ -6,20 +6,20 @@ permalink: /bioinfo/star/
 tags:
   - biosoftware
 ---
-# 简介
+## 简介
 
 + STAR （Spliced Transcripts Alignment to a Reference），用于将测序的 Read 对齐到参考基因组的比对软件，常用于 RNAseq。
 + 因其具有较高的准确率，映射速度较其他比对软件高 50 多倍，因此作为 ENCODE 项目的御用 pipeline 工具。
 + 它需要占用大量内存，对计算资源有较高的要求。
 + STAR 的默认参数针对哺乳动物基因组进行了优化
 
-# 安装
+## 安装
 
 ```sh
 conda install -c bioconda star
 ```
 
-# 使用
+## 使用
 
 生成索引
 
@@ -65,7 +65,7 @@ STAR --runThreadN 6 --runMode genomeGenerate \
 # --quantMode TranscriptomeSAM		将会输出翻译成转录本坐标的bam文件,aligned.toTranscriptome.out.bam.
 ```
 
-# 结果文件
+## 结果文件
 
 > SRR3589959Aligned.sortedByCoord.out.bam
 > SRR3589959Log.final.out
@@ -73,11 +73,11 @@ STAR --runThreadN 6 --runMode genomeGenerate \
 > SRR3589959Log.progress.out
 > SRR3589959SJ.out.tab
 
-# STAR 2-pass mode
+### STAR 2-pass mode
 
 为了发现更加灵敏的new junction，STAR建议使用2-pass mode，其能增加检测到的new junction数目，使得更多的splices reads能mapping到new junction。因此STAR先用一般参数做一遍mapping，收集检测到的junction信息，然后利用这已经annotated junction来做第二次mapping。
 
-## original 2-pass
+#### original 2-pass
 
 首先做一遍常规的比对，结果中会生成一个 `SJ.out.tab`文件，如上面所提到的 `SRR3589959SJ.out.tab`。然后用 `--sjdbFileChrStartEnd`参数将所有样品的 `SJ.out.tab`文件作为输入的 `annotated junction`进行第二次建index
 
@@ -99,7 +99,7 @@ STAR --runThreadN 20 --genomeDir ~/reference/index/STAR/mm10/index_2-pass/ \
 --outFileNamePrefix ./SRR3589959_2-pass
 ```
 
-## per-sample 2-pass
+#### per-sample 2-pass
 
 `original`方法适用于多样本的处理，但是如果是per-sample(单个样本？)的2-pass mapping，可以直接用 `--twopassMode Basic`参数将第两步mapping中的make index省去，直接再mapping。
 

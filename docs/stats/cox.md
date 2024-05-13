@@ -13,17 +13,23 @@ Cox回归分析是在生存分析中最常用的影响因素分析，回归模�
 
 Cox回归模型建模的主要对象是危险率（Hazard Rate），记作$h(t)$，它的基本形式：  
 
+:::center
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cox-regression/pic1.png)  
+:::
 
 它表示已生存到时间$t$的观察对象在t时刻的瞬时发生事件的概率，值为非负数。当$Δt=1$时，此时风险函数表示的就是时刻t存活的个体在此后一个单位死亡概率。  
 
 Cox回归的假设是$h$满足这样的分布：  
 
+:::center
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cox-regression/pic2.png)   
+:::
 
 其中$h_0(t)$我们不要去管它,，表示的是基线风险，即协变量为0时的风险率。对于两个对象，它们危险率的比值（Hazard Ratio）是和$h_0(t)$无关的。
 
+:::center
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cox-regression/pic3.png)  
+:::
 
 **对于每一个因素，如果回归系数的检验检验p值小于给定阈值，那么它的回归系数如果为正，该因素为风险因素，否则为保护因素（不利因素）。当确定该因素确实影响生存之后，影响力的大小可以用HR（hazard ratio）来表示。HR表示该影响因素增加一个单位风险率相对于原来增加多少倍。**  
 
@@ -43,7 +49,9 @@ Cox回归的假设是$h$满足这样的分布：
 + 以生存时间t为横轴，对数对数生存率ln[-ln(p)]为纵轴，绘制分类变量的每一组别的生存曲线，如果各组别对应的曲线直观上平行，则满足风险比例条件。  
 + 对于连续型协变量，可将每个协变量与对数生存时间的交互项X*ln(t)放入回归模型中，如果该将互相项没有统计学意义，则满足风险比例假设，如：  
 
+:::center
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cox-regression/pic4.png)   
+:::
 
 **当分析按比例风险的假定条件不成立是，可采用两种方法来解决**：  
 

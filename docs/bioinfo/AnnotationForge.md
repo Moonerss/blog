@@ -7,7 +7,7 @@ tags:
   - Bioconductor
   - biosoftware
 ---
-# 背景
+## 背景
 
 通常在对物种做GO富集分析时，我们会遇到2种情况模式物种 & 非模式物种；针对模式物种专门的Orgdb包，但是目前针对模式物种的包只有20种,针对非模式职位另一种解决方案是通过AnnotationForge包来创建Orgdb包，本节来介绍如何构建非模式物种的Orgdb来做GO富集分析
 
@@ -34,7 +34,7 @@ tags:
 + `KEGG_KO`: 推测的KEGG KO词条， 未必最新
 + `BiGG_Reactions`: BiGG代谢反应的预测结果
 
-# 2.安装AnnotationForge包
+## 2.安装AnnotationForge包
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -43,7 +43,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("AnnotationForge")
 ```
 
-# 3.导入数据
+## 3.导入数据
 
 从准备的注释文件导入注释信息，并提取必要的列用于构建库
 
@@ -61,7 +61,7 @@ gene2go <- dplyr::select(emapper,GID,GO) %>%
   mutate(EVIDENCE = 'A')
 ```
 
-# 4.构建0rgdb包
+## 4.构建0rgdb包
 
 ```r
 AnnotationForge::makeOrgPackage(gene_info=gene_info,
@@ -76,7 +76,7 @@ AnnotationForge::makeOrgPackage(gene_info=gene_info,
                                 goTable = "go")
 ```
 
-# 5.安装R包
+## 5.安装R包
 
 可以直接从文件夹进行安装，也可以构造之后安装
 

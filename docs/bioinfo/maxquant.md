@@ -7,15 +7,15 @@ tags:
   - biosoftware
   - Proteomics
 ---
-# 参考文献
+## 参考文献
 
 The MaxQuant computational platform for mass spectrometry–based shotgun proteomics
 
-# 简介
+## 简介
 
 **MaxQuant是基于质谱(Ms)的蛋白质组学数据分析最常用的平台之一**，目前认可度相对较高，可针对多种质谱数据。拥有自己的肽段搜索引擎- Andromeda。对于碰撞诱导离解(**CID)**、高能碰撞离解(**HCD**)和电子转移离解(**ETD**)所产生的串联光谱可以很容易地用MaxQuant进行分析。针对每种方法，采用自定义的多级评分方案，对每种特定的碎片化技术的多肽鉴定进行优化。MaxQuant使用target-decoy搜索策略以估计和控制假阳性。
 
-# 原理
+## 原理
 
 MaxQuant使用target-decoy搜索策略以估计和控制假阳性，主要思路如下：
 
@@ -24,7 +24,7 @@ MaxQuant使用target-decoy搜索策略以估计和控制假阳性，主要思路
 3. 与原始数据库不同的是，这些多肽序列是虚构的，不可能在样品中存在
 4. 采用相同的条件检索反相数据库，或者将两个数据库合并检索，用来模拟随机匹配的过程。在此时MaxQuant会计算，每条肽段搜库的FDR值，即搜库结果的准确性。
 
-# 质控的主要数参数解释
+## 质控的主要数参数解释
 
 + Andromeda score: 理论谱图与实际谱图的匹配程度
 + PSM(peptide spectrum match): 肽谱匹配，也就是被软件认为实际谱图与理论谱图可以匹配上的那些谱图
@@ -35,7 +35,7 @@ MaxQuant使用target-decoy搜索策略以估计和控制假阳性，主要思路
 + Protein FDR and q values：蛋白层面的FDR控制概率，要求1%
 + Razor peptides：某一个肽段是存在于多个protein group 中。这种肽被分配具有较多得分的protein group上。肽只能对这个protein group的得分做出贡献，确保光谱不被用于多个protein group使用。
 
-# 定量的主要参数解释
+## 定量的主要参数解释
 
 + Peptide intensity: 每一个肽段的相对丰度，也就是相对含量，可以理解为含量或者丰度，值越大，丰度越高。
 + Protein intensity ：对于 Protein groups，是该group 内所有肽段强度（Peptide intensity）的总和
@@ -45,7 +45,7 @@ MaxQuant使用target-decoy搜索策略以估计和控制假阳性，主要思路
 + iBAQ protein intensity：类似于绝对定量值（其实并不是，TMT和LFQ都是相对定量的），值得是某一特定蛋白所鉴定的所有肽段丰度的总和除以这一蛋白中包含的肽段数目
 + Reporter intensity：报告的定量值（即计算的信号强度和）。用于后续标准分析
 
-# 运行结果中的重要文件
+## 运行结果中的重要文件
 
 在运行结果中每个样本对应一个文件夹，包含了每个样本对应的谱图解析信息，我们需要关注的是一个 `combined` 文件夹，其中包含了我们需要的定量表达信息。我们关注的是其下的 `txt` 文件夹中的文件
 

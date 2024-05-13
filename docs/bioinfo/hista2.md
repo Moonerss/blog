@@ -7,21 +7,21 @@ tags:
   - biosoftware
 ---
 
-# 简介
+## 简介
 
 + Hisat是一种高效的RNA-seq实验比对工具
 
 + 它使用了基于BWT和Ferragina-manzini (Fm) index 两种算法的索引框架
 
-# 安装
+## 安装
 
 ```sh
 conda install hisat2
 ```
 
-# 使用
+## 使用
 
-## 建立索引
+### 建立索引
 
 HISAT2提供了部分已经建立好的索引: http://daehwankimlab.github.io/hisat2/download/
 
@@ -51,7 +51,7 @@ hisat2-build [options]* <reference_in> <ht2_base>
 -q 				静默运行
 ```
 
-## 比对
+### 比对
 
 ```sh
 # single-end
@@ -98,7 +98,7 @@ hisat2 [options]* -x <hisat2-idx> {-1 <m1> -2 <m2> | -U <r> | --sra-acc <SRA acc
 --score-min <func>			指定比对得分的函数, 当超过计算所得分数时才算一个成功比对
 ```
 
-## 下游分析
+### 下游分析
 
 HISTA2生成的结果是sam文件，可使用samtools进行下游分析
 

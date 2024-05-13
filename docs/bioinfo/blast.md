@@ -8,13 +8,13 @@ tags:
 ---
 **BLAST** (Basic Local Alignment Search Tool) 是我们常用的短序列比对工具，直接输入**fasta**格式的序列文件就可进行比对。
 
-# 安装
+## 安装
 
 ```sh
 conda install -c bioconda blast
 ```
 
-# 数据库构建
+## 数据库构建
 
 ```sh
 ## 构建数据库
@@ -27,7 +27,7 @@ makeblastdb -in genome.fasta -dbtype nucl -parse_seqids -out Homo_sapiens
 
 **-out**：数据库名称。
 
-# 序列比对
+## 序列比对
 
 构建好数据库就可进行序列比对。序列比对的工具共有5种，大家可以根据自己序列比对的类型进行选择。
 
@@ -62,7 +62,7 @@ blastn -query input.fa -db Homo_sapiens -evalue 1e-6 -outfmt 6 -num_threads 6 -o
 
 **-out**：输出文件。
 
-# 输出文件
+## 输出文件
 
 输出文件一共有12列：
 

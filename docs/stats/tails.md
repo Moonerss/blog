@@ -14,9 +14,11 @@ tags:
 + **假设有一个新的肿瘤治疗方案，我们希望新治疗方案的疗效较传统治疗更好**  
 + **为了探究新的抗肿瘤治疗方案是否疗效更优，故进行含6个患者的小临床试验，其中3个患者接受传统治疗方案，另外3个患者接受新的治疗方案。**将治疗疗效结果表示在坐标轴上，从左至右表示疗效从好至差。该数据提示新治疗方案的疗效似乎更好，但是有部分数据并未得出此结论（如下），故两种方案的疗效优劣并不明确。  
 
+:::center
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/one-tail/onetail1.jpg)  
 
 ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/one-tail/onetail2.jpg)  
+:::
 
 进行统计学检验：  
 
