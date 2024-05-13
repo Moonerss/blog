@@ -29,6 +29,17 @@ export const zhNavbar = [
     activeMatch: '^/py/'
   },
   {
+    text: 'Analysis',
+    icon: 'material-symbols:book-5-outline',
+    items: [
+      {
+        text: 'scRNA',
+        link: '/scRNA/',
+        icon: 'carbon:watson-machine-learning'
+      }
+    ]
+  },
+  {
     text: '资源',
     icon: 'material-symbols:book-5-outline',
     activeMatch: '^/resource/',

@@ -12,7 +12,7 @@ export const zhNotes = definePlumeNotesConfig({
           text: '基础内容',
           collapsed: false,
           icon: 'carbon:idea',
-          items: ['filetype', 'concept', 'genome'],
+          items: ['filetype', 'concept', 'genome', 'gene_id', 'tpm_fpkm_rpkm', 'vcf'],
         }
       ]
     },
@@ -36,13 +36,40 @@ export const zhNotes = definePlumeNotesConfig({
           text: '零星概念',
           collapsed: false,
           icon: 'carbon:idea',
-          items: ['typeof'],
+          items: ['typeof', 'r_object', 'file_r', 'apply'],
         },
         {
           text: '使用案例',
+          collapsed: true,
+          icon: 'carbon:idea',
+          items: ['r_stats', 'trycatch', 'library_require', 'cut'],
+        },
+        {
+          text: 'tidyverse',
+          collapsed: true,
+          icon: 'carbon:idea',
+          dir: '/tidyverse/',
+          items: ['readr', 'tibble', 'tidyr', 'dplyr', 'purrr', 'stringr']
+        },
+        {
+          text: 'ggplot2',
+          collapsed: true,
+          icon: 'carbon:idea',
+          dir: '/ggplot2/',
+          items: ['ggplot_tips', 'ggplot_gallery', 'combine_ggplot2']
+        },
+        {
+          text: 'R包开发',
+          collapsed: true,
+          icon: 'carbon:idea',
+          dir: '/pkgs/',
+          items: ['']
+        },
+        {
+          text: '其他',
           collapsed: false,
           icon: 'carbon:idea',
-          items: ['trycatch'],
+          items: ['r_format', 'r_parallel'],
         }
       ]
     },
@@ -54,7 +81,19 @@ export const zhNotes = definePlumeNotesConfig({
           text: 'Python',
           collapsed: false,
           icon: 'carbon:idea',
-          items: ['chara_py'],
+          items: ['dataformat_py', 'chara_py'],
+        }
+      ]
+    },
+    {
+      dir: 'Analysis/scRNA',
+      link: '/scRNA/',
+      sidebar: [
+        {
+          text: '工具',
+          icon: 'tabler:tools',
+          link: '/scRNA/',
+          items: ['base', 'quality_control']
         }
       ]
     },
