@@ -5,7 +5,7 @@ import { version } from '../../package.json'
 export const zhNavbar = [
   {
     text: 'NGS',
-    icon: 'icon-park-outline:guide-board',
+    icon: 'material-symbols:genetics',
     // link: '/guide/intro/',
     link: '/notes/NGS/filetype.md',
     activeMatch: '^/NGS/',
@@ -21,7 +21,7 @@ export const zhNavbar = [
   {
     text: 'R',
     icon: 'mdi:language-r',
-    link: '/notes/R/typeof.md',
+    link: '/notes/R/',
     activeMatch: '^/R/'
   },
   {

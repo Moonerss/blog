@@ -34,7 +34,7 @@ export const zhNotes = definePlumeNotesConfig({
       sidebar: [
         {
           text: '零星概念',
-          collapsed: false,
+          collapsed: true,
           icon: 'carbon:idea',
           items: ['typeof', 'r_object', 'file_r', 'apply'],
         },
@@ -67,7 +67,7 @@ export const zhNotes = definePlumeNotesConfig({
         },
         {
           text: '其他',
-          collapsed: false,
+          collapsed: true,
           icon: 'carbon:idea',
           items: ['r_format', 'r_parallel'],
         }
@@ -89,9 +89,9 @@ export const zhNotes = definePlumeNotesConfig({
       dir: 'Analysis/scRNA',
       link: '/scRNA/',
       sidebar: [
+        '',
         {
-          text: '工具',
-          icon: 'tabler:tools',
+          text: '数据预处理',
           link: '/scRNA/',
           items: ['base', 'quality_control']
         }
