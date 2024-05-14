@@ -2,7 +2,7 @@
 title: SSH连接自动断开问题
 author: Jeason
 createTime: 2020/11/16 19:48:23
-permalink: /software/screen_1/
+permalink: /software/ssh/
 tags:
   - ssh
 ---
