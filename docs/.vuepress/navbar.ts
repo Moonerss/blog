@@ -55,6 +55,23 @@ export const zhNavbar = [
     ]
   },
   {
+    text: 'Awesome',
+    icon: 'material-symbols:book-5-outline',
+    activeMatch: '^/awesome/',
+    items: [
+      {
+        text: 'Tools',
+        link: '/awesome/biotools/',
+        icon: 'carbon:watson-machine-learning'
+      },
+      {
+        text: 'Command',
+        link: '/awesome/command/',
+        icon: 'carbon:watson-machine-learning'
+      }
+    ]
+  },
+  {
     text: '博客',
     link: '/blog/',
     icon: 'material-symbols:article-outline',
