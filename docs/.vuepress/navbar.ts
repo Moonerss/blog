@@ -68,6 +68,11 @@ export const zhNavbar = [
         text: 'Command',
         link: '/awesome/command/',
         icon: 'carbon:watson-machine-learning'
+      },
+      {
+        text: 'R package',
+        link: '/awesome/Rpkgs/',
+        icon: 'carbon:watson-machine-learning'
       }
     ]
   },

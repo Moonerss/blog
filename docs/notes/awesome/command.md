@@ -4,12 +4,12 @@ author: Jeason
 createTime: 2024/05/20 21:57:24
 permalink: /awesome/command/
 ---
-
 ::: info
 收集分析中经常用到的command命令
 :::
 
 ## 数据下载
+
 1. `wget`下载文件
 
 ```
@@ -45,27 +45,34 @@ curl -o filename http://path
 `-C` 断点续传
 
 ## fasta文件操作
-1. 从`fasta`文件提取1-22、X、Y、MT染色体的序列  
+
+1. 从 `fasta`文件提取1-22、X、Y、MT染色体的序列
+
 ```sh
 ## 从 ensembl下载的序列取
 seqkit grep -i -r -p '^[\dXY(MT)]+$' raw.fa > new.fa
 ## 从 ucsc下载的序列取需要添加chr
 seqkit grep -i -r -p '^chr[\dXY(MT)]+$' raw.fa > new.fa
 ```
-2. 过滤从ensembl下载的`fasta`文件，保留chr1-22,X,Y,M的信息，并修改染色体名称
+
+2. 过滤从ensembl下载的 `fasta`文件，保留chr1-22,X,Y,M的信息，并修改染色体名称
+
 ```sh
 ## 从 ensembl下载的序列取
 seqkit grep -j 20 -i -r -p '^[\dXY(MT)]+$' input.fa.gz | sed 's/>/>chr/g' | sed 's/chrMT/chrM/g' > input.filter_config.fa
 ```
 
 ## GTF文件操作
-1. 过滤从ensembl下载的`GTF`文件，保留chr1-22,X,Y,M上的注释信息，并修改染色体名称
+
+1. 过滤从ensembl下载的 `GTF`文件，保留chr1-22,X,Y,M上的注释信息，并修改染色体名称
+
 ```sh
 ## 从 ensembl下载的序列取
 awk -v FS='\t' -v OFS='\t' '{if ($1~/^[0-9]+/||/#!/||/^[XY]+/||/^(MT)/) print $0}' input.gtf | sed 's/^/chr/g' | sed 's/^chr#/#/g' | sed 's/^chrMT/chrM/g' > input.filter_changed.gtf
 ```
 
-##  测序相关指标计算
+## 测序相关指标计算
+
 ### 测序深度
 
 ```sh
@@ -81,6 +88,7 @@ awk '{sum+=$3} END {print "Mean sequencing depth: ", sum/NR}' depth.txt
 samtools depth -aa H3_3.mLb.clN.sorted.bam > all_depth.txt
 awk -F "\t" 'BEGIN{a = 0} {if($3 > 0) {a += $3}} END {print a/NR}' all_depth.txt
 ```
+
 ### 测序量
 
 ```sh
@@ -104,6 +112,7 @@ awk -F "\t" 'BEGIN{a = 0} {if($3 > 0) {a++}} END {print a/NR}' all_depth.txt
 ## bash操作
 
 1. 在shell脚本中获取当前脚本路径
+
 ```sh
 #!/bin/bash
 echo ${BASH_SOURCE[0]}
@@ -111,6 +120,7 @@ echo ${BASH_SOURCE}
 ```
 
 2. shell计算程序运行时间
+
 ```sh
 start=$(date +%s)
 sleep 5
@@ -126,6 +136,7 @@ du -d 1 -h
 ```
 
 4. 搜索并杀死特定用户的进程
+
 ```sh
 ps -ef | grep 用户名 | grep 程序关键词 | awk '{print $2}' | xargs kill -9
 ```
@@ -135,4 +146,3 @@ ps -ef | grep 用户名 | grep 程序关键词 | awk '{print $2}' | xargs kill -
 ```sh
 jupyter notebook --no-browser --allow-root --port=8889
 ```
-
