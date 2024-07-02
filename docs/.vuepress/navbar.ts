@@ -60,13 +60,13 @@ export const zhNavbar = [
     activeMatch: '^/awesome/',
     items: [
       {
-        text: 'Tools',
-        link: '/awesome/biotools/',
+        text: 'Command',
+        link: '/awesome/command/',
         icon: 'carbon:watson-machine-learning'
       },
       {
-        text: 'Command',
-        link: '/awesome/command/',
+        text: 'Tools',
+        link: '/awesome/biotools/',
         icon: 'carbon:watson-machine-learning'
       },
       {
