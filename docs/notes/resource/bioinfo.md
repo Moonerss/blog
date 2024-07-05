@@ -17,6 +17,12 @@ permalink: /bioinfo/
 
 + [Guide to RNA-seq analysis](https://ycl6.gitbook.io/guide-to-rna-seq-analysis/)  
 
+## Epigenomics  
+
++ [Epigenomics Workshop 2024](https://nbis-workshop-epigenomics.readthedocs.io/en/latest/index.html#)  
++ [Analysis of ATAC-seq data in R and Bioconductor](https://rockefelleruniversity.github.io/RU_ATAC_Workshop.html)  
+
+
 ## Bioinformatics  
 
 + [Practical Computing and Bioinformatics for Conservation and Evolutionary Genomics](https://eriqande.github.io/eca-bioinf-handbook/)  
