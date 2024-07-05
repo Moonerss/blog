@@ -12,7 +12,7 @@ export const zhNotes = definePlumeNotesConfig({
           text: '基础内容',
           collapsed: false,
           icon: 'carbon:idea',
-          items: ['filetype', 'concept', 'genome', 'gene_id', 'tpm_fpkm_rpkm', 'vcf'],
+          items: ['filetype', 'concept', 'genome', 'gene_id', 'tpm_fpkm_rpkm', 'vcf', 'epigenetics'],
         }
       ]
     },
