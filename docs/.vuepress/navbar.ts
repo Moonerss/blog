@@ -73,6 +73,11 @@ export const zhNavbar = [
         text: 'R package',
         link: '/awesome/Rpkgs/',
         icon: 'carbon:watson-machine-learning'
+      },
+      {
+        text: 'Plot',
+        link: '/awesome/Plots/',
+        icon: 'carbon:watson-machine-learning'
       }
     ]
   },
