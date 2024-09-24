@@ -10,7 +10,10 @@ permalink: /awesome/Rpkgs/
 ### Doublet  
 
 + [DoubletCollection](https://github.com/xnnba1984/DoubletCollection) R package that integrates the installation, execution and benchmark of eight cutting-edge computational doublet-detection methods.  
-+ 
+
+### batch integration
+
++ [scMerge](https://github.com/SydneyBioX/scMerge) R package for merging and normalising single-cell RNA-Seq datasets.
 
 ### preprocessing  
 

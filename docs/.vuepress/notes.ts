@@ -63,7 +63,7 @@ export const zhNotes = definePlumeNotesConfig({
           collapsed: true,
           icon: 'carbon:idea',
           dir: '/pkgs/',
-          items: ['question']
+          items: ['question', 'S3']
         },
         {
           text: '其他',
