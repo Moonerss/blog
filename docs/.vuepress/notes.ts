@@ -93,7 +93,7 @@ export const zhNotes = definePlumeNotesConfig({
         {
           text: '数据预处理',
           link: '/scRNA/',
-          items: ['base', 'quality_control']
+          items: ['cellranger', 'base', 'quality_control']
         }
       ]
     },
