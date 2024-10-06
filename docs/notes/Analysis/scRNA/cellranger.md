@@ -44,9 +44,9 @@ cellranger提供了五个分析模块用于分析单细胞转录组数据
 调用bcl2fastq软件将illumina测序仪得到的BCL(raw base call)格式文件拆分为fastq文件。根据建库的不同可以分为如下操作：
 
 1. 一次上机测两个不同的文库，执行一次`cellranger mkfastq`  
-   ![一次上机，两个文库](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/one_batch.png)
+   ![一次上机，两个文库](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/one_batch.png)
 2. 一个文库分两次或多次上机，需要根据上机的不同分别执行`cellranger mkfastq`  
-   ![多次上机，一个文库](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/two_batch.png)  
+   ![多次上机，一个文库](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/two_batch.png)  
 
 #### 使用方法  
 
@@ -121,13 +121,13 @@ Outputs:
 根据不同的情景，cellranger流程需要进行不同的调整，具体的分析操作可以分为以下几种：  
 
 1. 单个样本，单次建库，单次上机  
-   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/flow1.png)
+   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/flow1.png)
 2. 单个样本，单次建库，多次上机  
-   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/flow2.png)
+   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/flow2.png)
 3. 单个样本，多次建库，单次上机  
-   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/flow3.png)
+   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/flow3.png)
 4. 多个样本，多次建库，单次上机  
-   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/flow4.png)
+   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/flow4.png)
 5. 多个样本，单次建库，单次上机  
-   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/flow5.png)
-   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cllranger/flow6.png)
+   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/flow5.png)
+   ![](https://cdn.jsdelivr.net/gh/Moonerss/CDN/paper/cellranger/flow6.png)
