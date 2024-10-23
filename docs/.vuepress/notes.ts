@@ -17,18 +17,6 @@ export const zhNotes = definePlumeNotesConfig({
       ]
     },
     {
-      dir: 'workflow',
-      link: '/workflow/',
-      sidebar: [
-        {
-          text: '测序原始数据处理流程',
-          collapsed: false,
-          icon: 'carbon:idea',
-          items: ['RNA', 'ATAC', 'CHIP'],
-        }
-      ]
-    },
-    {
       dir: 'R',
       link: '/R/',
       sidebar: [
@@ -94,6 +82,16 @@ export const zhNotes = definePlumeNotesConfig({
           text: '数据预处理',
           link: '/scRNA/',
           items: ['cellranger', 'base', 'quality_control']
+        }
+      ]
+    },
+    {
+      dir: 'Analysis/ATACseq',
+      link: '/ATACseq/',
+      sidebar: [
+        {
+          icon: 'grommet-icons:install',
+          items: ['ATAC_seq']
         }
       ]
     },

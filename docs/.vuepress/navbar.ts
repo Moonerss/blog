@@ -3,7 +3,10 @@ import { NavItem } from 'vuepress-theme-plume'
 import { version } from '../../package.json'
 
 export const zhNavbar = [
-  { text: '首页', link: '/', icon: 'material-symbols:home-outline' },
+  { text: '首页',
+    link: '/',
+    icon: 'material-symbols:home-outline'
+  },
   {
     text: 'NGS',
     icon: 'material-symbols:genetics',
@@ -39,6 +42,11 @@ export const zhNavbar = [
         text: 'scRNA',
         link: '/scRNA/',
         icon: 'carbon:watson-machine-learning'
+      },
+      {
+        text: 'ATAC-seq',
+        link: '/ATACseq/',
+        icon: 'grommet-icons:install'
       }
     ]
   },
