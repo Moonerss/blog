@@ -146,3 +146,14 @@ ps -ef | grep 用户名 | grep 程序关键词 | awk '{print $2}' | xargs kill -
 ```sh
 jupyter notebook --no-browser --allow-root --port=8889
 ```
+
+6. 服务器穿透使用jupyter
+
+```sh
+# 服务器端口映射本地端口
+ssh -L port:localhost:port username@server.ip
+# 如果分登录节点和运行结点，需要在登录节点再次映射
+ssh -L port:localhost:port nodexx
+# jupyter 设定端口
+jupyter notebook --no-browser --allow-root --port=port
+```

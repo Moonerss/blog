@@ -12,10 +12,14 @@ permalink: /bioinfo/
 + [Orchestrating Single-Cell Analysis with Bioconductor](https://bioconductor.org/books/release/OSCA/)  
 + [Best Practices for Spatial Transcriptomics Analysis with Bioconductor](https://lmweber.org/BestPracticesST/)  
 + [Analysis of single cell RNA-seq data](https://www.singlecellcourse.org/index.html)
++ [Demultiplexing and detecting doublets with best software combination](https://demultiplexing-doublet-detecting-docs.readthedocs.io/en/latest/index.html)  
++ [Rseurat-Single Cell RNA-seq](https://maxplanck-ie.github.io/Rseurat/)  
++ 
 
 ## RNA-seq analysis  
 
 + [Guide to RNA-seq analysis](https://ycl6.gitbook.io/guide-to-rna-seq-analysis/)  
++ [A Guide to Analyzing Single-cell Datasets](https://ouyanglab.com/singlecell/)
 
 ## Epigenomics  
 
@@ -45,8 +49,23 @@ permalink: /bioinfo/
 + [The caret Package](https://topepo.github.io/caret/)  
 + [Caret Package – A Practical Guide to Machine Learning in R](https://www.machinelearningplus.com/machine-learning/caret-package/)  
 + [AI-EDU](https://microsoft.github.io/ai-edu/index.html)
++ [李宏毅春季机器学习课程](https://github.com/Fafa-DL/Lhy_Machine_Learning)  
++ 
 
 ## R Packages  
 
 + [R Packages (2e)](https://r-pkgs.org/)  
++ [Awesome R Package Development Tools](https://github.com/IndrajeetPatil/awesome-r-pkgtools)  
+
+## Python  
+
++ [Comprehensive Python Cheatsheet](https://gto76.github.io/python-cheatsheet/#operator)  
+
+
+
+## Other  
+
++ [Good Good study，Day Day up!](https://github.com/anzhihe/learning)  
++ [Bioinformatics training materials](https://github.com/sib-swiss/training-collection)  
++ 
 
