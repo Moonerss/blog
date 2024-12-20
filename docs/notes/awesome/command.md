@@ -157,3 +157,22 @@ ssh -L port:localhost:port nodexx
 # jupyter 设定端口
 jupyter notebook --no-browser --allow-root --port=port
 ```
+
+## R操作  
+
+### 下载基因坐标信息  
+
+```R
+mart <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl", host = "useast.ensembl.org", port = 80)
+attributes <- c(
+    "hgnc_symbol",
+    "chromosome_name",
+    "band",
+    "strand",
+    "start_position",
+    "end_position",
+    "ensembl_gene_id"
+  )
+## 根据filters筛选values，这两个参数必不可少
+result <- biomaRt::getBM(attributes = attributes, filters = "chromosome_name", values <- list(c(1:22, "X", "Y")), mart = mart, uniqueRows = T)
+```
