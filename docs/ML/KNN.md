@@ -1,5 +1,5 @@
 ---
-title: [机器学习] 1-K近邻(kNN)
+title: 机器学习-K近邻(kNN)
 author: Jeason
 createTime: 2025/02/23 20:41:45
 permalink: /blog/ML/KNN/
