@@ -4,7 +4,7 @@ author: Jeason
 createTime: 2023/04/03 11:13:16
 permalink: /R/pkgs/question/
 ---
-# global variable
+## global variable
 
 在开发R包的过程中，使用R CMD check进行检测时，出现许多的NOTE:
 
@@ -15,7 +15,7 @@ permalink: /R/pkgs/question/
 
 这些NOTE一般是由于某一个变量并没有在全局环境中声明所导致的，解决的方法有多种，具体思路如下：
 
-## resolution 1
+### resolution 1
 
 使用 `globalVariables()`函数包裹所有的变量进行全局声明，如：
 
@@ -29,7 +29,7 @@ globalVariables(c("mpg", "hp", "mpg_div_hp"))
 globalVariables(c(":=", "!!"))
 ```
 
-## resolution 2
+### resolution 2
 
 在函数的开始部分对非全局变量进行声明，定义为 `NULL`值
 
@@ -42,7 +42,7 @@ my_fn <- function() {
 }
 ```
 
-## resolution 3
+### resolution 3
 
 该方法主要适用于 `tidyverse`编程的函数，在函数中引入 `.data`进行声明：
 
@@ -60,6 +60,39 @@ my_fn <- function() {
     mutate(mpg_div_hp = .data$mpg / .data$hp)
 }
 ```
+
+## 多个函数使用同一个文档
+
+可以使用`@rdname`+ 统一别名 (`@aliases`)的方式
+
+```r
+#' 数据清洗函数组
+#'
+#' 这些函数用于数据清洗的不同阶段。
+#' 
+#' @param x 输入数据
+#' @param na.rm 是否移除NA值
+#' @return 清洗后的数据
+#' @rdname data_cleaning
+#' @aliases clean_data remove_outliers standardize_values
+#' @export
+clean_data <- function(x, na.rm = TRUE) {
+  # 函数实现
+}
+
+#' @rdname data_cleaning
+#' @export
+remove_outliers <- function(x, na.rm = TRUE) {
+  # 函数实现
+}
+
+#' @rdname data_cleaning
+#' @export
+standardize_values <- function(x, na.rm = TRUE) {
+  # 函数实现
+}
+```
+
 
 # Reference：
 
