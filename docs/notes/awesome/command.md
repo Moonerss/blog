@@ -176,3 +176,31 @@ attributes <- c(
 ## 根据filters筛选values，这两个参数必不可少
 result <- biomaRt::getBM(attributes = attributes, filters = "chromosome_name", values <- list(c(1:22, "X", "Y")), mart = mart, uniqueRows = T)
 ```
+
+### 解决ExperimentHub和AnnotationHub等的报错  
+
+报错信息：
+```R
+Cannot connect to ExperimentHub server, using 'localHub=TRUE' instead
+Using 'localHub=TRUE'
+  If offline, please also see BiocManager vignette section on offline use
+Error in .updateHubDB(hub_bfc, .class, url, proxy, localHub) : 
+  Invalid Cache: sqlite file
+  Hub has not been added to cache
+  Run again with 'localHub=FALSE'
+```
+
+解决方案：
+```R
+proxy = httr::use_proxy(Sys.getenv('http_proxy'))
+httr::set_config(proxy)
+ExperimentHub::setExperimentHubOption('PROXY', proxy)
+hub <- ExperimentHub()
+Assuming valid proxy connection through ':1'
+ If you experience connection issues consider using 'localHub=TRUE'
+  |========================================================================| 100%
+
+snapshotDate(): 2024-04-29
+```
+
+暂时不知道解决原理
