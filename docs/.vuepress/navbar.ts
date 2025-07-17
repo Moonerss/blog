@@ -51,6 +51,12 @@ export const zhNavbar = [
     ]
   },
   {
+    text: 'biology',
+    icon: 'material-symbols:book-5-outline',
+    link: '/notes/biology/',
+    activeMatch: '^/biology/'
+  },
+  {
     text: '资源',
     icon: 'material-symbols:book-5-outline',
     activeMatch: '^/resource/',
