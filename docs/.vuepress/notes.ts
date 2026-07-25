@@ -96,6 +96,18 @@ export const zhNotes = definePlumeNotesConfig({
       ]
     },
     {
+      dir: 'biology',
+      link: '/biology/',
+      sidebar: [
+        {
+          text: 'basic',
+          collapsed: false,
+          icon: 'carbon:idea',
+          items: ['program_death'],
+        }
+      ]
+    },
+    {
       dir: 'resource',
       link: '/resource/'
     }
