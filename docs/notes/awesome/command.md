@@ -12,7 +12,7 @@ permalink: /awesome/command/
 
 1. `wget`下载文件
 
-```
+```sh
 wget -O filename -c http://path
 ```
 
@@ -24,7 +24,7 @@ wget -O filename -c http://path
 
 2. `axel`下载文件
 
-```
+```sh
 axel -n threads -o filename http://path
 ```
 
@@ -36,7 +36,7 @@ axel -n threads -o filename http://path
 
 3. `curl`下载文件
 
-```
+```sh
 curl -o filename http://path
 ```
 
@@ -107,6 +107,23 @@ cexuliang=$(echo "scale=10;${read_num}* 2/4 * ${read_len} /1000000000" | bc)
 ```sh
 samtools depth -aa H3_3.mLb.clN.sorted.bam > all_depth.txt
 awk -F "\t" 'BEGIN{a = 0} {if($3 > 0) {a++}} END {print a/NR}' all_depth.txt
+```
+
+### bam\bedgraph\bw
+
+```sh
+set CHROM_SIZE = path/to/genome.fa.fai
+bedtools genomecov -ibam $sample.filtered.no.downsampled.bam -bga > $sample.nodup.bedGraph
+sort -k1,1 -k2,2n $sample.nodup.bedGraph > $sample.nodup.sorted.bedGraph
+bedGraphToBigWig $sample.nodup.sorted.bedGraph $CHROM_SIZE $sample.nodup.bw
+```
+
+## pip操作
+
+镜像切换
+
+```sh
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ## bash操作
